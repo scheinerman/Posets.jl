@@ -5,10 +5,10 @@ using Graphs
 import Base: eltype, show
 
 
-import Graphs: add_vertex!, add_vertices!, add_edge!, nv
+import Graphs: add_vertex!, add_vertices!, add_edge!, rem_vertex!, nv
 
 
-export Poset, add_vertex!, add_vertices!, nv
+export Poset, add_vertex!, add_vertices!, rem_vertex!, nv
 
 abstract type AbstractPoset{T<:Integer} end
 

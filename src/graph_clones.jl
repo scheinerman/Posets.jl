@@ -29,5 +29,14 @@ Add `n` new vertices to the poset `p`. Return the number of vertices that were a
 add_vertices!(p::Poset, n::Integer) = add_vertices!(p.d, n)
 
 
+"""
+    rem_vertex!(p::Poset, v::Integer)
+
+Remove element `v` from `p`. The last element in `p` takes its place.  Returns `true`
+if successful.
+"""
+rem_vertex!(p::Poset, v::Integer) = rem_vertex!(p.d, v)
+
+
 # Print in a format similar to SimpleDiGraph
-show(io::IO, p::Poset{T}) where T = write(io, "{$(nv(p))} $T poset")
+show(io::IO, p::Poset{T}) where {T} = write(io, "{$(nv(p))} $T poset")
