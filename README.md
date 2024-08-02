@@ -64,11 +64,16 @@ julia> has_relation(p,1,3)
 true
 ```
 
+> Not yet implemented: I hope to have `p[a] < p[b]` be equivalent to `has_relation!(p,a,b)` and likewise `p[a] > p[b]` or `p[a] <= p[b]`, etc.
+
+
 Use `nr` to return the number of relations in the poset (this is analogous to `ne` in `Graphs`):
 ```
 julia> nr(p)
 3
 ```
+
+> Not implemented yet: `relations(p)` creates an iterator for the relations in `p`.
 
 ### Removing elements and relations
 
@@ -92,5 +97,19 @@ When element 2 is removed from `p`, element 5 takes its place.
 
 ### Relation iterator
 
-> Not implemented yet.
+> Not implemented yet. Will based on `edges`.
 
+
+## Constructors
+
+The following functions create standard partially ordered sets.
+
+* `chain(n)` creates the poset with `n` elements in which $1 < 2 < 3 < \cdots < n$.
+* `antichain(n)` creates the poset with `n` elements and no relations. Same as `Poset(n)`.
+
+> More to come
+
+
+## Operations
+
+> None implemented. Would like to see `reverse`, `+` (disjoint union), etc.

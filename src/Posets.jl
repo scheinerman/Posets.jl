@@ -23,5 +23,6 @@ Poset(n::Int = 0) = Poset{Int}(n)
 
 include("graph_clones.jl")
 include("relations.jl")
+include("constructors.jl")
 
 end # module Posets
