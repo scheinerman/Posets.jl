@@ -1,7 +1,7 @@
 # Posets
 Partially ordered sets for Julia based on [Graphs](https://juliagraphs.org/Graphs.jl/).
 
-## Partially ordered sets
+## Introduction: Partially Ordered Sets
 
 A *partially ordered set*, or *poset* for short, is a pair $(V,<)$ where V is a set and
 $<$ is a binary relation on $V$ that is
