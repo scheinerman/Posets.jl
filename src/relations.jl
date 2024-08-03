@@ -1,6 +1,7 @@
 # methods for dealing with relations
 
 import Graphs: src, dst
+import Base: getindex, <
 
 export nr, has_relation, add_relation!, Relation, relations, src, dst
 
@@ -64,4 +65,43 @@ Return an iterator for the relations in `p`.
 """
 function relations(p::Poset)
     (Relation(e) for e in edges(p.d))
+end
+
+
+
+
+###
+# The following code enables p[i] < p[j] syntax for has(p,i,j)
+##
+struct PosetElement
+    p::Poset
+    x::Integer
+    function PosetElement(p::Poset, x::Integer)
+        if x < 0 || x > nv(p)
+            throw(BoundsError(p, x))
+        end
+        new(p, x)
+    end
+end
+
+show(io::IO, pe::PosetElement) = print(io, "Element $(pe.x) in $(pe.p)")
+
+getindex(p::Poset, x::Integer) = PosetElement(p, x)
+
+function _cannot_compare() 
+    throw(error("Cannot compare elements of different posets"))
+end
+
+function (<)(a::PosetElement, b::PosetElement)::Bool
+    if a.p !== b.p   # different posets
+        _cannot_compare()
+    end
+    return has_relation(a.p, a.x, b.x)
+end
+
+function (==)(a::PosetElement, b::PosetElement)::Bool
+    if a.p !== b.p
+        _cannot_compare()
+    end
+    return a.x == b.x
 end

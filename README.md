@@ -58,44 +58,43 @@ Let's look at this carefully to understand why the third call to `add_relation!`
 * The second call to `add_relation!` causes the relation $2 < 3$ to be added to `p`. Given that $1 < 2$ and $2 < 3$, by transitivity we automatically have $1 < 3$ in `p`.
 * Therefore, we cannot add $3 < 1$ as a relation to this poset as that would violate antisymmetry.
 
+
+### Inspecting relations
+
 We can check that $1 < 3$ in `p` using the `has_relation` function:
 ```
 julia> has_relation(p,1,3)
 true
 ```
 
-> Not yet implemented: I hope to have `p[a] < p[b]` be equivalent to `has_relation!(p,a,b)` and likewise `p[a] > p[b]` or `p[a] <= p[b]`, etc.
+There is an alternative way to determine the relation between elements `a` and `b` in a poset `p`. Instead of `has_relation(p,a,b)` we may use this instead: `p[a] < p[b]`.
+```
+julia> has_relation(p,1,3)
+true
 
+julia> p[1] < p[3]
+true
+
+julia> p[3] < p[1]
+false
+```
+The other comparison operators (`<=`, `>`, `>=`, `==`, `!=`) works as expected.
+```
+julia> p[3] > p[1]
+true
+```
+
+The following throw errors:
+* Using the syntax `p[a]` if `a` is not an element of `p`.
+* Trying to compare elements of different posets (even if they are equal).
+
+### Counting/listing relations
 
 Use `nr` to return the number of relations in the poset (this is analogous to `ne` in `Graphs`):
 ```
 julia> nr(p)
 3
 ```
-
-> Not implemented yet: `relations(p)` creates an iterator for the relations in `p`.
-
-### Removing elements and relations
-
-The function `rem_vertex!` behaves exactly as in `Graphs`. It removes the given vertex from the poset. For example:
-```
-julia> p = Poset(5)
-{5} Int64 poset
-
-julia> add_relation!(p,1,5)
-true
-
-julia> rem_vertex!(p,2)
-true
-
-julia> has_relation(p,1,2)
-true
-```
-When element 2 is removed from `p`, element 5 takes its place. 
-
-> Removal of relations not implemented yet.
-
-### Relation iterator
 
 The function `relations` returns an iterator for all the relations in a poset.
 ```
@@ -119,6 +118,27 @@ Relation 1 < 2
 julia> src(r), dst(r)
 (1, 2)
 ```
+### Removing elements and relations
+
+The function `rem_vertex!` behaves exactly as in `Graphs`. It removes the given vertex from the poset. For example:
+```
+julia> p = Poset(5)
+{5} Int64 poset
+
+julia> add_relation!(p,1,5)
+true
+
+julia> rem_vertex!(p,2)
+true
+
+julia> has_relation(p,1,2)
+true
+```
+When element 2 is removed from `p`, element 5 takes its place. 
+
+> Removal of relations not implemented yet.
+
+
 
 ## Constructors
 
