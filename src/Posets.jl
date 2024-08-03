@@ -21,6 +21,12 @@ struct Poset{T<:Integer} <: AbstractPoset{T}
 end
 Poset(n::Int = 0) = Poset{Int}(n)
 
+
+# Print in a format similar to SimpleDiGraph
+show(io::IO, p::Poset{T}) where {T} = print(io, "{$(nv(p))} $T poset")
+
+
+
 include("graph_clones.jl")
 include("relations.jl")
 include("constructors.jl")

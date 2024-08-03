@@ -37,6 +37,3 @@ if successful.
 """
 rem_vertex!(p::Poset, v::Integer) = rem_vertex!(p.d, v)
 
-
-# Print in a format similar to SimpleDiGraph
-show(io::IO, p::Poset{T}) where {T} = write(io, "{$(nv(p))} $T poset")

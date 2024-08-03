@@ -97,8 +97,28 @@ When element 2 is removed from `p`, element 5 takes its place.
 
 ### Relation iterator
 
-> Not implemented yet. Will based on `edges`.
+The function `relations` returns an iterator for all the relations in a poset.
+```
+julia> p = chain(4)
+{4} Int64 poset
 
+julia> collect(relations(p))
+6-element Vector{Relation{Int64}}:
+ Relation 1 < 2
+ Relation 1 < 3
+ Relation 1 < 4
+ Relation 2 < 3
+ Relation 2 < 4
+ Relation 3 < 4
+ ```
+The functions `src` and `dst` return the less and greater elements of a relation, respectively:
+```
+julia> r = first(relations(p))
+Relation 1 < 2
+
+julia> src(r), dst(r)
+(1, 2)
+```
 
 ## Constructors
 
@@ -106,6 +126,7 @@ The following functions create standard partially ordered sets.
 
 * `chain(n)` creates the poset with `n` elements in which $1 < 2 < 3 < \cdots < n$.
 * `antichain(n)` creates the poset with `n` elements and no relations. Same as `Poset(n)`.
+* `standard_example(n)` creates a poset with `2n` elements. Elements `1` through `n` form an antichain as do elements `n+1` through `2n`. The only relations are of the form `j < k` where `1 ≤ j ≤ n` and `k = n+i` where `1 ≤ i ≤ n` and `i ≠ j`. This is a smallest-size poset of dimension `n`.
 
 > More to come
 
