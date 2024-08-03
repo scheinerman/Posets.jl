@@ -65,5 +65,6 @@ include("standard.jl")
 include("up-down.jl")
 include("matrices.jl")
 include("graphs.jl")
+include("operations.jl")
 
 end # module Posets

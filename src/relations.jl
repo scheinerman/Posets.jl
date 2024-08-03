@@ -5,6 +5,7 @@ import Base: getindex, <, <<, >>
 
 export nr, has_relation, add_relation!, Relation, relations, src, dst
 export covered_by, just_below, just_above
+export maximals, minimals
 
 """
     nr(p::Poset)
@@ -163,4 +164,23 @@ See also: `above`.
 """
 function just_above(p::Poset, a::Integer)
     (k for k = 1:nv(p) if covered_by(p, a, k))
+end
+
+
+"""
+    maximals(p::Poset)
+
+Return an iterator for all maximal elements of `p`.
+"""
+function maximals(p::Poset)
+    (v for v=1:nv(p) if outdegree(p.d, v) == 0)
+end
+
+"""
+    minimals(p::Poset)
+
+Return an iterator for all minimal elements of `p`.
+"""
+function minimals(p::Poset)
+    (v for v=1:nv(p) if indegree(p.d, v) == 0)
 end

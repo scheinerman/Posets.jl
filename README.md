@@ -211,6 +211,11 @@ julia> collect(between(p,3,7))
  6
  ```
 
+### Maxmals/Minimals
+
+* `maximals(p)` returns an iterator for the maximal elements of `p`.
+* `minimals(p)` returns an iterator for the minimal elements of `p`.
+
 ### Covers
 
 In a poset, we say `a` is covered by `b` provided `a < b` and there is no element `c` such 
@@ -310,4 +315,17 @@ In both cases, the output is a dense, integer matrix.
 
 ## Operations
 
-> None implemented. Would like to see `reverse`, `+` (disjoint union), etc.
+### Dual
+The dual of poset `p` is created using `reverse(p)`. This returns a new poset with the
+same elements as `p` in which all relations are reversed (i.e., `v < w` in `p` if and 
+only if `w < v` in `reverse(p)`).
+
+### Disjoint union
+Given two posets `p` and `q`, the result of `p+q` is a new poset formed from the 
+disjoint union of `p` and `q`. Note that `p+q` and `q+p` are isomorphic, but unequal
+posets because of our numbering convention.
+
+### Stack
+
+Given two posets `p` and `q`, the result of `p/q` is a new poset from from a copy of `p` 
+and a copy of `q` with all elements of `p` above all elements of `q`. 
