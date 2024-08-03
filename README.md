@@ -16,8 +16,20 @@ The design philosophy for this module is modeled exactly on `Graphs`. In particu
 ## Basic functions
 
 
-### Creating a poset and adding elements
+### Constructors
 Create a new poset with no elements using `Poset()` or a poset with a specified number of elements with `Poset(n)`. 
+
+Given a poset `p`, use `Poset(p)` to create an independent copy of `p`.
+
+Given a directed graph `d`, use `Poset(d)` to create a new poset from the transitive 
+closure of `d`. An error is thrown if `d` has cycles. (Self loops in `d` are ignored.)
+
+Given a square matrix `A`, create a poset in which `i < j` exactly when the `i,j`-entry 
+of `A` is nonzero. Diagonal entries are ignored, but if this would create a cycle an 
+error is thrown. 
+
+
+### Adding elements
 
 For consistency with `Graph`, we call the elements of a `Poset` *vertices* and the functions `add_vertex!` and `add_vertices!` work exactly as in the `Graphs` module.
 ```
@@ -61,13 +73,24 @@ Let's look at this carefully to understand why the third call to `add_relation!`
 
 ### Inspecting relations
 
-We can check that $1 < 3$ in `p` using the `has_relation` function:
+There are three ways to check if elements are related in a poset.
+
+First, to see if  $1 < 3$ in `p` we use the `has_relation` function:
 ```
 julia> has_relation(p,1,3)
 true
 ```
 
-There is an alternative way to determine the relation between elements `a` and `b` in a poset `p`. Instead of `has_relation(p,a,b)` we may use this instead: `p[a] < p[b]`.
+Second, the syntax `p(a,b)` is equivalent to `has_relation(p,a,b)`:
+```
+julia> p(1,3)
+true
+
+julia> p(3,1)
+false
+```
+
+There is a third way to determine the relation between elements `a` and `b` in a poset `p`. Instead of `has_relation(p,a,b)` or `p(a,b)` we may use this instead: `p[a] < p[b]`.
 ```
 julia> has_relation(p,1,3)
 true
@@ -84,7 +107,15 @@ julia> p[3] > p[1]
 true
 ```
 
-The following throw errors:
+
+Neither `has_relation(p,a,b)` nor `p(a,b)` generate errors; they return `false` 
+even if `a` or `b` are not elements of `p`. 
+```
+julia> p(-2,9)
+false
+```
+
+However, the expression `p[a] < p[b]`  throws an error in either or these situations:
 * Using the syntax `p[a]` if `a` is not an element of `p`.
 * Trying to compare elements of different posets (even if they are equal).
 
@@ -110,7 +141,7 @@ julia> collect(relations(p))
  Relation 2 < 4
  Relation 3 < 4
  ```
-The functions `src` and `dst` return the less and greater elements of a relation, respectively:
+The functions `src` and `dst` return the lesser and greater elements of a relation, respectively:
 ```
 julia> r = first(relations(p))
 Relation 1 < 2

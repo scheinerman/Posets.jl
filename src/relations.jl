@@ -19,6 +19,8 @@ Determine if `a<b` is a relation in `p`.
 """
 has_relation(p::Poset, a::Integer, b::Integer) = has_edge(p.d, a, b)
 
+(p::Poset)(a::Integer, b::Integer) = has_relation(p, a, b)
+
 """
     add_relation!(p::Poset, a::Integer, b::Integer)::Bool
 
@@ -78,7 +80,7 @@ struct PosetElement
     x::Integer
     function PosetElement(p::Poset, x::Integer)
         if x < 0 || x > nv(p)
-            throw(BoundsError(p, x))
+            throw(ArgumentError("$x is not in this poset"))
         end
         new(p, x)
     end
@@ -88,8 +90,8 @@ show(io::IO, pe::PosetElement) = print(io, "Element $(pe.x) in $(pe.p)")
 
 getindex(p::Poset, x::Integer) = PosetElement(p, x)
 
-function _cannot_compare() 
-    throw(error("Cannot compare elements of different posets"))
+function _cannot_compare()
+    throw(ArgumentError("Cannot compare elements of different posets"))
 end
 
 function (<)(a::PosetElement, b::PosetElement)::Bool
