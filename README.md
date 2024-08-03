@@ -171,7 +171,7 @@ When element 2 is removed from `p`, element 5 takes its place.
 
 
 
-## Constructors
+## Standard Posets
 
 The following functions create standard partially ordered sets.
 

@@ -1,4 +1,5 @@
-## methods extended from Graphs to Posets
+## These functions have the same names as in Graphs. 
+
 """
     nv(p::Poset)
 

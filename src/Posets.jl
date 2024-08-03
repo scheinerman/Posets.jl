@@ -3,10 +3,7 @@ module Posets
 using Graphs
 
 import Base: eltype, show, ==
-
-
 import Graphs: add_vertex!, add_vertices!, add_edge!, rem_vertex!, nv
-
 
 export Poset, add_vertex!, add_vertices!, rem_vertex!, ==
 
@@ -65,8 +62,8 @@ show(io::IO, p::Poset{T}) where {T} = print(io, "{$(nv(p))} $T poset")
 
 
 
-include("graph_clones.jl")
+include("graphs_reuse.jl")
 include("relations.jl")
-include("constructors.jl")
+include("standard.jl")
 
 end # module Posets
