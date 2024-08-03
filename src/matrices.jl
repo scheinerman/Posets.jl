@@ -1,6 +1,6 @@
 # zeta and Möbius matrices
 
-export zeta_matrix, mobius_matrix 
+export zeta_matrix, mobius_matrix
 
 """
     zeta_matrix(p::Poset)::Matrix{Int}
@@ -18,7 +18,7 @@ end
 
 Return the inverse `zeta_matrix(p)`.
 """
-function mobius_matrix(p::Poset):: Matrix{Int}
+function mobius_matrix(p::Poset)::Matrix{Int}
     Z = zeta_matrix(p)
     return Int.(inv(Z))
 end

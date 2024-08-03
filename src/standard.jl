@@ -9,8 +9,8 @@ Create an `n`-element poset in which `1 < 2 < ... < n`.
 """
 function chain(n::Integer)
     p = Poset(n)
-    for i=1:n-1
-        add_edge!(p.d,i,i+1)
+    for i = 1:n-1
+        add_edge!(p.d, i, i + 1)
     end
     transitiveclosure!(p.d)
     return p
@@ -34,12 +34,12 @@ poset of dimension `n`.
 """
 function standard_example(n::Integer)
     p = Poset(2n)
-    for a = 1:n 
-        for b=1:n
-            if a != b 
-                add_edge!(p.d, a, b+n)
+    for a = 1:n
+        for b = 1:n
+            if a != b
+                add_edge!(p.d, a, b + n)
             end
         end
     end
-    return p 
+    return p
 end

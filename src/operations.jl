@@ -65,16 +65,16 @@ function intersect(p::Poset, q::Poset)
     if np != nq
         throw(AssertionError("Posets must have same number of elements: $np ≠ $nq"))
     end
-    
-    nn = promote(np,nq)[1]
+
+    nn = promote(np, nq)[1]
 
     pq = Poset(nn)
 
     rel_p = relations(p)
     rel_q = relations(q)
 
-    for r in rel_p 
-        if r in rel_q 
+    for r in rel_p
+        if r in rel_q
             add_relation!(pq, src(r), dst(r))
         end
     end

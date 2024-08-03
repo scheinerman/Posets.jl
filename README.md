@@ -211,11 +211,6 @@ julia> collect(between(p,3,7))
  6
  ```
 
-### Maxmals/Minimals
-
-* `maximals(p)` returns an iterator for the maximal elements of `p`.
-* `minimals(p)` returns an iterator for the minimal elements of `p`.
-
 ### Covers
 
 In a poset, we say `a` is covered by `b` provided `a < b` and there is no element `c` such 
@@ -263,6 +258,11 @@ julia> just_below(p,5) |> collect
  4
  ```
 
+
+### Maxmals/Minimals
+
+* `maximals(p)` returns an iterator for the maximal elements of `p`.
+* `minimals(p)` returns an iterator for the minimal elements of `p`.
 
 
 ## Standard Posets
@@ -344,3 +344,10 @@ julia> p = chain(5)
 julia> p ∩ reverse(p)
 {5, 0} Int64 poset
 ```
+
+## To Do List
+
+* Linear extension
+* Height
+* Connected components
+* More examples

@@ -132,7 +132,7 @@ function (<<)(a::PosetElement, b::PosetElement)::Bool
     if a.p != b.p
         _cannot_compare()
     end
-    just_below(a.p, a.x, b.x)
+    covered_by(a.p, a.x, b.x)
 end
 
 """
@@ -173,7 +173,7 @@ end
 Return an iterator for all maximal elements of `p`.
 """
 function maximals(p::Poset)
-    (v for v=1:nv(p) if outdegree(p.d, v) == 0)
+    (v for v = 1:nv(p) if outdegree(p.d, v) == 0)
 end
 
 """
@@ -182,5 +182,5 @@ end
 Return an iterator for all minimal elements of `p`.
 """
 function minimals(p::Poset)
-    (v for v=1:nv(p) if indegree(p.d, v) == 0)
+    (v for v = 1:nv(p) if indegree(p.d, v) == 0)
 end
