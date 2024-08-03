@@ -211,6 +211,54 @@ julia> collect(between(p,3,7))
  6
  ```
 
+### Covers
+
+In a poset, we say `a` is covered by `b` provided `a < b` and there is no element `c` such 
+that `a < c < b`.
+
+Use `covered_by(p,a,b)` to determine if `a` is covered by `b`. Alternatively, use
+`p[a] << p[b]` or `p[b] >> p[a]`.
+```
+julia> p = chain(8)
+{8, 28} Int64 poset
+
+julia> p[4] << p[5]
+true
+
+julia> p[4] << p[6]
+false
+```
+
+The functions `just_above` and `just_below` can be used to find elements that cover, or are covered by, a given vertex.
+
+```
+julia> p = chain(9)
+{9, 36} Int64 poset
+
+julia> above(p,5) |> collect
+4-element Vector{Int64}:
+ 6
+ 7
+ 8
+ 9
+
+julia> just_above(p,5) |> collect
+1-element Vector{Int64}:
+ 6
+
+julia> below(p,5) |> collect
+4-element Vector{Int64}:
+ 1
+ 2
+ 3
+ 4
+
+julia> just_below(p,5) |> collect
+1-element Vector{Int64}:
+ 4
+ ```
+
+
 
 ## Standard Posets
 
@@ -221,6 +269,34 @@ The following functions create standard partially ordered sets.
 * `standard_example(n)` creates a poset with `2n` elements. Elements `1` through `n` form an antichain as do elements `n+1` through `2n`. The only relations are of the form `j < k` where `1 ≤ j ≤ n` and `k = n+i` where `1 ≤ i ≤ n` and `i ≠ j`. This is a smallest-size poset of dimension `n`.
 
 > More to come
+
+## Graphs
+
+Let `p` be a poset. The following two functions create graphs from `p` with the same 
+vertex set as `p`:
+
+* `comparability_graph(p)` creates an undirected graph in which there is an edge from `v` to `w` exactly when `v < w` or `w < v` in `p`.
+* `cover_digraph(p)` creates a directed graph in which there is an edge from `v` to `w` exactly when `v` is covered by `w`.
+```
+julia> p = chain(9)
+{9, 36} Int64 poset
+
+julia> g = comparability_graph(p)
+{9, 36} undirected simple Int64 graph
+
+julia> g == complete_graph(9)
+true
+
+julia> d = cover_digraph(p)
+{9, 8} directed simple Int64 graph
+
+julia> d == path_digraph(9)
+true
+```
+
+Given a graph `g`, calling `vertex_edge_incidence_poset(p)` creates a poset whose
+elements correspond to the vertices and edges of `g`. In this poset the only relations
+are of the form `v < e` where `v` is a vertex that is an end point of the edge `e`.
 
 
 ## Matrices

@@ -1,9 +1,10 @@
 # methods for dealing with relations
 
 import Graphs: src, dst
-import Base: getindex, <
+import Base: getindex, <, <<, >>
 
 export nr, has_relation, add_relation!, Relation, relations, src, dst
+export covered_by, just_below, just_above
 
 """
     nr(p::Poset)
@@ -106,4 +107,60 @@ function (==)(a::PosetElement, b::PosetElement)::Bool
         _cannot_compare()
     end
     return a.x == b.x
+end
+
+
+
+# COVERING
+
+"""
+    covered_by(p::Poset, a::Integer, b::Integer)::Bool
+
+Return `true` is `a < b` in `p` and there is no element `c` with `a < c < b`.
+"""
+function covered_by(p::Poset, a::Integer, b::Integer)::Bool
+    p(a, b) && length(collect(between(p, a, b))) == 0
+end
+
+"""
+    (<<)(a::PosetElement, b::PosetElement)::Bool
+
+`p[u] << p[v]` returns `true` exactly when `u` is covered by `v`.
+"""
+function (<<)(a::PosetElement, b::PosetElement)::Bool
+    if a.p != b.p
+        _cannot_compare()
+    end
+    just_below(a.p, a.x, b.x)
+end
+
+"""
+    (>>)(a::PosetElement, b::PosetElement)::Bool
+
+`p[u] >> p[v]` returns `true` exactly when `v` is covered by `u`.
+"""
+(>>)(a::PosetElement, b::PosetElement)::Bool = b << a
+
+
+"""
+    just_below(p::Poset, a::Integer)
+
+Return an iterator for the elements of `p` that `a` covers.
+
+See also: `below`.
+"""
+function just_below(p::Poset, a::Integer)
+    (k for k = 1:nv(p) if covered_by(p, k, a))
+end
+
+
+"""
+    just_above(p::Poset, a::Integer)
+
+Return an iterator for the elements of `p` that cover `a`.
+
+See also: `above`.
+"""
+function just_above(p::Poset, a::Integer)
+    (k for k = 1:nv(p) if covered_by(p, a, k))
 end
