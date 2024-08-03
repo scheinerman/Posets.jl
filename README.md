@@ -13,10 +13,11 @@ Posets are naturally represented as transitively closed, directed, acyclic graph
 
 The design philosophy for this module is modeled exactly on `Graphs`. In particular, the vertex set of a poset is necessarily of the form $\{ 1,2,\ldots, n \}$.
 
-## Basic functions
+## Basics
 
 
-### Constructors
+### Construct new posets 
+
 Create a new poset with no elements using `Poset()` or a poset with a specified number of elements with `Poset(n)`. 
 
 Given a poset `p`, use `Poset(p)` to create an independent copy of `p`.
@@ -36,7 +37,7 @@ For consistency with `Graph`, we call the elements of a `Poset` *vertices* and t
 julia> using Posets
 
 julia> p = Poset()
-{0} Int64 poset
+{0, 0} Int64 poset
 
 julia> add_vertex!(p)
 true
@@ -45,7 +46,7 @@ julia> add_vertices!(p,5)
 5
 
 julia> p
-{6} Int64 poset
+{6, 0} Int64 poset
 ```
 Use `nv(p)` to return the number of elements (vertices) in `p`.
 
@@ -53,7 +54,7 @@ Use `nv(p)` to return the number of elements (vertices) in `p`.
 To add a relation to a poset, use `add_relation!`. This returns `true` when successful.
 ```
 julia> p = Poset(4)
-{4} Int64 poset
+{4, 0} Int64 poset
 
 julia> add_relation!(p,1,2)
 true
@@ -70,8 +71,36 @@ Let's look at this carefully to understand why the third call to `add_relation!`
 * The second call to `add_relation!` causes the relation $2 < 3$ to be added to `p`. Given that $1 < 2$ and $2 < 3$, by transitivity we automatically have $1 < 3$ in `p`.
 * Therefore, we cannot add $3 < 1$ as a relation to this poset as that would violate antisymmetry.
 
+### Removing elements
 
-### Inspecting relations
+The function `rem_vertex!` behaves exactly as in `Graphs`. It removes the given vertex from the poset. For example:
+```
+julia> p = Poset(5)
+{5, 0} Int64 poset
+
+julia> add_relation!(p,1,5)
+true
+
+julia> rem_vertex!(p,2)
+true
+
+julia> has_relation(p,1,2)
+true
+```
+When element 2 is removed from `p`, element 5 takes its place. 
+
+### Removing relations
+> Removal of relations not implemented yet.
+
+
+## Inspection
+
+### Vertices
+
+Use `nv(p)` to return the number of vertices in the poset `p`. As in `Graphs`, the 
+elements of the poset are integers from `1` to `n`. 
+
+### Checking relations
 
 There are three ways to check if elements are related in a poset.
 
@@ -130,7 +159,7 @@ julia> nr(p)
 The function `relations` returns an iterator for all the relations in a poset.
 ```
 julia> p = chain(4)
-{4} Int64 poset
+{4, 6} Int64 poset
 
 julia> collect(relations(p))
 6-element Vector{Relation{Int64}}:
@@ -149,26 +178,38 @@ Relation 1 < 2
 julia> src(r), dst(r)
 (1, 2)
 ```
-### Removing elements and relations
 
-The function `rem_vertex!` behaves exactly as in `Graphs`. It removes the given vertex from the poset. For example:
+### Above, Below, Between
+
+* `above(p,a)` returns an iterator for all elements `k` of `p` such that `a<k`.
+* `below(p,a)` returns an iterator for all elements `k` of `p` such that `k<a`.
+* `between(p,a,b)` eturns an iterator for all elements `k` of `p` such that `a<k<b`.
+
 ```
-julia> p = Poset(5)
-{5} Int64 poset
+julia> p = chain(10)
+{10, 45} Int64 poset
 
-julia> add_relation!(p,1,5)
-true
+julia> collect(above(p,6))
+4-element Vector{Int64}:
+  7
+  8
+  9
+ 10
 
-julia> rem_vertex!(p,2)
-true
+julia> collect(below(p,6))
+5-element Vector{Int64}:
+ 1
+ 2
+ 3
+ 4
+ 5
 
-julia> has_relation(p,1,2)
-true
-```
-When element 2 is removed from `p`, element 5 takes its place. 
-
-> Removal of relations not implemented yet.
-
+julia> collect(between(p,3,7))
+3-element Vector{Int64}:
+ 4
+ 5
+ 6
+ ```
 
 
 ## Standard Posets
@@ -180,6 +221,15 @@ The following functions create standard partially ordered sets.
 * `standard_example(n)` creates a poset with `2n` elements. Elements `1` through `n` form an antichain as do elements `n+1` through `2n`. The only relations are of the form `j < k` where `1 ≤ j ≤ n` and `k = n+i` where `1 ≤ i ≤ n` and `i ≠ j`. This is a smallest-size poset of dimension `n`.
 
 > More to come
+
+
+## Matrices
+
+* `zeta_matrix(p)` returns the zeta matrix of the poset. This is a `0,1`-matrix whose
+`i,j`-entry is `1` exactly when `p[i] ≤ p[j]`. 
+* `mobius_matrix(p)` returns the inverse of `zeta(p)`. 
+
+In both cases, the output is a dense, integer matrix. 
 
 
 ## Operations

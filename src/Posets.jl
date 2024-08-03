@@ -1,6 +1,7 @@
 module Posets
 
 using Graphs
+using LinearAlgebra
 
 import Base: eltype, show, ==
 import Graphs: add_vertex!, add_vertices!, add_edge!, rem_vertex!, nv
@@ -53,17 +54,15 @@ end
 (==)(p::Poset, q::Poset) = p.d == q.d
 
 
-## Construct from a SimpleDiGraph
-
-
-
 # Print in a format similar to SimpleDiGraph
-show(io::IO, p::Poset{T}) where {T} = print(io, "{$(nv(p))} $T poset")
+show(io::IO, p::Poset{T}) where {T} = print(io, "{$(nv(p)), $(nr(p))} $T poset")
 
 
 
-include("graphs_reuse.jl")
+include("function_reuse.jl")
 include("relations.jl")
 include("standard.jl")
+include("up-down.jl")
+include("matrices.jl")
 
 end # module Posets
