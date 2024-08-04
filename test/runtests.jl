@@ -62,6 +62,11 @@ end
 
     p = chain(5) ∩ reverse(chain(5))
     @test nr(p) == 0
+
+    p = standard_example(4)
+    q = linear_extension(p)
+    @test nr(q) == binomial(8, 2)
+    @test p ⊆ q
 end
 
 @testset "Matrices" begin
@@ -79,7 +84,6 @@ end
     @test ne(g) == 6
     @test nv(g) == 7
     @test is_tree(Graph(g))
-
 
     p = chain(3) + chain(4)
     g = comparability_graph(p)

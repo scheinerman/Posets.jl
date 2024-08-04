@@ -10,14 +10,14 @@ import Base: eltype, show, ==, +, /, reverse, intersect, getindex, <, <<, >>, is
 
 import Graphs: add_vertex!, add_vertices!, add_edge!, rem_vertex!, nv, src, dst
 
-export Poset, add_vertex!, add_vertices!, rem_vertex!, ==
+export Poset# , add_vertex!, add_vertices!, rem_vertex! # , ==
 export comparability_graph, cover_digraph, vertex_edge_incidence_poset
 export nr, has_relation, add_relation!, Relation, relations, src, dst
 export covered_by, just_below, just_above
 export maximals, minimals
 export zeta_matrix, mobius_matrix
 export chain, antichain, standard_example
-export above, below, between
+export above, below, between, linear_extension
 
 abstract type AbstractPoset{T<:Integer} end
 

@@ -58,3 +58,19 @@ May also be invoked as `p ∩ q`.
 """
 intersect(p::Poset, q::Poset) = Poset(p.d ∩ q.d)
 
+
+"""
+    linear_extension(p::Poset)::Poset
+
+Return a linear extension of `p`. This is a total order `q` with 
+the same elements as `p` with `p ⊆ q`.
+"""
+function linear_extension(p::Poset)::Poset
+    n = nv(p)
+    seq = topological_sort(p.d)
+    d = DiGraph(n)
+    for i=1:n-1
+        add_edge!(d,seq[i],seq[i+1])
+    end
+    return Poset(d)
+end
