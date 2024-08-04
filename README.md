@@ -372,3 +372,9 @@ This is a total order `q` with the same elements as `p` and with `p ⊆ q`.
 
 The `extras` folder includes additional code that may be useful in 
 working with `Posets`. See the `README` in that directory. 
+
+The [PosetsOptim](https://github.com/scheinerman/PosetsOptim.jl)
+module provides additional functionality for posets that relies 
+on mathematical programming. In particular, this module has 
+functions to find maximum chains and maximum antichains (and 
+therefore the height and width of a poset).
