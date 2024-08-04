@@ -81,14 +81,14 @@ struct PosetElement
     p::Poset
     x::Integer
     function PosetElement(p::Poset, x::Integer)
-        if x < 0 || x > nv(p)
+        if x <= 0 || x > nv(p)
             throw(ArgumentError("$x is not in this poset"))
         end
         new(p, x)
     end
 end
 
-show(io::IO, pe::PosetElement) = print(io, "Element $(pe.x) in $(pe.p)")
+show(io::IO, pe::PosetElement) = print(io, "Element $(pe.x) in a $(pe.p)")
 
 getindex(p::Poset, x::Integer) = PosetElement(p, x)
 

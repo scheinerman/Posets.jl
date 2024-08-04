@@ -63,7 +63,7 @@ function intersect(p::Poset, q::Poset)
     np = nv(p)
     nq = nv(q)
     if np != nq
-        throw(AssertionError("Posets must have same number of elements: $np ≠ $nq"))
+        throw(ArgumentError("Posets must have same number of elements: $np ≠ $nq"))
     end
 
     nn = promote(np, nq)[1]
