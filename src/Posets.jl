@@ -1,5 +1,6 @@
-
-
+"""
+Partially ordered sets in Julia based on the `Graphs` module.
+"""
 module Posets
 
 using Graphs
@@ -19,11 +20,19 @@ export above, below, between
 
 abstract type AbstractPoset{T<:Integer} end
 
+"""
+A `Poset` is a (strict) partially ordered set on elements `{1,2,...,n}`.
+
+Basic constructors:
+* `Poset(n::Integer = 0)` create a poset with `n` elements (no relations).
+* `Poset(d::DiGraph)` create a poset for a directed acyclic graph.
+* `Poset(p::Poset)` copy constructor.
+"""
 struct Poset{T<:Integer} <: AbstractPoset{T}
-    d::SimpleDiGraph{T}
+    d::DiGraph{T}
     # construct a poset with no relations
     function Poset(n::T) where {T<:Integer}
-        new{T}(SimpleDiGraph{T}(n))
+        new{T}(DiGraph{T}(n))
     end
 
     # construct a poset from a directed graph 
@@ -56,17 +65,12 @@ Poset() = Poset(0)
 function Poset(A::T) where {T<:AbstractMatrix}
     d = DiGraph(A)
     return Poset(d)
-
 end
-
 
 (==)(p::Poset, q::Poset) = p.d == q.d
 
-
-# Print in a format similar to SimpleDiGraph
+# Print in a format similar to a DiGraph
 show(io::IO, p::Poset{T}) where {T} = print(io, "{$(nv(p)), $(nr(p))} $T poset")
-
-
 
 include("function_reuse.jl")
 include("relations.jl")

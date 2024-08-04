@@ -13,7 +13,7 @@ end
 """
     (+)(p::Poset, q::Poset)::Poset
 
-`p+q`is the disjoint union of posets `p` and `q`
+`p+q`is the disjoint union of posets `p` and `q`.
 """
 function (+)(p::Poset, q::Poset)::Poset
     np = nv(p)
@@ -47,32 +47,14 @@ function (/)(p::Poset, q::Poset)::Poset
     return Poset(ZZ)
 end
 
-
 """
     intersect(p::Poset, q::Poset)
 
-The intersection of posets `p` and `q` (which must have the same number of elements)
-is a new poset in which `v < w` if and only if `v < w` in poth `p` and `q`.
+The intersection of posets `p` and `q`. This is a new poset 
+in which `v < w` if and only if `v < w` in both `p` and `q`.
+The number of elements is the smaller of `nv(p)` and `nv(q)`.
+
+May also be invoked as `p ∩ q`.
 """
-function intersect(p::Poset, q::Poset)
-    np = nv(p)
-    nq = nv(q)
-    if np != nq
-        throw(ArgumentError("Posets must have same number of elements: $np ≠ $nq"))
-    end
+intersect(p::Poset, q::Poset) = Poset(p.d ∩ q.d)
 
-    nn = promote(np, nq)[1]
-
-    pq = Poset(nn)
-
-    rel_p = relations(p)
-    rel_q = relations(q)
-
-    for r in rel_p
-        if r in rel_q
-            add_relation!(pq, src(r), dst(r))
-        end
-    end
-
-    return pq
-end
