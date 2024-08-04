@@ -335,7 +335,7 @@ posets because of our numbering convention.
 Given two posets `p` and `q`, the result of `p/q` is a new poset from from a copy of `p` 
 and a copy of `q` with all elements of `p` above all elements of `q`. 
 
-## Induced subposet
+### Induced subposet
 
 Given a poset `p` and a list of vertices `vlist`, use `induced_subposet(p)` to return a 
 pair `(q,vmap)`. The poset `q` is the induced subposet and the vector `vmap` maps
