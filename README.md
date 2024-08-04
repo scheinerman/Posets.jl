@@ -179,6 +179,11 @@ julia> src(r), dst(r)
 (1, 2)
 ```
 
+### Subset
+
+* `issubset(p,q)` (or `p ⊆ q`) returns `true` exactly when `nv(p) ≤ nv(q)` and whenever `v < w` in 
+`p` we also have `v < w` in `q`.
+
 ### Above, Below, Between
 
 * `above(p,a)` returns an iterator for all elements `k` of `p` such that `a<k`.
@@ -332,9 +337,9 @@ and a copy of `q` with all elements of `p` above all elements of `q`.
 
 ### Intersection
 
-Given two posets `p` and `q` with the same number of elements, `intersect(p,q)`
-is a new poset in which `v < w` if and only if `v < w` in both `p` and `q`. This may 
-also be invoked as `p ∩ q`. 
+Given two posets `p` and `q`, `intersect(p,q)` is a new poset in which `v < w` if and only 
+if `v < w` in both `p` and `q`. The number of elements is the smaller of `nv(p)` and `nv(q)`.
+This may also be invoked as `p ∩ q`. 
 
 For example, the intersection of a chain with its reversal has no relations:
 ```
@@ -344,6 +349,8 @@ julia> p = chain(5)
 julia> p ∩ reverse(p)
 {5, 0} Int64 poset
 ```
+
+### Linear extension
 
 ## To Do List
 

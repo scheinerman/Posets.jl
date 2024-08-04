@@ -177,3 +177,12 @@ Return an iterator for all minimal elements of `p`.
 function minimals(p::Poset)
     (v for v = 1:nv(p) if indegree(p.d, v) == 0)
 end
+
+
+"""
+    issubset(p::Poset, q::Poset)
+
+Return `true` is `nv(p) <= nv(q)` and if `v < w` in `p`, then also 
+`v < w` in `q`.
+"""
+issubset(p::Poset, q::Poset) = p.d ⊆ q.d

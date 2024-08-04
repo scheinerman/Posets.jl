@@ -6,7 +6,8 @@ module Posets
 using Graphs
 using LinearAlgebra
 
-import Base: eltype, show, ==, +, /, reverse, intersect, getindex, <, <<, >>
+import Base: eltype, show, ==, +, /, reverse, intersect, getindex, <, <<, >>, issubset
+
 import Graphs: add_vertex!, add_vertices!, add_edge!, rem_vertex!, nv, src, dst
 
 export Poset, add_vertex!, add_vertices!, rem_vertex!, ==
