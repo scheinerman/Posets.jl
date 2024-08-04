@@ -23,3 +23,9 @@ random order.
 
 * `random_poset(n,d=2)`: Create a random `d`-dimensional poset by intersecting `d` random linear orders,
 each with `n` elements. 
+
+## `pplot.jl`
+
+Function provided:
+* `pplot(p)`: draw a picture of (the cover digraph of) `p`. An edge `v → w` means 
+`v < w` and `w` covers `v`. Use `pplot(p, nodelable=1:nv(p))` to have the nodes labeled.

@@ -74,3 +74,14 @@ function linear_extension(p::Poset)::Poset
     end
     return Poset(d)
 end
+
+
+import Graphs:induced_subgraph
+export induced_subposet
+
+
+function induced_subposet(p::Poset, vlist::AbstractVector{T}) where T<:Integer 
+    g,m = induced_subgraph(p.d, vlist)
+    q = Poset(g)
+    return q, m
+end

@@ -67,6 +67,21 @@ end
     q = linear_extension(p)
     @test nr(q) == binomial(8, 2)
     @test p ⊆ q
+
+    p = standard_example(5)
+    q,_ = induced_subposet(p, [1,2,3])
+    @test nr(q) == 0
+    @test !is_connected(q)
+
+    q,_ = induced_subposet(p,[1,7,8,9,10])
+    @test nr(q) == 4
+    @test is_connected(q)
+end
+
+@testset "Connection" begin
+    p = chain(3) + chain(6)
+    @test length(connected_components(p)) == 2 
+    @test !is_connected(p)
 end
 
 @testset "Matrices" begin

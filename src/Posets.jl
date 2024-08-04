@@ -9,6 +9,7 @@ using LinearAlgebra
 import Base: eltype, show, ==, +, /, reverse, intersect, getindex, <, <<, >>, issubset
 
 import Graphs: add_vertex!, add_vertices!, add_edge!, rem_vertex!, nv, src, dst
+import Graphs: connected_components, is_connected, induced_subgraph
 
 export Poset# , add_vertex!, add_vertices!, rem_vertex! # , ==
 export comparability_graph, cover_digraph, vertex_edge_incidence_poset
@@ -18,6 +19,7 @@ export maximals, minimals
 export zeta_matrix, mobius_matrix
 export chain, antichain, standard_example
 export above, below, between, linear_extension
+export connected_components, is_connected, induced_subposet
 
 abstract type AbstractPoset{T<:Integer} end
 
@@ -80,5 +82,6 @@ include("up-down.jl")
 include("matrices.jl")
 include("graphs.jl")
 include("operations.jl")
+include("connection.jl")
 
 end # module Posets
