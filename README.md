@@ -144,7 +144,7 @@ julia> p(-2,9)
 false
 ```
 
-However, the expression `p[a] < p[b]`  throws an error in either or these situations:
+However, the expression `p[a] < p[b]`  throws an error in either of these situations:
 * Using the syntax `p[a]` if `a` is not an element of `p`.
 * Trying to compare elements of different posets (even if they are equal).
 
@@ -188,7 +188,7 @@ julia> src(r), dst(r)
 
 * `above(p,a)` returns an iterator for all elements `k` of `p` such that `a<k`.
 * `below(p,a)` returns an iterator for all elements `k` of `p` such that `k<a`.
-* `between(p,a,b)` eturns an iterator for all elements `k` of `p` such that `a<k<b`.
+* `between(p,a,b)` returns an iterator for all elements `k` of `p` such that `a<k<b`.
 
 ```
 julia> p = chain(10)
@@ -330,8 +330,8 @@ only if `w < v` in `reverse(p)`).
 
 ### Disjoint union
 Given two posets `p` and `q`, the result of `p+q` is a new poset formed from the 
-disjoint union of `p` and `q`. Note that `p+q` and `q+p` are isomorphic, but unequal
-posets because of our numbering convention.
+disjoint union of `p` and `q`. Note that `p+q` and `q+p` are isomorphic, but 
+may be unequal because of the vertex numbering convention.
 
 ### Stack
 
