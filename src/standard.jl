@@ -15,6 +15,26 @@ function chain(n::Integer)
 end
 
 """
+    chain(vlist::Vector{T}) where {T<:Integer}
+
+Create a chain with elements drawn from `vlist`, which must be a permutation of `1:n`.
+For example, `chain([2,1,3])` returns a poset in which `2 < 1 < 3`.
+"""
+function chain(vlist::Vector{T}) where {T<:Integer}
+    n = length(vlist)
+    if sort(vlist) != collect(1:n)
+        throw(ArgumentError("List of numbers must be a permutation of 1:n"))
+    end
+
+    p = Poset(n)
+    for i = 1:n-1
+        add_edge!(p.d, vlist[i], vlist[i+1])
+    end
+    transitiveclosure!(p.d)
+    return p
+end
+
+"""
     antichain(n::Integer)
 
 Create an `n` element poset in which all pairs of elements are incomparable. 

@@ -274,11 +274,14 @@ julia> just_below(p,5) |> collect
 
 The following functions create standard partially ordered sets.
 
-* `chain(n)` creates the poset with `n` elements in which $1 < 2 < 3 < \cdots < n$.
+* `chain(n)` creates the poset with `n` elements in which `1 < 2 < 3 < ... < n`. 
+* `chain(vlist)` creates a chain from the integer vector `vlist` (which must be a permutation of `1:n`). 
+For example, `chain([2,1,3])` creates a chain in which `2 < 1 < 3`.
 * `antichain(n)` creates the poset with `n` elements and no relations. Same as `Poset(n)`.
-* `standard_example(n)` creates a poset with `2n` elements. Elements `1` through `n` form an antichain as do elements `n+1` through `2n`. The only relations are of the form `j < k` where `1 ≤ j ≤ n` and `k = n+i` where `1 ≤ i ≤ n` and `i ≠ j`. This is a smallest-size poset of dimension `n`.
+* `standard_example(n)` creates a poset with `2n` elements. Elements `1` through `n` form an antichain 
+as do elements `n+1` through `2n`. The only relations are of the form `j < k` where `1 ≤ j ≤ n` 
+and `k = n+i` where `1 ≤ i ≤ n` and `i ≠ j`. This is a smallest-size poset of dimension `n`.
 
-> More to come
 
 ## Graphs
 
