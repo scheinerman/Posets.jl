@@ -43,7 +43,7 @@ end
 struct Relation{T<:Integer}
     e::Edge{T}
     function Relation(e::Edge{T}) where {T}
-        new{T}(e)
+        return new{T}(e)
     end
 end
 
@@ -51,9 +51,7 @@ end
 src(r::Relation) = src(r.e)
 dst(r::Relation) = dst(r.e)
 
-function show(io::IO, ab::Relation)
-    print(io, "Relation $(src(ab)) < $(dst(ab))")
-end
+show(io::IO, ab::Relation) = print(io, "Relation $(src(ab)) < $(dst(ab))")
 
 """
     relations(p::Poset)
@@ -61,7 +59,7 @@ end
 Return an iterator for the relations in `p`.
 """
 function relations(p::Poset)
-    (Relation(e) for e in edges(p.d))
+    return (Relation(e) for e in edges(p.d))
 end
 
 
@@ -77,7 +75,7 @@ struct PosetElement
         if x <= 0 || x > nv(p)
             throw(ArgumentError("$x is not in this poset"))
         end
-        new(p, x)
+        return new(p, x)
     end
 end
 
@@ -113,7 +111,7 @@ end
 Return `true` is `a < b` in `p` and there is no element `c` with `a < c < b`.
 """
 function covered_by(p::Poset, a::Integer, b::Integer)::Bool
-    p(a, b) && length(collect(between(p, a, b))) == 0
+    return p(a, b) && length(collect(between(p, a, b))) == 0
 end
 
 """
@@ -125,7 +123,7 @@ function (<<)(a::PosetElement, b::PosetElement)::Bool
     if a.p != b.p
         _cannot_compare()
     end
-    covered_by(a.p, a.x, b.x)
+    return covered_by(a.p, a.x, b.x)
 end
 
 """
@@ -144,7 +142,7 @@ Return an iterator for the elements of `p` that `a` covers.
 See also: `below`.
 """
 function just_below(p::Poset, a::Integer)
-    (k for k = 1:nv(p) if covered_by(p, k, a))
+    return (k for k = 1:nv(p) if covered_by(p, k, a))
 end
 
 
@@ -156,7 +154,7 @@ Return an iterator for the elements of `p` that cover `a`.
 See also: `above`.
 """
 function just_above(p::Poset, a::Integer)
-    (k for k = 1:nv(p) if covered_by(p, a, k))
+    return (k for k = 1:nv(p) if covered_by(p, a, k))
 end
 
 
@@ -166,7 +164,7 @@ end
 Return an iterator for all maximal elements of `p`.
 """
 function maximals(p::Poset)
-    (v for v = 1:nv(p) if outdegree(p.d, v) == 0)
+    return (v for v = 1:nv(p) if outdegree(p.d, v) == 0)
 end
 
 """
@@ -175,7 +173,7 @@ end
 Return an iterator for all minimal elements of `p`.
 """
 function minimals(p::Poset)
-    (v for v = 1:nv(p) if indegree(p.d, v) == 0)
+    return (v for v = 1:nv(p) if indegree(p.d, v) == 0)
 end
 
 

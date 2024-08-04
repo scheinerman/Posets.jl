@@ -33,7 +33,7 @@ struct Poset{T<:Integer} <: AbstractPoset{T}
     d::DiGraph{T}
     # construct a poset with no relations
     function Poset(n::T) where {T<:Integer}
-        new{T}(DiGraph{T}(n))
+        return new{T}(DiGraph{T}(n))
     end
 
     # construct a poset from a directed graph 
@@ -51,12 +51,12 @@ struct Poset{T<:Integer} <: AbstractPoset{T}
         if is_cyclic(dd)
             throw(ArgumentError("Cannot construct a poset from a DiGraph with cycles"))
         end
-        new{T}(transitiveclosure(dd))
+        return new{T}(transitiveclosure(dd))
     end
 
     # copy constructor
     function Poset(p::Poset{T}) where {T}
-        new{T}(DiGraph(p.d))
+        return new{T}(DiGraph(p.d))
     end
 end
 
