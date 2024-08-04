@@ -364,8 +364,3 @@ julia> p ∩ reverse(p)
 Use `linear_extension(p)` to create  a linear extension of `p`. 
 This is a total order `q` with the same elements as `p` and with `p ⊆ q`. 
 
-## To Do List
-
-* Height (in `PosetOptim` ? )
-* Connected components
-* More examples
