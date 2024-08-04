@@ -11,7 +11,7 @@ $<$ is a binary relation on $V$ that is
 
 Posets are naturally represented as transitively closed, directed, acyclic graphs. This is how this module implements posets using the `SimpleDiGraph` type in `Graphs`.
 
-The design philosophy for this module is modeled exactly on `Graphs`. In particular, the vertex set of a poset is necessarily of the form $\{ 1,2,\ldots, n \}$.
+The design philosophy for this module is modeled exactly on `Graphs`. In particular, the vertex set of a poset is necessarily of the form `{1,2,...,n}`.
 
 ## Basics
 
@@ -367,3 +367,8 @@ julia> p ∩ reverse(p)
 Use `linear_extension(p)` to create  a linear extension of `p`. 
 This is a total order `q` with the same elements as `p` and with `p ⊆ q`. 
 
+
+## See Also
+
+The `extras` folder includes additional code that may be useful in 
+working with `Posets`. See the `README` in that directory. 
