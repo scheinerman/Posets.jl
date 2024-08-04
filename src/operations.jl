@@ -1,25 +1,21 @@
 # Methods to transform or combine posets  
 
-import Base: +, /, reverse, intersect
-
 """
-    reverse(p::Poset)
+    reverse(p::Poset)::Poset
 
 Create the dual of `p`, i.e., a poset with the same elements but with 
 all relations reversed.
 """
-function reverse(p::Poset)
+function reverse(p::Poset)::Poset
     return Poset(reverse(p.d))
 end
 
-
-
 """
-    (+)(p::Poset, q::Poset)
+    (+)(p::Poset, q::Poset)::Poset
 
 `p+q`is the disjoint union of posets `p` and `q`
 """
-function (+)(p::Poset, q::Poset)
+function (+)(p::Poset, q::Poset)::Poset
     np = nv(p)
     nq = nv(q)
 
@@ -32,13 +28,12 @@ function (+)(p::Poset, q::Poset)
     return Poset(ZZ)
 end
 
-
 """
-    (/)(p::Poset, q::Poset)
+    (/)(p::Poset, q::Poset)::Poset
 
 `p/q` creates a new poset by stacking `p` above `q`.
 """
-function (/)(p::Poset, q::Poset)
+function (/)(p::Poset, q::Poset)::Poset
     np = nv(p)
     nq = nv(q)
 

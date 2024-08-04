@@ -1,12 +1,5 @@
 # methods for dealing with relations
 
-import Graphs: src, dst
-import Base: getindex, <, <<, >>
-
-export nr, has_relation, add_relation!, Relation, relations, src, dst
-export covered_by, just_below, just_above
-export maximals, minimals
-
 """
     nr(p::Poset)
 

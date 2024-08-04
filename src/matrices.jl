@@ -1,7 +1,5 @@
 # zeta and Möbius matrices
 
-export zeta_matrix, mobius_matrix
-
 """
     zeta_matrix(p::Poset)::Matrix{Int}
 
@@ -11,7 +9,6 @@ is `1` exactly when `p[i] ≤ p[j]`.
 function zeta_matrix(p::Poset)::Matrix{Int}
     Matrix(adjacency_matrix(p.d) + I)
 end
-
 
 """
     mobius_matrix(p::Poset):: Matrix{Int}

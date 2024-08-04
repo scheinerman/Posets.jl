@@ -1,7 +1,3 @@
-export above, below, between
-
-
-
 """
     above(p::Poset, a::Integer)
 

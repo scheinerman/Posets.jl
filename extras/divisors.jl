@@ -1,5 +1,5 @@
-using Posets, Primes
-
+using Posets
+using Primes
 
 function divisor_poset(nums::Vector{Int})
     if any((n <= 0 for n in nums))

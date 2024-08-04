@@ -1,5 +1,6 @@
 using Test
 using Posets
+using Graphs
 using LinearAlgebra
 
 @testset "Basics" begin

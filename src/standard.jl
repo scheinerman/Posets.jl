@@ -1,7 +1,5 @@
 # Standard Posets
 
-export chain, antichain, standard_example
-
 """
     chain(n::Integer)
 
@@ -16,14 +14,12 @@ function chain(n::Integer)
     return p
 end
 
-
 """
     antichain(n::Integer)
 
 Create an `n` element poset in which all pairs of elements are incomparable. 
 """
 antichain(n::Integer) = Poset(n)
-
 
 """
     standard_example(n::Integer)

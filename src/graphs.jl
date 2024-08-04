@@ -1,8 +1,5 @@
 # Graphs associated with Posets
 
-export comparability_graph, cover_digraph, vertex_edge_incidence_poset
-
-
 """
     comparability_graph(p::Poset)
 
@@ -10,8 +7,6 @@ Return the comparability graph of `p`. This is graph in which there is an edge
 between `i` and `j` if and only if `p[i] < p[j]` or `p[j] < p[i]`.
 """
 comparability_graph(p::Poset{T}) where {T} = Graph{T}(p.d)
-
-
 
 """
     cover_digraph(p::Poset{T}) where {T}
@@ -29,8 +24,6 @@ function cover_digraph(p::Poset{T}) where {T}
     end
     return g
 end
-
-
 
 """
     vertex_edge_incidence_poset(g::AbstractGraph)
@@ -55,4 +48,3 @@ function vertex_edge_incidence_poset(g::AbstractGraph)
 
     return p
 end
-
