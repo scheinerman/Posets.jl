@@ -91,6 +91,10 @@ end
     q = Poset(A')
     @test p == reverse(q)
     @test A * mobius_matrix(p) == I
+
+    p = chevron()
+    Z = zeta_matrix(p)
+    @test Z' == zeta_matrix(p')
 end
 
 @testset "Graphs" begin

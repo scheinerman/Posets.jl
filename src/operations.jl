@@ -4,11 +4,13 @@
     reverse(p::Poset)::Poset
 
 Create the dual of `p`, i.e., a poset with the same elements but with 
-all relations reversed.
+all relations reversed. May also be invoked as `p'`.
 """
 function reverse(p::Poset)::Poset
     return Poset(reverse(p.d))
 end
+
+adjoint(p::Poset) = reverse(p)
 
 """
     (+)(p::Poset, q::Poset)::Poset

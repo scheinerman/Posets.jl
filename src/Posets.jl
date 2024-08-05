@@ -9,7 +9,7 @@ using ChooseOptimizer
 using JuMP
 using HiGHS
 
-import Base: eltype, show, ==, +, /, reverse, intersect, getindex, <, <<, >>, issubset
+import Base: eltype, show, ==, +, /, reverse, intersect, getindex, <, <<, >>, issubset, adjoint
 
 import Graphs: add_vertex!, add_vertices!, add_edge!, rem_vertex!, nv, src, dst
 import Graphs: connected_components, is_connected, induced_subgraph
