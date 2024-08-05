@@ -47,7 +47,6 @@ struct Relation{T<:Integer}
     end
 end
 
-
 src(r::Relation) = src(r.e)
 dst(r::Relation) = dst(r.e)
 
@@ -61,9 +60,6 @@ Return an iterator for the relations in `p`.
 function relations(p::Poset)
     return (Relation(e) for e in edges(p.d))
 end
-
-
-
 
 ###
 # The following code enables p[i] < p[j] syntax for has(p,i,j)
@@ -101,8 +97,6 @@ function (==)(a::PosetElement, b::PosetElement)::Bool
     return a.x == b.x
 end
 
-
-
 # COVERING
 
 """
@@ -133,7 +127,6 @@ end
 """
 (>>)(a::PosetElement, b::PosetElement)::Bool = b << a
 
-
 """
     just_below(p::Poset, a::Integer)
 
@@ -142,9 +135,8 @@ Return an iterator for the elements of `p` that `a` covers.
 See also: `below`.
 """
 function just_below(p::Poset, a::Integer)
-    return (k for k = 1:nv(p) if covered_by(p, k, a))
+    return (k for k in 1:nv(p) if covered_by(p, k, a))
 end
-
 
 """
     just_above(p::Poset, a::Integer)
@@ -154,9 +146,8 @@ Return an iterator for the elements of `p` that cover `a`.
 See also: `above`.
 """
 function just_above(p::Poset, a::Integer)
-    return (k for k = 1:nv(p) if covered_by(p, a, k))
+    return (k for k in 1:nv(p) if covered_by(p, a, k))
 end
-
 
 """
     maximals(p::Poset)
@@ -164,7 +155,7 @@ end
 Return an iterator for all maximal elements of `p`.
 """
 function maximals(p::Poset)
-    return (v for v = 1:nv(p) if outdegree(p.d, v) == 0)
+    return (v for v in 1:nv(p) if outdegree(p.d, v) == 0)
 end
 
 """
@@ -173,9 +164,8 @@ end
 Return an iterator for all minimal elements of `p`.
 """
 function minimals(p::Poset)
-    return (v for v = 1:nv(p) if indegree(p.d, v) == 0)
+    return (v for v in 1:nv(p) if indegree(p.d, v) == 0)
 end
-
 
 """
     issubset(p::Poset, q::Poset)

@@ -11,9 +11,9 @@ function divisor_poset(nums::Vector{Int})
 
     n = length(nums)
     p = Poset(n)
-    for i = 1:n
+    for i in 1:n
         a = nums[i]
-        for j = 1:n
+        for j in 1:n
             b = nums[j]
             if mod(b, a) == 0
                 add_relation!(p, i, j)
@@ -31,14 +31,12 @@ in which `a < b` provided the `a`-th divisor of `n` is a factor of the
 `b`-th divisor. 
 """
 function divisor_poset(n::Integer)
-    if n <= 0 
+    if n <= 0
         throw(ArgumentError("Number must be a postive integer"))
     end
     factors = sort(divisors(n))
     return divisor_poset(factors)
 end
-
-
 
 """
     subsets_poset(d::Integer)

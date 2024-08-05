@@ -11,5 +11,5 @@ Use `pplot(p, nodelabel=1:nv(p))` to have labeled vertices.
 """
 function pplot(p::Poset; args...)
     g = cover_digraph(p)
-    gplot(g; args...)
+    return gplot(g; args...)
 end
