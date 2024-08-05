@@ -307,7 +307,7 @@ julia> dimension(p)
 ```
 
 > **Note**: Computation of the dimension of a poset is NP-hard. The `dimension` function may be
-slow even for moderately large posets.
+slow, even for moderate-size posets.
 
 
 ## Standard Posets
