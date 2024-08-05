@@ -22,17 +22,17 @@ function graph_iso(g::AbstractGraph, h::AbstractGraph)::Dict{Int,Int}
     # success when A*X = X*B and X is permutation 
 
     # X must be doubly stochastic ==> permutation
-    for i = 1:n
-        @constraint(MOD, sum(X[i, j] for j = 1:n) == 1)
-        @constraint(MOD, sum(X[j, i] for j = 1:n) == 1)
+    for i in 1:n
+        @constraint(MOD, sum(X[i, j] for j in 1:n) == 1)
+        @constraint(MOD, sum(X[j, i] for j in 1:n) == 1)
     end
 
     # A*X = X*B 
-    for i = 1:n
-        for k = 1:n
+    for i in 1:n
+        for k in 1:n
             @constraint(
                 MOD,
-                sum(A[i, j] * X[j, k] for j = 1:n) == sum(X[i, j] * B[j, k] for j = 1:n)
+                sum(A[i, j] * X[j, k] for j in 1:n) == sum(X[i, j] * B[j, k] for j in 1:n)
             )
         end
     end
@@ -50,10 +50,10 @@ function graph_iso(g::AbstractGraph, h::AbstractGraph)::Dict{Int,Int}
 
     # convert to a dictionary
     result = Dict{Int,Int}()
-    for v=1:n 
-        for w=1:n 
-            if P[v,w] > 0
-                result[v] = w 
+    for v in 1:n
+        for w in 1:n
+            if P[v, w] > 0
+                result[v] = w
             end
         end
     end
@@ -62,7 +62,6 @@ function graph_iso(g::AbstractGraph, h::AbstractGraph)::Dict{Int,Int}
 end
 
 _posets_not_iso() = error("The posets are not isomorphic")
-
 
 """
     iso(p::Poset, q::Poset)::Dict{Int,Int}
@@ -87,7 +86,7 @@ Return `true` if the posets are isomorphic and `false` if not.
 """
 function iso_check(p::Poset, q::Poset)::Bool
     try
-        iso(p,q)
+        iso(p, q)
         return true
     catch
         return false
