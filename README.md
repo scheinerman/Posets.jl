@@ -379,7 +379,7 @@ In both cases, the output is a dense, integer matrix.
 ### Dual
 The dual of poset `p` is created using `reverse(p)`. This returns a new poset with the
 same elements as `p` in which all relations are reversed (i.e., `v < w` in `p` if and 
-only if `w < v` in `reverse(p)`).
+only if `w < v` in `reverse(p)`). The dual (reverse) of `p` can also be created with `p'`. 
 
 ### Disjoint union
 Given two posets `p` and `q`, the result of `p+q` is a new poset formed from the 
