@@ -134,3 +134,35 @@ end
     a, b, c = realizer(p, 3)
     @test a ∩ b ∩ c == p
 end
+
+@testset "Isomorphism" begin
+    p = standard_example(4)
+    @test iso_check(p, reverse(p))
+
+    p = chain(3) / antichain(2)
+    q = reverse(p)
+    @test !iso_check(p, q)
+
+    # Here we define a poset that has no nontrivial automorphism
+    p = Poset(6)
+    prels = [(1, 2), (2, 4), (4, 5), (3, 4)]
+    for r in prels
+        add_relation!(p, r...)
+    end
+
+    # Now we build a poset isomorphic to p, but changing the labels
+    q = Poset(6)
+    qrels = [(5, 3), (3, 1), (1, 4), (2, 1)]
+    for r in qrels
+        add_relation!(q, r...)
+    end
+
+    f = iso(p, q)
+    # test that the relabeling works
+    @test f[1] == 5 && f[2] == 3 && f[3] == 2 && f[4] == 1 && f[5] == 4
+
+    # test that the minimals of p are mapped by f to the minimals of q
+    min_p = Set(minimals(p))
+    min_q = Set(minimals(q))
+    @test Set(f[x] for x in min_p) == min_q
+end

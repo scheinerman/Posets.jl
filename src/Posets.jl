@@ -22,7 +22,7 @@ export maximals, minimals
 export zeta_matrix, mobius_matrix
 export chain, antichain, standard_example, chevron
 export above, below, between, linear_extension
-export connected_components, is_connected, induced_subposet
+export connected_components, is_connected, induced_subposet, iso, iso_check
 
 # These use integer linear programming.
 export max_anti_chain, max_chain, width, height
@@ -99,5 +99,6 @@ include("connection.jl")
 
 include("height-width.jl")
 include("realizer.jl")
+include("iso.jl")
 
 end # module Posets

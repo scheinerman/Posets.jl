@@ -274,6 +274,17 @@ julia> just_below(p,5) |> collect
 * `height(p)` returns the size of a largest chain in `p`.
 * `width(p)` returns the size of a largest antichain in `p`.
 
+### Isomorphism
+
+For posets `p` and `q`, use `iso(p,q)` to compute an isomorphism from `p` to `q`, 
+or throw an error if the posets are not isomorphic.
+
+Let `f = iso(p,q)`. Then `f` is a `Dict` mapping vertices of `p` to vertices of `q`. 
+For example, if `p` has a unique minimal element `x`, then `f[x]` is the unique minimal
+element of `q`. 
+
+To check if posets are isomorphic, use `iso_check` (which calls `iso` inside a `try/catch` block).
+
 ### Realizers and dimension
 
 A *realizer* for a poset `p` is a set of linear extensions whose intersection is `p`. 
