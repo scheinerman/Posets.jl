@@ -264,10 +264,46 @@ julia> just_below(p,5) |> collect
  ```
 
 
-### Maxmals/Minimals
+### Maxmals/Minimals/Height/Width
 
 * `maximals(p)` returns an iterator for the maximal elements of `p`.
 * `minimals(p)` returns an iterator for the minimal elements of `p`.
+* `max_chain(p)` returns a vector containing the elements of a largest chain in `p`.
+* `max_antichain(p)` returns a vector containing the elements of a largest antichain in `p`.
+* `height(p)` returns the size of a largest chain in `p`.
+* `width(p)` returns the size of a largest antichain in `p`.
+
+### Realizers and dimension
+
+A *realizer* for a poset `p` is a set of linear extensions whose intersection is `p`. 
+The function `realizer(p, d)` returns a list of `d` linear extensions (total orders) 
+that form a realizer of `p`, or throws an error if no realizer of that size exists.
+```
+julia> p = standard_example(3)
+{6, 6} Int64 poset
+
+julia> r = realizer(p, 3)
+3-element Vector{Poset{Int64}}:
+ {6, 15} Int64 poset
+ {6, 15} Int64 poset
+ {6, 15} Int64 poset
+
+julia> r[1] ∩ r[2] ∩ r[3] == p
+true
+
+julia> realizer(p, 2)
+ERROR: This poset has dimension greater than 2; no realizer found.
+```
+
+The *dimension* of a poset is the size of a smallest realizer. Use `dimension(p)` 
+to calculate its dimension. 
+```
+julia> p = standard_example(4)
+{8, 12} Int64 poset
+
+julia> dimension(p)
+4
+```
 
 
 ## Standard Posets
@@ -372,9 +408,3 @@ This is a total order `q` with the same elements as `p` and with `p ⊆ q`.
 
 The `extras` folder includes additional code that may be useful in 
 working with `Posets`. See the `README` in that directory. 
-
-The [PosetsOptim](https://github.com/scheinerman/PosetsOptim.jl)
-module provides additional functionality for posets that relies 
-on mathematical programming. In particular, this module has 
-functions to find maximum chains and maximum antichains (and 
-therefore the height and width of a poset).

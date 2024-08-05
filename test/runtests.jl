@@ -104,3 +104,30 @@ end
     g = comparability_graph(p)
     @test length(connected_components(g)) == 2
 end
+
+
+@testset "height/width" begin
+    p = standard_example(4)
+    @test height(p) == 2
+    @test width(p) == 4
+
+    p = p / p
+    @test height(p) == 4
+    @test width(p) == 4
+
+    p = p + p
+    @test width(p) == 8
+end
+
+@testset "dimension" begin
+    p = standard_example(4)
+    p1, p2, p3, p4 = realizer(p, 4)
+    @test p1 ∩ p2 ∩ p3 ∩ p4 == p
+
+    @test dimension(p) == 4
+
+    p = antichain(10)
+    p1, p2 = realizer(p, 2)
+    @test p1 == reverse(p2)
+    @test dimension(p) == 2
+end

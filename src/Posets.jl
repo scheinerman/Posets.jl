@@ -5,6 +5,9 @@ module Posets
 
 using Graphs
 using LinearAlgebra
+using ChooseOptimizer
+using JuMP
+using HiGHS
 
 import Base: eltype, show, ==, +, /, reverse, intersect, getindex, <, <<, >>, issubset
 
@@ -20,6 +23,17 @@ export zeta_matrix, mobius_matrix
 export chain, antichain, standard_example
 export above, below, between, linear_extension
 export connected_components, is_connected, induced_subposet
+
+# These use integer linear programming.
+export max_anti_chain, max_chain, width, height
+export realizer, dimension
+
+
+function __init__()
+    set_solver(HiGHS)
+    set_solver_verbose(false)
+end
+
 
 abstract type AbstractPoset{T<:Integer} end
 
@@ -83,5 +97,11 @@ include("matrices.jl")
 include("graphs.jl")
 include("operations.jl")
 include("connection.jl")
+
+
+
+include("height-width.jl")
+include("realizer.jl")
+
 
 end # module Posets
