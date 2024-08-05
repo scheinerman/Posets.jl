@@ -7,7 +7,7 @@ Create an `n`-element poset in which `1 < 2 < ... < n`.
 """
 function chain(n::Integer)
     p = Poset(n)
-    for i in 1:(n - 1)
+    for i = 1:(n-1)
         add_edge!(p.d, i, i + 1)
     end
     transitiveclosure!(p.d)
@@ -27,8 +27,8 @@ function chain(vlist::Vector{T}) where {T<:Integer}
     end
 
     p = Poset(n)
-    for i in 1:(n - 1)
-        add_edge!(p.d, vlist[i], vlist[i + 1])
+    for i = 1:(n-1)
+        add_edge!(p.d, vlist[i], vlist[i+1])
     end
     transitiveclosure!(p.d)
     return p
@@ -50,12 +50,31 @@ poset of dimension `n`.
 """
 function standard_example(n::Integer)
     p = Poset(2n)
-    for a in 1:n
-        for b in 1:n
+    for a = 1:n
+        for b = 1:n
             if a != b
                 add_edge!(p.d, a, b + n)
             end
         end
     end
+    return p
+end
+
+
+"""
+    chevron()
+
+Return the chevron poset, a poset with 6 elements that has dimension equal to 3. 
+"""
+function chevron()
+    p = Poset(6)
+
+    add_relation!(p, 1, 3)
+    add_relation!(p, 2, 3)
+    add_relation!(p, 1, 4)
+    add_relation!(p, 2, 5)
+    add_relation!(p, 4, 6)
+    add_relation!(p, 5, 6)
+
     return p
 end

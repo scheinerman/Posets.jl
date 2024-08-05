@@ -9,7 +9,7 @@ $<$ is a binary relation on $V$ that is
 * antisymmetric (for all $v,w \in V$, we never have both $v < w$ and $w < v$), and
 * transitive (for all $u,v,w \in V$, if $u < v$ and $v < w$ then $u < w$).
 
-Posets are naturally represented as transitively closed, directed, acyclic graphs. This is how this module implements posets using the `SimpleDiGraph` type in `Graphs`.
+Posets are naturally represented as transitively closed, directed, acyclic graphs. This is how this module implements posets using the `DiGraph` type in `Graphs`.
 
 The design philosophy for this module is modeled exactly on `Graphs`. In particular, the vertex set of a poset is necessarily of the form `{1,2,...,n}`.
 
@@ -18,7 +18,8 @@ The design philosophy for this module is modeled exactly on `Graphs`. In particu
 
 ### Construct new posets 
 
-Create a new poset with no elements using `Poset()` or a poset with a specified number of elements with `Poset(n)`. 
+Create a new poset with no elements using `Poset()` or a poset with a specified number 
+of elements with `Poset(n)`. 
 
 Given a poset `p`, use `Poset(p)` to create an independent copy of `p`.
 
@@ -26,7 +27,7 @@ Given a directed graph `d`, use `Poset(d)` to create a new poset from the transi
 closure of `d`. An error is thrown if `d` has cycles. (Self loops in `d` are ignored.)
 
 Given a square matrix `A`, create a poset in which `i < j` exactly when the `i,j`-entry 
-of `A` is nonzero. Diagonal entries are ignored, but if this would create a cycle an 
+of `A` is nonzero. Diagonal entries are ignored. If this matrix would create a cycle, an 
 error is thrown. 
 
 
@@ -67,9 +68,9 @@ false
 ```
 Let's look at this carefully to understand why the third call to `add_relation!` does not succeed:
 
-* The first call to `add_relation!` causes the relation $1 < 2$ to hold in `p`. 
-* The second call to `add_relation!` causes the relation $2 < 3$ to be added to `p`. Given that $1 < 2$ and $2 < 3$, by transitivity we automatically have $1 < 3$ in `p`.
-* Therefore, we cannot add $3 < 1$ as a relation to this poset as that would violate antisymmetry.
+* The first call to `add_relation!` causes the relation `1 < 2` to hold in `p`. 
+* The second call to `add_relation!` causes the relation `2 < 3` to be added to `p`. Given that `1 < 2` and `2 < 3`, by transitivity we automatically have `1 < 3` in `p`.
+* Therefore, we cannot add `3 < 1` as a relation to this poset as that would violate antisymmetry.
 
 ### Removing elements
 
@@ -87,10 +88,10 @@ true
 julia> has_relation(p,1,2)
 true
 ```
-When element 2 is removed from `p`, element 5 takes its place. 
+When element `2` is removed from `p`, element `5` takes its place. 
 
 ### Removing relations
-> Removal of relations not implemented yet.
+> *Removal of relations not implemented yet.*
 
 
 ## Inspection
@@ -104,7 +105,7 @@ elements of the poset are integers from `1` to `n`.
 
 There are three ways to check if elements are related in a poset.
 
-First, to see if  $1 < 3$ in `p` we use the `has_relation` function:
+First, to see if  `1 < 3` in `p` we use the `has_relation` function:
 ```
 julia> has_relation(p,1,3)
 true
@@ -146,7 +147,7 @@ false
 
 However, the expression `p[a] < p[b]`  throws an error in either of these situations:
 * Using the syntax `p[a]` if `a` is not an element of `p`.
-* Trying to compare elements of different posets (even if they are equal).
+* Trying to compare elements of different posets (even if the two posets are equal).
 
 ### Counting/listing relations
 
@@ -304,6 +305,9 @@ julia> p = standard_example(4)
 julia> dimension(p)
 4
 ```
+
+> **Note**: Computation of the dimension of a poset is NP-hard. The `dimension` function may be
+slow even for moderately large posets.
 
 
 ## Standard Posets

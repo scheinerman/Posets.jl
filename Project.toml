@@ -1,7 +1,7 @@
 name = "Posets"
 uuid = "9a158a65-591e-4f68-ac4f-9ffef2fc51f2"
 authors = ["Ed Scheinerman <ers@jhu.edu>"]
-version = "0.0.1"
+version = "0.1.0"
 
 [deps]
 Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"

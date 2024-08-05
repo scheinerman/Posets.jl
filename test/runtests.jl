@@ -129,4 +129,8 @@ end
     p1, p2 = realizer(p, 2)
     @test p1 == reverse(p2)
     @test dimension(p) == 2
+
+    p = chevron()
+    a, b, c = realizer(p, 3)
+    @test a ∩ b ∩ c == p
 end
