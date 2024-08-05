@@ -321,6 +321,8 @@ For example, `chain([2,1,3])` creates a chain in which `2 < 1 < 3`.
 * `standard_example(n)` creates a poset with `2n` elements. Elements `1` through `n` form an antichain 
 as do elements `n+1` through `2n`. The only relations are of the form `j < k` where `1 ≤ j ≤ n` 
 and `k = n+i` where `1 ≤ i ≤ n` and `i ≠ j`. This is a smallest-size poset of dimension `n`.
+* `chevron()` creates a poset with `6` elements that has dimension equal to `3`. It is 
+different from `standard_example(3)`. 
 
 
 ## Graphs
