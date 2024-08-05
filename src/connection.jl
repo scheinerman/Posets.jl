@@ -5,7 +5,6 @@ Return the connected components of the poset `p`.
 """
 connected_components(p::Poset) = connected_components(p.d)
 
-
 """
     is_connected(p::Poset)
 

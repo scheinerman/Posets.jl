@@ -28,12 +28,11 @@ export connected_components, is_connected, induced_subposet
 export max_anti_chain, max_chain, width, height
 export realizer, dimension
 
-
 function __init__()
     set_solver(HiGHS)
     set_solver_verbose(false)
+    return nothing
 end
-
 
 abstract type AbstractPoset{T<:Integer} end
 
@@ -57,7 +56,7 @@ struct Poset{T<:Integer} <: AbstractPoset{T}
         dd = DiGraph(d)  # make a copy
         n = nv(dd)
         # remove self loops
-        for v = 1:n
+        for v in 1:n
             if has_edge(dd, v, v)
                 rem_edge!(dd, v, v)
             end
@@ -98,10 +97,7 @@ include("graphs.jl")
 include("operations.jl")
 include("connection.jl")
 
-
-
 include("height-width.jl")
 include("realizer.jl")
-
 
 end # module Posets

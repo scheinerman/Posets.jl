@@ -32,7 +32,6 @@ Return the width of `p`, i.e., the size of a maximum antichain.
 """
 width(p::Poset) = length(max_anti_chain(p))
 
-
 """
     max_chain(p::Poset)
 
@@ -45,8 +44,8 @@ function max_chain(p::Poset)
 
     @variable(MOD, x[V], Bin)
 
-    for u = 1:n-1
-        for v = u+1:n
+    for u in 1:(n - 1)
+        for v in (u + 1):n
             if p(u, v) || p(v, u)
                 continue
             end
@@ -60,7 +59,6 @@ function max_chain(p::Poset)
     X = value.(x)
     return [v for v in V if X[v] > 0.1]
 end
-
 
 """
     height(p::Poset)

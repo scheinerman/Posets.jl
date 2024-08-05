@@ -17,7 +17,7 @@ an edge from `v` to `w` exactly when `v` is covered by `w` in `p`.
 function cover_digraph(p::Poset{T}) where {T}
     n = nv(p)
     g = DiGraph{T}(n)
-    for v = 1:n
+    for v in 1:n
         for w in just_above(p, v)
             add_edge!(g, v, w)
         end
@@ -38,7 +38,7 @@ function vertex_edge_incidence_poset(g::AbstractGraph)
     p = Poset(n + m)
 
     elist = collect(edges(g))
-    for j = 1:m
+    for j in 1:m
         e = elist[j]
         u = src(e)
         v = dst(e)
