@@ -13,6 +13,9 @@ LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 [compat]
 julia = "1"
 Graphs = "1"
+<<<<<<< HEAD
 ChooseOptimizer = "0.2"
 JuMP = "1"
 HiGHS = "1"
+=======
+>>>>>>> 7d13d0d09bb6985291abbb9e0430f48b1dbca293
