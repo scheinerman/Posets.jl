@@ -81,7 +81,7 @@ function realizer(p::Poset, d::Integer)
         error("This poset has dimension greater than $d; no realizer found.")
     end
 
-    X = value.(x)
+    X = round.(value.(x))
     A = Int.(Array(X))
     plist = [Poset(A[:, :, k]) for k in 1:d]
 

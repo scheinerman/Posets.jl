@@ -46,7 +46,7 @@ function graph_iso(g::AbstractGraph, h::AbstractGraph)::Dict{Int,Int}
     end
 
     # get the matrix
-    P = Int.(value.(X))
+    P = Int.(round.(value.(X)))
 
     # convert to a dictionary
     result = Dict{Int,Int}()
