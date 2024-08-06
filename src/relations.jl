@@ -208,3 +208,47 @@ Return `true` is `nv(p) <= nv(q)` and if `v < w` in `p`, then also
 `v < w` in `q`.
 """
 issubset(p::Poset, q::Poset) = p.d ⊆ q.d
+
+"""
+    is_chain(p::Poset, vlist)::Bool
+
+Check if the elements in `vlist` form a chain in `p`.
+"""
+function is_chain(p::Poset, vlist)::Bool
+    # make sure all elements of vlist are in p
+    if !all(v ∈ p for v in vlist)
+        return false
+    end
+
+    for v in vlist
+        for w in vlist
+            if !are_comparable(p, v, w)
+                return false
+            end
+        end
+    end
+    return true
+end
+
+"""
+    is_antichain(p::Poset, vlist)::Bool
+
+Check if the elements in `vlist` form an antichain in `p`.
+"""
+function is_antichain(p::Poset, vlist)::Bool
+    # make sure all elements of vlist are in p
+    if !all(v ∈ p for v in vlist)
+        return false
+    end
+
+    for v in vlist
+        for w in vlist
+            if v != w
+                if are_comparable(p, v, w)
+                    return false
+                end
+            end
+        end
+    end
+    return true
+end

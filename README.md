@@ -162,7 +162,12 @@ but none of the follower are true: `a<b`, `a==b`, or `a>b`.
 
 #### Chain/antichain check
 
-> TBW
+Given a list of elements `vlist` of a poset `p`:
+
+* `is_chain(p, vlist)` returns `true` if the elements of `vlist` form a chain in `p`.
+* `is_antichain(p, vlist)` returns `true` if the elements of `vlist` form an antichain in `p`.
+
+Both return `false` if an element of `vlist` is not in `p`.
 
 
 ### Counting/listing relations

@@ -56,6 +56,14 @@ end
     p = standard_example(5)
     @test collect(maximals(p)) == collect(6:10)
     @test collect(minimals(p)) == collect(1:5)
+
+    x = maximals(p)
+    @test is_antichain(p, x)
+
+    p = chain(3) + chain(2)
+    @test is_chain(p, [3, 2, 1])
+    X = Set(4:5)
+    @test is_chain(p, X)
 end
 
 @testset "Operations" begin
@@ -130,6 +138,10 @@ end
 
     p = p + p
     @test width(p) == 8
+
+    CC = chain_cover(p)
+    @test length(CC) == width(p)
+    @test is_chain(p, CC[1]) && is_chain(p, CC[end])
 end
 
 @testset "dimension" begin

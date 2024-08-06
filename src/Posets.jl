@@ -61,7 +61,9 @@ export Poset,
     connected_components,
     is_connected,
     induced_subposet,
-    in
+    in,
+    is_chain,
+    is_antichain
 
 # These use integer linear programming.
 export max_anti_chain,
