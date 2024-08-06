@@ -1,7 +1,3 @@
-using Posets
-using Graphs
-using Random
-
 """
     random_linear_order(n::Integer)
 

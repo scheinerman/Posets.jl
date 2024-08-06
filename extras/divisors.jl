@@ -49,3 +49,5 @@ function subsets_poset(d::Integer)
     n = prod(primes(d))  # product of first d primes
     return divisor_poset(n)
 end
+
+nothing

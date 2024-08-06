@@ -13,3 +13,5 @@ function pplot(p::Poset; args...)
     g = cover_digraph(p)
     return gplot(g; args...)
 end
+
+nothing

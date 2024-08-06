@@ -5,6 +5,8 @@ module Posets
 
 using Graphs
 using LinearAlgebra
+using Random
+
 using ChooseOptimizer
 using JuMP
 using HiGHS
@@ -63,6 +65,8 @@ export Poset,
     mobius_matrix,
     nr,
     nv,
+    random_linear_order,
+    random_poset,
     realizer,
     relations,
     rem_vertex!,
@@ -146,5 +150,6 @@ include("connection.jl")
 include("height-width.jl")
 include("realizer.jl")
 include("iso.jl")
+include("random-posets.jl")
 
 end # module Posets
