@@ -364,6 +364,8 @@ different from `standard_example(3)`.
 random order.
 * `random_poset(n,d=2)`: Create a random `d`-dimensional poset by intersecting `d` random linear orders,
 each with `n` elements. 
+* `subset_lattice(d)`: Create the poset corresponding to the `2^d` subsets of `{1,2,...,d}` ordered by 
+inclusion. For `a` between `1` and `2^d`, element `a` corresponds to a subset of `{1,2,...,d}` as follows: Write `a-1` in binary and view the bits as the characteristic vector indicating the members of the set. For example, if `a` equals `12`, then `a-1` is `1011` in binary. Reading off the digits from the right, this gives the set `{1,2,4}`.
 
 
 

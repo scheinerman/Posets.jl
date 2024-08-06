@@ -74,6 +74,7 @@ export Poset,
     src,
     src,
     standard_example,
+    subset_lattice,
     vertex_edge_incidence_poset,
     width,
     zeta_matrix

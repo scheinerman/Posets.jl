@@ -77,3 +77,25 @@ function chevron()
 
     return p
 end
+
+"""
+    subset_lattice(d::Integer)
+
+Create the poset corresponding to the subsets of a `d`-element set 
+ordered by inclusion. 
+"""
+function subset_lattice(d::Integer)::Poset
+    codes = collect(UInt64(0):(UInt64(1) << d - 1))
+    n = length(codes)
+    g = DiGraph(n)
+
+    for a in 1:n
+        for b in 1:n
+            if codes[a] & codes[b] == codes[a]
+                add_edge!(g, a, b)
+            end
+        end
+    end
+
+    return Poset(g)
+end
