@@ -1,4 +1,3 @@
-
 """
     max_anti_chain(p::Poset)
 
@@ -35,7 +34,8 @@ width(p::Poset) = length(max_anti_chain(p))
 """
     max_chain(p::Poset)
 
-Return a maximum size chain of `p` (as a list).
+Return a maximum size chain of `p` (as a list). The 
+chain elements are returned in order (least is first).
 """
 function max_chain(p::Poset)
     n = nv(p)
@@ -57,7 +57,8 @@ function max_chain(p::Poset)
     optimize!(MOD)
 
     X = value.(x)
-    return [v for v in V if X[v] > 0.1]
+    ch = [v for v in V if X[v] > 0.1]
+    return _chain_sort(p, ch)
 end
 
 """
@@ -106,8 +107,8 @@ function chain_cover(p::Poset, k::Integer)
     end
 
     X = value.(x)
-
-    return [findall(X[:, i] .> 0.1) for i in 1:k]
+    chains = [findall(X[:, i] .> 0.1) for i in 1:k]
+    return [_chain_sort(p, c) for c in chains]
 end
 
 chain_cover(p::Poset) = chain_cover(p, width(p))

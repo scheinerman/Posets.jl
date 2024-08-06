@@ -90,6 +90,8 @@ true
 ```
 When element `2` is removed from `p`, element `5` takes its place. 
 
+> The `rem_vertices!` function is not part of the official API for `Graphs` and so we have not defined `rem_vertices!` for `Posets`.
+
 ### Removing relations
 > *Removal of relations not implemented yet.*
 
