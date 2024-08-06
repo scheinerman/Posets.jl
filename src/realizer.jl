@@ -115,7 +115,7 @@ function dimension(p::Poset, verb::Bool=false)::Int
 
     ub1 = Int(floor(n / 2))
     ub2 = width(p)
-    ub = max(ub1, ub2)
+    ub = min(ub1, ub2)
 
     return dimension_work(p, lb, ub, verb)
 end

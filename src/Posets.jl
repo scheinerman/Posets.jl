@@ -63,7 +63,8 @@ export Poset,
     induced_subposet,
     in,
     is_chain,
-    is_antichain
+    is_antichain,
+    semiorder
 
 # These use integer linear programming.
 export max_anti_chain,

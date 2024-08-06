@@ -360,6 +360,7 @@ as do elements `n+1` through `2n`. The only relations are of the form `j < k` wh
 and `k = n+i` where `1 ≤ i ≤ n` and `i ≠ j`. This is a smallest-size poset of dimension `n`.
 * `chevron()` creates a poset with `6` elements that has dimension equal to `3`. It is 
 different from `standard_example(3)`. 
+* `semiorder(xs)` creates a semiorder. Here `xs` is a list of `n` real numbers. The result is a poset with `n` elements in which `i<j` when `x[i] ≤ x[j] - 1`. More generally, use `semiorder(xs,t)` in which case `i<j` when `x[i] ≤ x[j] - t`. Setting `t=0` gives a total order (if the values in `xs` are distinct). If `t` is negative, errors may be thrown. 
 
 
 ## Graphs
