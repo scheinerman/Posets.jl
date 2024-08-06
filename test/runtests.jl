@@ -192,3 +192,26 @@ end
     min_q = Set(minimals(q))
     @test Set(f[x] for x in min_p) == min_q
 end
+
+@testset "Subset lattice" begin
+    p = subset_lattice(6)
+    @test width(p) == binomial(6, 3)
+    @test height(p) == 6 + 1
+
+    ch = max_chain(p)
+    a = ch[2]
+    b = ch[3]
+    @test subset_decode(a) ⊆ subset_decode(b)
+
+    A = Set([1, 3, 5])
+    B = Set([1, 2, 3, 5])
+    a = subset_encode(A)
+    b = subset_encode(B)
+    @test p[a] < p[b]
+end
+
+@testset "Random poset" begin
+    p = random_poset(20, 3)
+    R = realizer(p, 3)
+    @test R[1] ∩ R[2] ∩ R[3] == p
+end
