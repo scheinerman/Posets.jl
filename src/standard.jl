@@ -99,3 +99,26 @@ function subset_lattice(d::Integer)::Poset
 
     return Poset(g)
 end
+
+"""
+    subset_decode(c::Integer)::Set{Int}
+
+Convert a positive integer into a set of positive integers.
+"""
+function subset_decode(c::Integer)::Set{Int}
+    bits = digits(c - 1; base=2)
+    return Set{Int}(findall(bits .> 0))
+end
+
+"""
+    subset_encode(A::Set{T})::Int where {T<:Integer}
+
+Encode a set of positive integers into an integer.
+"""
+function subset_encode(A::Set{T})::Int where {T<:Integer}
+    s = 0
+    for k in A
+        s += 1 << (k - 1)
+    end
+    return s + 1
+end
