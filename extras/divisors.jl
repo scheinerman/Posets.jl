@@ -38,16 +38,4 @@ function divisor_poset(n::Integer)
     return divisor_poset(factors)
 end
 
-"""
-    subsets_poset(d::Integer)
-
-Create a poset (isomorphic to) the subsets of a `d`-element 
-set ordered by inclusion. 
-"""
-function subsets_poset(d::Integer)
-    p = prime(d)  # d'th prime 
-    n = prod(primes(d))  # product of first d primes
-    return divisor_poset(n)
-end
-
 nothing

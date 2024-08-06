@@ -1,4 +1,6 @@
-using Posets, Graphs, ClosedIntervals
+using ClosedIntervals
+using Graphs
+using Posets
 
 """
     semiorder(values::Vector{T}, thresh=1) where {T<:Real}
