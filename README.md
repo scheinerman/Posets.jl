@@ -101,7 +101,10 @@ When element `2` is removed from `p`, element `5` takes its place.
 Use `nv(p)` to return the number of vertices in the poset `p`. As in `Graphs`, the 
 elements of the poset are integers from `1` to `n`. 
 
-### Checking relations
+Use `in(a, p)` [or `a ∈ p`] to determine if `a` is an element of `p`. 
+This is equivalent to `1 <= a <= nv(p)`.
+
+### Relations
 
 There are three ways to check if elements are related in a poset.
 
@@ -148,6 +151,19 @@ false
 However, the expression `p[a] < p[b]`  throws an error in either of these situations:
 * Using the syntax `p[a]` if `a` is not an element of `p`.
 * Trying to compare elements of different posets (even if the two posets are equal).
+
+#### Comparability check
+
+The functions `are_comparable(p,a,b)` and `are_incomparable(p,a,b)` behave as follows:
+* `are_comparable(p,a,b)` returns `true` exactly when `a` and `b` are both in the poset, 
+and one of the following is true: `a<b`, `a==b`, or `a>b`.
+* `are_incompable(p,a,b)` returns `true` exactly when `a` and `b` are both in the poset, 
+but none of the follower are true: `a<b`, `a==b`, or `a>b`.
+
+#### Chain/antichain check
+
+> TBW
+
 
 ### Counting/listing relations
 

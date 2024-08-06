@@ -17,6 +17,40 @@ has_relation(p::Poset, a::Integer, b::Integer) = has_edge(p.d, a, b)
 (p::Poset)(a::Integer, b::Integer) = has_relation(p, a, b)
 
 """
+    in(p::Poset, a::Integer)
+
+Return true if `a` is a vertex of poset `p`. 
+"""
+in(a::Integer, p::Poset) = 1 <= a <= nv(p)
+
+"""
+    are_comparable(p::Poset, a::Integer, b::Integer)
+
+Return `true` if `a<b` or `a==b` or `b<a`;  returns `false` if either
+`a` or `b` is not in `p`.
+"""
+function are_comparable(p::Poset, a::Integer, b::Integer)::Bool
+    if (a ∉ p) || (b ∉ p)
+        return false
+    end
+
+    return (a == b) || has_relation(p, a, b) || has_relation(p, b, a)
+end
+
+"""
+    are_incomparable(p::Poset, a::Integer, b::Integer)::Bool
+
+Returns `true` provided both `a` and `b` are in `p` and none of the
+following are true: `a<b` or `a==b` or `b<a`.
+"""
+function are_incomparable(p::Poset, a::Integer, b::Integer)::Bool
+    if (a ∉ p) || (b ∉ p) || (a == b)
+        return false
+    end
+    return !(has_relation(p, a, b) && has_relation(p, b, a))
+end
+
+"""
     add_relation!(p::Poset, a::Integer, b::Integer)::Bool
 
 Add `a<b` as a relation in the poset. Returns `true` if successful.

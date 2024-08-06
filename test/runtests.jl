@@ -6,6 +6,9 @@ using LinearAlgebra
 @testset "Basics" begin
     p = Poset(5)
     @test nv(p) == 5
+    @test 1 ∈ p
+    @test !(0 ∈ p)
+    @test 6 ∉ p
     add_vertex!(p)
     @test nv(p) == 6
     add_vertices!(p, 4)
@@ -19,6 +22,13 @@ using LinearAlgebra
     @test p(1, 3)
     @test p[1] < p[3]
     @test p[3] > p[1]
+
+    @test are_comparable(p, 1, 3)
+    @test !are_comparable(p, 0, 3)
+    @test are_comparable(p, 4, 4)
+
+    @test are_incomparable(p, 1, 4)
+    @test !are_incomparable(p, 0, 0)
 
     rem_vertex!(p, 2)
     @test nr(p) == 1

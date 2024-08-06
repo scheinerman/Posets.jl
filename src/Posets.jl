@@ -10,24 +10,62 @@ using JuMP
 using HiGHS
 
 import Base:
-    eltype, show, ==, +, /, reverse, intersect, getindex, <, <<, >>, issubset, adjoint
+    eltype, show, ==, +, /, reverse, intersect, getindex, <, <<, >>, issubset, adjoint, in
 
-import Graphs: add_vertex!, add_vertices!, add_edge!, rem_vertex!, nv, src, dst
-import Graphs: connected_components, is_connected, induced_subgraph
+import Graphs:
+    add_vertex!,
+    add_vertices!,
+    add_edge!,
+    rem_vertex!,
+    nv,
+    src,
+    dst,
+    connected_components,
+    is_connected,
+    induced_subgraph
 
-export Poset, add_vertex!, add_vertices!, rem_vertex!, nv, src, dst
-export comparability_graph, cover_digraph, vertex_edge_incidence_poset
-export nr, has_relation, add_relation!, Relation, relations, src, dst
-export covered_by, just_below, just_above
-export maximals, minimals
-export zeta_matrix, mobius_matrix
-export chain, antichain, standard_example, chevron
-export above, below, between, linear_extension
-export connected_components, is_connected, induced_subposet, iso, iso_check
+export Poset,
+    add_vertex!,
+    add_vertices!,
+    rem_vertex!,
+    nv,
+    src,
+    dst,
+    comparability_graph,
+    cover_digraph,
+    vertex_edge_incidence_poset,
+    nr,
+    has_relation,
+    add_relation!,
+    Relation,
+    relations,
+    src,
+    dst,
+    are_comparable,
+    are_incomparable,
+    covered_by,
+    just_below,
+    just_above,
+    maximals,
+    minimals,
+    zeta_matrix,
+    mobius_matrix,
+    chain,
+    antichain,
+    standard_example,
+    chevron,
+    above,
+    below,
+    between,
+    linear_extension,
+    connected_components,
+    is_connected,
+    induced_subposet,
+    in
 
 # These use integer linear programming.
-export max_anti_chain, max_chain, width, height, chain_cover
-export realizer, dimension
+export max_anti_chain,
+    max_chain, width, height, chain_cover, realizer, dimension, iso, iso_check
 
 function __init__()
     set_solver(HiGHS)
