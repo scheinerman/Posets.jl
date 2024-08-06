@@ -273,6 +273,9 @@ julia> just_below(p,5) |> collect
 * `max_antichain(p)` returns a vector containing the elements of a largest antichain in `p`.
 * `height(p)` returns the size of a largest chain in `p`.
 * `width(p)` returns the size of a largest antichain in `p`.
+* `chain_cover(p, k)` returns a collection of `k` chains of `p` such that every element of 
+`p` is in one of the chains. The parameter `k` is optional, in which case the width of `p` 
+is used. (This is the smallest possible size of a chain cover per Dilworth's theorem.)
 
 ### Isomorphism
 

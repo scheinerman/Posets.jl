@@ -26,7 +26,7 @@ export above, below, between, linear_extension
 export connected_components, is_connected, induced_subposet, iso, iso_check
 
 # These use integer linear programming.
-export max_anti_chain, max_chain, width, height
+export max_anti_chain, max_chain, width, height, chain_cover
 export realizer, dimension
 
 function __init__()
