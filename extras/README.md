@@ -5,15 +5,19 @@ in working with partially ordered sets.
 
 ## `divisors.jl`
 
-Functions provided:
+Function provided:
 
 * `divisors_poset(n)`: Create a poset whose elements correspond to the divisors of 
 the (positive) integer `n`. In this poset we have `a < b` provided the `a`-th divisor of `n`
 is a factor of the `b`-th divisor. 
+* This can also be invoked as `divisor_poset(list)` where `list` is a list (`Vector`) of 
+distinct positive integers to be ordered by divisibility. 
 
 
 
 ## `interval-orders.jl`
+
+Functions provided:
 
 * `semiorder(xs)` creates a semiorder. Here `xs` is a list of `n` real numbers. 
 The result is a poset with `n` elements in which `i<j` when `x[i] ≤ x[j]-1`. 
