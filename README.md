@@ -3,11 +3,11 @@ Partially ordered sets for Julia based on [Graphs](https://juliagraphs.org/Graph
 
 ## Introduction: Partially Ordered Sets
 
-A *partially ordered set*, or *poset* for short, is a pair $(V,<)$ where V is a set and
-$<$ is a binary relation on $V$ that is
-* irreflexive (for all $v \in V$, it is never the case that $v < v$),
-* antisymmetric (for all $v,w \in V$, we never have both $v < w$ and $w < v$), and
-* transitive (for all $u,v,w \in V$, if $u < v$ and $v < w$ then $u < w$).
+A *partially ordered set*, or *poset* for short, is a pair $(V,\prec)$ where $V$ is a set and
+$\prec$ is a binary relation on $V$ that is
+* *irreflexive* (for all $v \in V$, it is never the case that $v \prec v$),
+* *antisymmetric* (for all $v,w \in V$, we never have both $v \prec w$ and $w \prec v$), and
+* *transitive* (for all $u,v,w \in V$, if $u \prec v$ and $v \prec w$ then $u \prec w$).
 
 Posets are naturally represented as transitively closed, directed, acyclic graphs. This is how this module implements posets using the `DiGraph` type in `Graphs`.
 
@@ -555,12 +555,10 @@ The `add_relation!` function first checks if the added relation would violate
 transitivity; this is speedy because we can add the relation $a \prec b$ so 
 long as we don't have $b\prec a$ already in the poset. However, after the edge $(a,b)$ 
 is inserted into the digraph, we execute `transitiveclosure!` and that takes some 
-work. This makes adding relations one at a time to the poset slow. 
+work. Adding several relations to the poset, one at a time, can be slow. 
 
-This can be 
-accelerated by adding edges directly to `p.d` and only invoking `transitiveclosure!`
-at the end. However, one needs to be careful that the added edges do not 
-form a cycle. 
+This can be greatly accelerated by using `Posets.add_relations!` but (as discussed above)
+this function can cause severe problems if not used carefully.
 
 
 

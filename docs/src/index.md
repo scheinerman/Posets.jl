@@ -3,11 +3,11 @@ Partially ordered sets for Julia based on [Graphs](https://juliagraphs.org/Graph
 
 ## Introduction: Partially Ordered Sets
 
-A *partially ordered set*, or *poset* for short, is a pair $(V,<)$ where V is a set and
-$<$ is a binary relation on $V$ that is
-* irreflexive (for all $v \in V$, it is never the case that $v < v$),
-* antisymmetric (for all $v,w \in V$, we never have both $v < w$ and $w < v$), and
-* transitive (for all $u,v,w \in V$, if $u < v$ and $v < w$ then $u < w$).
+A *partially ordered set*, or *poset* for short, is a pair $(V,\prec)$ where $V$ is a set and
+$\prec$ is a binary relation on $V$ that is
+* *irreflexive* (for all $v \in V$, it is never the case that $v \prec v$),
+* *antisymmetric* (for all $v,w \in V$, we never have both $v \prec w$ and $w \prec v$), and
+* *transitive* (for all $u,v,w \in V$, if $u \prec v$ and $v \prec w$ then $u \prec w$).
 
 Posets are naturally represented as transitively closed, directed, acyclic graphs. This is how this module implements posets using the `DiGraph` type in `Graphs`.
 
@@ -51,7 +51,7 @@ julia> p
 ```
 Use `nv(p)` to return the number of elements (vertices) in `p`.
 
-### Adding relations
+### Adding a relation
 To add a relation to a poset, use `add_relation!`. This returns `true` when successful.
 ```
 julia> p = Poset(4)
@@ -72,7 +72,57 @@ Let's look at this carefully to understand why the third call to `add_relation!`
 * The second call to `add_relation!` causes the relation `2 < 3` to be added to `p`. Given that `1 < 2` and `2 < 3`, by transitivity we automatically have `1 < 3` in `p`.
 * Therefore, we cannot add `3 < 1` as a relation to this poset as that would violate antisymmetry.
 
-### Removing elements
+The `add_relation!` function may also be called as `add_relation!(p, (a,b))` or 
+`add_relation!(p, a => b)`. Both are equivalent to `add_relations(p, a, b)`.
+
+### Adding multiple relations (Danger!)
+
+The addition of a relation to a poset can be somewhat slow. 
+Each addition involves error checking and calculations to ensure the integrity 
+of the underlying data structure. See the Implementation section at the
+end of this document.  Adding a list of relations one at a time can be inefficient,
+but it is safe. We also provide the function `add_relations!` (plural) that is more 
+efficient, but can cause serious problems. 
+
+To underscore the risk, this function 
+is not exported, but needs to be invoked as `Posets.add_relations!(p, rlist)` 
+where `rlist` is a list of either tuples `(a,b)` or pairs `a => b`. 
+
+Here is a good application of this function (although using `chain(10)` is safer):
+```
+julia> p = Poset(10)
+{10, 0} Int64 poset
+
+julia> rlist = ((i,i+1) for i=1:9)
+Base.Generator{UnitRange{Int64}, var"#13#14"}(var"#13#14"(), 1:9)
+
+julia> Posets.add_relations!(p, rlist)
+
+julia> p == chain(10)
+true
+```
+
+Here is what happens with misuse:
+```
+julia> p = Poset(5)
+{5, 0} Int64 poset
+
+julia> rlist = [ 1=>2, 2=>3, 3=>1 ]
+3-element Vector{Pair{Int64, Int64}}:
+ 1 => 2
+ 2 => 3
+ 3 => 1
+
+julia> Posets.add_relations!(p, rlist)
+ERROR: This poset has been become corrupted!
+```
+
+
+
+
+
+
+### Removing an element
 
 The function `rem_vertex!` behaves exactly as in `Graphs`. It removes the given vertex from the poset. For example:
 ```
@@ -482,7 +532,39 @@ Use `linear_extension(p)` to create  a linear extension of `p`.
 This is a total order `q` with the same elements as `p` and with `p ⊆ q`. 
 
 
+## Implementation
+
+A `Poset` is a structure that contains a single data element: a `DiGraph`. 
+Users should not be accessing this directly, but it may be useful to understand
+how posets are implemented. The directed graph is acyclic (including loopless)
+and transitively closed. This means if $a \to b$ is an edge and $b\to c$ is
+an edge, then $a \to c$ is also an edge. The advantage to this structure is that
+checking if $a \prec b$ in a poset is quick. There are two disadvantages.
+
+First, the graph may be larger than needed. If we only kept cover edges 
+(the transitive reduction of the digraph) we might have many fewer edges. 
+For example, a linear order with $n$ elements has $\binom{n}{2} \sim n^2/2$ 
+edges in the digraph that represents it, whereas there are only $n-1$ edges in 
+the cover digraph. However, this savings is an extreme example. A poset with $n$
+elements split into two antichains, with every element of the first antichain below
+every element of the second, has $n^2/4$ edges in either representation. 
+So in either case, the representing digraph may have up to order $n^2$ edges. 
+
+Second, the computational cost of adding (or deleting) a relation is nontrivial. 
+The `add_relation!` function first checks if the added relation would violate 
+transitivity; this is speedy because we can add the relation $a \prec b$ so 
+long as we don't have $b\prec a$ already in the poset. However, after the edge $(a,b)$ 
+is inserted into the digraph, we execute `transitiveclosure!` and that takes some 
+work. Adding several relations to the poset, one at a time, can be slow. 
+
+This can be greatly accelerated by using `Posets.add_relations!` but (as discussed above)
+this function can cause severe problems if not used carefully.
+
+
+
 ## See Also
 
 The `extras` folder includes additional code that may be useful in 
 working with `Posets`. See the `README` in that directory. 
+
+
