@@ -36,6 +36,15 @@ using LinearAlgebra
     @test p[3] >= p[1]
 
     @test length(relations(p)) == ne(p.d)
+
+    p = chain(5)
+    @test nr(p) == binomial(5, 2)
+    rem_relation!(p, 2, 3)
+    @test nr(p) == binomial(5, 2) - 1
+
+    p = chain(5)
+    rem_relation!(p, 2, 4)
+    @test width(p) == 3
 end
 
 @testset "Above/Below/Between" begin
