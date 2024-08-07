@@ -252,3 +252,24 @@ function is_antichain(p::Poset, vlist)::Bool
     end
     return true
 end
+
+"""
+    rem_relation!(p::Poset, a::Integer, b::Integer)::Bool
+
+Delete the relation `a < b` from the poset `p` as well as all 
+relations of the form `a < x` and `x < b` where `x` is between
+`a` and `b`.
+"""
+function rem_relation!(p::Poset, a::Integer, b::Integer)::Bool
+    if !p(a, b)  # this is not a relation of the poset
+        return false
+    end
+
+    mids = collect(between(p, a, b))  # vtcs between a and b 
+    for c in mids
+        rem_edge!(p.d, a, c)
+        rem_edge!(p.d, c, b)
+    end
+    rem_edge!(p.d, a, b)
+    return true
+end

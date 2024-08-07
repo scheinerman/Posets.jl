@@ -1,3 +1,3 @@
 using Documenter, Posets
 
-makedocs(sitename = "Posets")
+makedocs(; sitename="Posets")

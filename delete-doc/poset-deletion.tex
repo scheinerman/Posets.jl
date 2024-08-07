@@ -3,7 +3,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{framed} 
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=1.25in]{geometry}
 
 \begin{document}
 \begin{center}
@@ -17,7 +17,7 @@ Deleting vertices from a poset is somewhat different from deleting
 vertices in a graph. When a vertex is deleted from a graph, the vertex
 and all edges incident with that vertex are removed. Similarly, when
 a vertex is removed from a poset, the relations between all the
-remaining verices remain unchanged. However, this is not the same as
+remaining vertices remain unchanged. However, this is not the same as
 simply deleting a vertex and its edges from the poset's Hasse
 diagram. 
 
@@ -25,7 +25,7 @@ Consider the poset on the left in Figure~\ref{fig:vertex-deletion}.
 Mathematically, deleting vertex $2$ from this poset results in the
 poset in the middle of the figure. In the Hasse diagram we have an
 edge from 1 upward to 3 because $1\prec 3$ in the original poset, and
-so we still have $1 \prec 3$ after the deletion. Similiarly, the
+so we still have $1 \prec 3$ after the deletion. Similarly, the
 relation $4\prec3$ is preserved.
 
 \begin{figure}[h]
@@ -68,7 +68,7 @@ julia> collect(relations(p))
 Deleting a relation from a poset is complicated. The simplest case is
 the removal of a relation $a \prec b$ where $b$ is a cover of $a$. In
 this case, it is possible just to remove the single relation $a \prec
-b$ and make no changes to any other relation. This is illustrated in
+b$ and make no other changes to the poset. This is illustrated in
 Figure~\ref{fig:cover-edge-deletion} in which we delete the cover
 relation $2\prec$ from the linear order $1\prec2\prec3\prec4$. 
 \begin{figure}[h]
@@ -81,21 +81,19 @@ relation $2\prec$ from the linear order $1\prec2\prec3\prec4$.
   \end{framed}
 \end{figure}
 
-The following Juila code\footnote{Users should not directly access
-  the internals of a \texttt{Poset} object. This is just to illustrate.}
-implements the action of deleting $2 \prec 3$ from a 4-element chain:
+The following Julia code implements the action of deleting $2 \prec 3$
+from a 4-element chain:
 \begin{verbatim}
 julia> p = chain(4);
-julia> g = DiGraph(p.d); # This makes a copy of the graph
-julia> rem_edge!(g, 3, 4);
-julia> q = Poset(g);
-julia> collect(relations(q))
-5-element Vector{Relation{Int64}}:
+julia> rem_relation!(p, 2, 3);
+julia> collect(relations(p))
+6-element Vector{Relation{Int64}}:
  Relation 1 < 2
  Relation 1 < 3
  Relation 1 < 4
  Relation 2 < 3
  Relation 2 < 4
+ Relation 3 < 4
 \end{verbatim}
 It is an easy exercise that deleting a single cover relation from a
 poset yields a poset. 
@@ -111,8 +109,37 @@ a poset. If there is an element $x$ with $a\prec x\prec b$ we cannot
 delete just $a\prec b$ and keep both $a \prec x$ and $x\prec b$. There
 is no \emph{a priori} reason to prefer one of $a\prec x$ or $x \prec
 b$ for deletion (or retention). Hence, it is a design decision that
-when removing a relation $a \prec b$ we also remove all relations $a
-\prec x$ and $x \prec b$ for all $x$ that are between $a$ and $b$. 
-Again, one can prove that the result of this is a poset. 
+when removing a relation $a \prec b$ we also remove both relations $a
+\prec x$ and $x \prec b$ for all $x$ between $a$ and $b$.  Again, one
+can prove that the result of this is a poset.
+
+For example, suppose we wish to delete the relation $2\prec4$ from the
+linear order $1 \prec 2 \prec 3 \prec 4 \prec 5$. Our implementation
+deletes not only $2\prec 4$ but also $2\prec3$ and $3\prec4$ as well. 
+This is illustrated in Figure~\ref{fig:other-edge-deletion}. 
+\begin{figure}[h]
+  \begin{framed}
+    \begin{center}
+      \includegraphics[scale=0.4]{other-edge-deletion}
+    \end{center}
+    \caption{Deleting a non-cover relation, $2\prec4$, from a poset. }
+    \label{fig:other-edge-deletion}
+  \end{framed}
+\end{figure}
+
+This Julia code illustrates the deletion:
+\begin{verbatim}
+julia> p = chain(5);
+julia> rem_relation!(p, 2, 4);
+julia> collect(relations(p))
+7-element Vector{Relation{Int64}}:
+ Relation 1 < 2
+ Relation 1 < 3
+ Relation 1 < 4
+ Relation 1 < 5
+ Relation 2 < 5
+ Relation 3 < 5
+ Relation 4 < 5
+\end{verbatim}
 
 \end{document}

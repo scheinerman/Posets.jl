@@ -90,10 +90,36 @@ true
 ```
 When element `2` is removed from `p`, element `5` takes its place. 
 
-> The `rem_vertices!` function is not part of the official API for `Graphs` and so we have not defined `rem_vertices!` for `Posets`.
+For a more extensive explanation, see `poset-deletion.pdf` in the `delete-doc` folder. 
+
+> **Note**: The `rem_vertices!` function is not part of the official API for `Graphs` and so we have not defined `rem_vertices!` for `Posets`.
 
 ### Removing relations
-> *Removal of relations not implemented yet.*
+
+Removing relations from a poset is accomplished with `rem_relations!(p,a,b)`. Assuming `a<b` in `p`,
+this deletes the relation `a<b` from `p`, but also deletes all relations `a<x` and `x<b` for 
+vertices `x` that lie between `a` and `b`.
+```
+julia> p = chain(5)
+{5, 10} Int64 poset
+
+julia> rem_relation!(p, 2, 4)
+true
+
+julia> collect(relations(p))
+8-element Vector{Relation{Int64}}:
+ Relation 1 < 2
+ Relation 1 < 3
+ Relation 1 < 4
+ Relation 1 < 5
+ Relation 2 < 4
+ Relation 2 < 5
+ Relation 3 < 5
+ Relation 4 < 5
+```
+Note that relations `2<3` and `3<4` have been removed. 
+
+For a more extensive explanation, see `poset-deletion.pdf` in the `delete-doc` folder. 
 
 
 ## Inspection
@@ -157,10 +183,8 @@ However, the expression `p[a] < p[b]`  throws an error in either of these situat
 #### Comparability check
 
 The functions `are_comparable(p,a,b)` and `are_incomparable(p,a,b)` behave as follows:
-* `are_comparable(p,a,b)` returns `true` exactly when `a` and `b` are both in the poset, 
-and one of the following is true: `a<b`, `a==b`, or `a>b`.
-* `are_incompable(p,a,b)` returns `true` exactly when `a` and `b` are both in the poset, 
-but none of the follower are true: `a<b`, `a==b`, or `a>b`.
+* `are_comparable(p,a,b)` returns `true` exactly when `a` and `b` are both in the poset, and one of the following is true: `a<b`, `a==b`, or `a>b`.
+* `are_incompable(p,a,b)` returns `true` exactly when `a` and `b` are both in the poset, but none of the follower are true: `a<b`, `a==b`, or `a>b`.
 
 #### Chain/antichain check
 
@@ -206,8 +230,7 @@ julia> src(r), dst(r)
 
 ### Subset
 
-* `issubset(p,q)` (or `p ⊆ q`) returns `true` exactly when `nv(p) ≤ nv(q)` and whenever `v < w` in 
-`p` we also have `v < w` in `q`.
+* `issubset(p,q)` (or `p ⊆ q`) returns `true` exactly when `nv(p) ≤ nv(q)` and whenever `v < w` in `p` we also have `v < w` in `q`.
 
 ### Above, Below, Between
 
@@ -298,8 +321,8 @@ julia> just_below(p,5) |> collect
 * `height(p)` returns the size of a largest chain in `p`.
 * `width(p)` returns the size of a largest antichain in `p`.
 * `chain_cover(p, k)` returns a collection of `k` chains of `p` such that every element of 
-`p` is in one of the chains. The parameter `k` is optional, in which case the width of `p` 
-is used. (This is the smallest possible size of a chain cover per Dilworth's theorem.)
+   `p` is in one of the chains. The parameter `k` is optional, in which case the width of `p` 
+   is used. (This is the smallest possible size of a chain cover per Dilworth's theorem.)
 
 ### Isomorphism
 
@@ -344,8 +367,7 @@ julia> dimension(p)
 4
 ```
 
-> **Note**: Computation of the dimension of a poset is NP-hard. The `dimension` function may be
-slow, even for moderate-size posets.
+> **Note**: Computation of the dimension of a poset is NP-hard. The `dimension` function may be slow, even for moderate-size posets.
 
 
 ## Standard Posets
@@ -357,21 +379,20 @@ The following functions create standard partially ordered sets.
 For example, `chain([2,1,3])` creates a chain in which `2 < 1 < 3`.
 * `antichain(n)` creates the poset with `n` elements and no relations. Same as `Poset(n)`.
 * `standard_example(n)` creates a poset with `2n` elements. Elements `1` through `n` form an antichain 
-as do elements `n+1` through `2n`. The only relations are of the form `j < k` where `1 ≤ j ≤ n` 
-and `k = n+i` where `1 ≤ i ≤ n` and `i ≠ j`. This is a smallest-size poset of dimension `n`.
+  as do elements `n+1` through `2n`. The only relations are of the form `j < k` where `1 ≤ j ≤ n` 
+  and `k = n+i` where `1 ≤ i ≤ n` and `i ≠ j`. This is a smallest-size poset of dimension `n`.
 * `chevron()` creates a poset with `6` elements that has dimension equal to `3`. It is 
-different from `standard_example(3)`. 
+  different from `standard_example(3)`. 
 * `random_linear_order(n)`: Create a linear order in which the numbers `1` through `n` appear in 
-random order.
+  random order.
 * `random_poset(n,d=2)`: Create a random `d`-dimensional poset by intersecting `d` random linear orders,
-each with `n` elements. 
+  each with `n` elements. 
 * `subset_lattice(d)`: Create the poset corresponding to the `2^d` subsets of `{1,2,...,d}` 
-ordered by inclusion. For `a` between `1` and `2^d`, element `a` corresponds to a 
-subset of `{1,2,...,d}` as follows: Write `a-1` in binary and view the bits as the characteristic 
-vector indicating the members of the set. For example, if `a` equals `12`, then `a-1` is `1011` in 
-binary. Reading off the digits from the right, this gives the set `{1,2,4}`.  
-  * Use `subset_decode(a)` to convert an element `a` of this poset into a set of positive 
-  integers, `A`.
+  ordered by inclusion. For `a` between `1` and `2^d`, element `a` corresponds to a 
+  subset of `{1,2,...,d}` as follows: Write `a-1` in binary and view the bits as the characteristic 
+  vector indicating the members of the set. For example, if `a` equals `12`, then `a-1` is `1011` in 
+  binary. Reading off the digits from the right, this gives the set `{1,2,4}`.  
+  * Use `subset_decode(a)` to convert an element `a` of this poset into a set of positive integers, `A`.
   * Use `subset_encode(A)` to convert a set of positive integers to its name in this poset. 
 
 
@@ -408,7 +429,7 @@ are of the form `v < e` where `v` is a vertex that is an end point of the edge `
 ## Matrices
 
 * `zeta_matrix(p)` returns the zeta matrix of the poset. This is a `0,1`-matrix whose
-`i,j`-entry is `1` exactly when `p[i] ≤ p[j]`. 
+  `i,j`-entry is `1` exactly when `p[i] ≤ p[j]`. 
 * `mobius_matrix(p)` returns the inverse of `zeta(p)`. 
 
 In both cases, the output is a dense, integer matrix. 
