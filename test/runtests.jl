@@ -45,6 +45,11 @@ using LinearAlgebra
     p = chain(5)
     rem_relation!(p, 2, 4)
     @test width(p) == 3
+
+    p = Poset(6)
+    rlist = [(i, i + 1) for i in 1:5]
+    Posets.add_relations!(p, rlist)
+    @test p == chain(6)
 end
 
 @testset "Above/Below/Between" begin
