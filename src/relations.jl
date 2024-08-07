@@ -54,6 +54,10 @@ end
     add_relation!(p::Poset, a::Integer, b::Integer)::Bool
 
 Add `a<b` as a relation in the poset. Returns `true` if successful.
+
+This may also be invoked as follows:
+* `add_relation!(p, (a, b))` 
+* `add_relation!(p, a => b)`
 """
 function add_relation!(p::Poset, a::Integer, b::Integer)::Bool
     n = nv(p)
@@ -72,6 +76,59 @@ function add_relation!(p::Poset, a::Integer, b::Integer)::Bool
     add_edge!(p.d, a, b)
     transitiveclosure!(p.d)
     return true
+end
+
+add_relation!(P, ab::Pair{S,T}) where {S<:Integer,T<:Integer} = add_relation!(P, ab...)
+add_relation!(P, ab::Tuple{S,T}) where {S<:Integer,T<:Integer} = add_relation!(P, ab...)
+
+"""
+    Posets.add_relations!(p::Poset, rlist)
+
+**WARNING!! This is a dangerous operation that may corrupt `p`.** 
+
+Add a list of relations to a poset. The entries in the list `rlist` are 
+either tuples `(a,b)` or pairs `a => b` of integers. 
+
+When both `a` and `b` are valid vertices (distinct integers between `1` and `nv(p)`) the 
+edge `(a,b)` is added into `p`'s data structure without any error checking. 
+
+After the relations in `rlist` have been added to the data structure, 
+if a cycle has been created an error is thrown (and the poset `p` is invalid).
+
+Do not use this function unless absolutely sure no harm will be caused. 
+Alternatively, first make a copy of `p`, exectute this function inside a 
+`try`/`catch` block, and, if there is an error, `p` can be recovered from the 
+saved copy. 
+
+Example
+=======
+```
+julia> p = Poset(10)
+{10, 0} Int64 poset
+
+julia> rlist = ((i,i+1) for i=1:9)
+Base.Generator{UnitRange{Int64}, var"#13#14"}(var"#13#14"(), 1:9)
+
+julia> Posets.add_relations!(p, rlist)
+
+julia> p == chain(10)
+true
+```
+"""
+function add_relations!(p::Poset, rlist)
+    for r in rlist
+        if r[1] == r[2]  # ignore loops
+            continue
+        end
+        add_edge!(p.d, r...)
+    end
+
+    if is_cyclic(p.d)
+        error("This poset has been become corrupted!")
+    end
+    transitiveclosure!(p.d)
+
+    return nothing
 end
 
 struct Relation{T<:Integer}
