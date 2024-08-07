@@ -31,7 +31,7 @@ of `A` is nonzero. Diagonal entries are ignored. If this matrix would create a c
 error is thrown. 
 
 
-### Adding elements
+### Adding vertices (elements)
 
 For consistency with `Graph`, we call the elements of a `Poset` *vertices* and the functions `add_vertex!` and `add_vertices!` work exactly as in the `Graphs` module.
 ```
@@ -117,11 +117,6 @@ julia> Posets.add_relations!(p, rlist)
 ERROR: This poset has been become corrupted!
 ```
 
-
-
-
-
-
 ### Removing an element
 
 The function `rem_vertex!` behaves exactly as in `Graphs`. It removes the given vertex from the poset. For example:
@@ -144,9 +139,9 @@ For a more extensive explanation, see `poset-deletion.pdf` in the `delete-doc` f
 
 > **Note**: The `rem_vertices!` function is not part of the official API for `Graphs` and so we have not defined `rem_vertices!` for `Posets`.
 
-### Removing relations
+### Removing a relation
 
-Removing relations from a poset is accomplished with `rem_relations!(p,a,b)`. Assuming `a<b` in `p`,
+Removing relations from a poset is accomplished with `rem_relation!(p,a,b)`. Assuming `a<b` in `p`,
 this deletes the relation `a<b` from `p`, but also deletes all relations `a<x` and `x<b` for 
 vertices `x` that lie between `a` and `b`.
 ```
