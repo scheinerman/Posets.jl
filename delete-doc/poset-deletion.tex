@@ -1,9 +1,10 @@
 \documentclass[12pt]{article}
 \usepackage{newtx}
 \usepackage{graphicx}
+\graphicspath{{figures/}}
 \usepackage{amsmath}
 \usepackage{framed} 
-\usepackage[margin=1.25in]{geometry}
+\usepackage[margin=1in]{geometry}
 
 \begin{document}
 \begin{center}
@@ -33,7 +34,10 @@ relation $4\prec3$ is preserved.
   \begin{center}
     \includegraphics[scale=0.4]{vertex-deletion}
   \end{center}
-  \caption{Vertex deletion in \texttt{Posets}.}
+  \caption{Vertex deletion in \texttt{Posets}. When vertex $2$ is deleted 
+  from the poset on the left, mathematically we have the poset in the middle.
+  However, following \texttt{Graphs}' convention, vertex $6$ is renamed 
+  by the deleted vertex, $2$, giving the result on the right.}
   \label{fig:vertex-deletion}
 \end{framed}
 \end{figure}
@@ -122,7 +126,11 @@ This is illustrated in Figure~\ref{fig:other-edge-deletion}.
     \begin{center}
       \includegraphics[scale=0.4]{other-edge-deletion}
     \end{center}
-    \caption{Deleting a non-cover relation, $2\prec4$, from a poset. }
+    \caption{Deleting the non-cover relation $2\prec4$ from the poset on the left
+    yields the poset on the right. 
+    The function \texttt{rem\_relation!(p,a,b)} not only deletes $a\prec b$, but also 
+    all relations of the form $a\prec x$ and $x\prec b$ for vertices $x$
+    between $a$ and $b$.}
     \label{fig:other-edge-deletion}
   \end{framed}
 \end{figure}
