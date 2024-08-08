@@ -1,10 +1,14 @@
 \documentclass[12pt]{article}
-\usepackage{newtx}
 \usepackage{graphicx}
 \graphicspath{{figures/}}
 \usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{newtx}
+
 \usepackage{framed} 
 \usepackage[margin=1in]{geometry}
+
+\newtheorem{prop}{Proposition}
 
 \begin{document}
 \begin{center}
@@ -32,12 +36,13 @@ relation $4\prec3$ is preserved.
 \begin{figure}[h]
 \begin{framed}
   \begin{center}
-    \includegraphics[scale=0.4]{vertex-deletion}
+    \includegraphics[scale=0.3]{vertex-deletion}
   \end{center}
-  \caption{Vertex deletion in \texttt{Posets}. When vertex $2$ is deleted 
-  from the poset on the left, mathematically we have the poset in the middle.
-  However, following \texttt{Graphs}' convention, vertex $6$ is renamed 
-  by the deleted vertex, $2$, giving the result on the right.}
+  \caption{Vertex deletion in \texttt{Posets}. When vertex $2$ is
+    deleted from the poset on the left, mathematically we have the
+    poset in the middle.  However, following \texttt{Graphs}'
+    convention, vertex $6$ is renamed by the deleted vertex, $2$,
+    giving the result on the right.}
   \label{fig:vertex-deletion}
 \end{framed}
 \end{figure}
@@ -78,7 +83,7 @@ relation $2\prec$ from the linear order $1\prec2\prec3\prec4$.
 \begin{figure}[h]
   \begin{framed}
     \begin{center}
-      \includegraphics[scale=0.4]{cover-edge-deletion}
+      \includegraphics[scale=0.3]{cover-edge-deletion}
     \end{center}
     \caption{Deleting a cover relation, $2\prec3$, from a poset.}
     \label{fig:cover-edge-deletion}
@@ -99,8 +104,8 @@ julia> collect(relations(p))
  Relation 2 < 4
  Relation 3 < 4
 \end{verbatim}
-It is an easy exercise that deleting a single cover relation from a
-poset yields a poset. 
+That this yields a partial order follows from
+Proposition~\ref{prop:ab}. 
 
 The situation is different for non-cover relations. For example,
 consider the linear order $1\prec2\prec3\prec4\prec5$. Suppose we
@@ -114,8 +119,9 @@ delete just $a\prec b$ and keep both $a \prec x$ and $x\prec b$. There
 is no \emph{a priori} reason to prefer one of $a\prec x$ or $x \prec
 b$ for deletion (or retention). Hence, it is a design decision that
 when removing a relation $a \prec b$ we also remove both relations $a
-\prec x$ and $x \prec b$ for all $x$ between $a$ and $b$.  Again, one
-can prove that the result of this is a poset.
+\prec x$ and $x \prec b$ for all $x$ between $a$ and
+$b$. Proposition~\ref{prop:ab} ensures that the new relation gives a
+partial order. 
 
 For example, suppose we wish to delete the relation $2\prec4$ from the
 linear order $1 \prec 2 \prec 3 \prec 4 \prec 5$. Our implementation
@@ -124,13 +130,13 @@ This is illustrated in Figure~\ref{fig:other-edge-deletion}.
 \begin{figure}[h]
   \begin{framed}
     \begin{center}
-      \includegraphics[scale=0.4]{other-edge-deletion}
+      \includegraphics[scale=0.3]{other-edge-deletion}
     \end{center}
-    \caption{Deleting the non-cover relation $2\prec4$ from the poset on the left
-    yields the poset on the right. 
-    The function \texttt{rem\_relation!(p,a,b)} not only deletes $a\prec b$, but also 
-    all relations of the form $a\prec x$ and $x\prec b$ for vertices $x$
-    between $a$ and $b$.}
+    \caption{Deleting the non-cover relation $2\prec4$ from the poset
+      on the left yields the poset on the right.  The function
+      \texttt{rem\_relation!(p,a,b)} not only deletes $a\prec b$, but
+      also all relations of the form $a\prec x$ and $x\prec b$ for
+      vertices $x$ between $a$ and $b$.}
     \label{fig:other-edge-deletion}
   \end{framed}
 \end{figure}
@@ -149,5 +155,42 @@ julia> collect(relations(p))
  Relation 3 < 5
  Relation 4 < 5
 \end{verbatim}
+
+Note on notation: $[a,b] = \{ c \in V \colon a \preceq c \preceq b
+\}$. 
+
+\begin{prop}\label{prop:ab}
+  Let $P=(V,\prec)$ be a poset. Let $a,b\in V$ with $a \prec b$.
+  Let $\prec'$ be a new relation on $V$ in which $x\prec'y$ provided
+  $x\prec y$ and neither $x=a \prec y \preceq b$ nor 
+  $a\preceq x \prec y=b$.
+
+  Then $(V,\prec')$ is a partially ordered set.
+\end{prop}
+
+
+\begin{proof}
+  Note that if $x\prec' y$ then necessarily $x \prec y$. [Formally,
+  ${\prec'} \subseteq {\prec}$.]
+
+  We cannot have $x \prec' x$ because that would imply $x \prec
+  x$. Likewise, we cannot have $x \prec' y$ and $y\prec' x$ as that
+  would imply $x\prec y$ and $y\prec x$. Hence $\prec'$ is irreflexive
+  and antisymmetric. We need to prove that $\prec'$ is transitive.
+
+  Suppose $x \prec' y \prec' z$. We must show $x \prec' z$. Note that
+  this supposition implies $x \prec y \prec z$ and hence $x \prec
+  z$. To show that $x \prec' z$ we need to rule out both $x=a\prec
+  z\preceq b$ and $a\preceq x \prec b=z$.
+    
+  Suppose $x=a\prec z\preceq b$. Since $y$ is between $x$ and $z$, we
+  have $x=a \prec y \prec z \preceq b$ implying that $x=a\not\prec'y$,
+  a contradiction.
+
+  Supposing $a\preceq x \prec b=z$ leads to a similar contradiction.
+
+  Therefore $x \prec' z$ and we conclude that $\prec'$ is transitive
+  and that $(V,\prec')$ is a partially ordered set.
+\end{proof}
 
 \end{document}
