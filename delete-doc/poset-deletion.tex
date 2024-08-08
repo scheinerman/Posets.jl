@@ -6,7 +6,7 @@
 \usepackage{newtx}
 
 \usepackage{framed} 
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=1.25in]{geometry}
 
 \newtheorem{prop}{Proposition}
 
@@ -20,7 +20,7 @@
 
 Deleting vertices from a poset is somewhat different from deleting
 vertices in a graph. When a vertex is deleted from a graph, the vertex
-and all edges incident with that vertex are removed. Similarly, when
+and edges incident with that vertex are removed. Similarly, when
 a vertex is removed from a poset, the relations between all the
 remaining vertices remain unchanged. However, this is not the same as
 simply deleting a vertex and its edges from the poset's Hasse
@@ -36,7 +36,7 @@ relation $4\prec3$ is preserved.
 \begin{figure}[h]
 \begin{framed}
   \begin{center}
-    \includegraphics[scale=0.3]{vertex-deletion}
+    \includegraphics[scale=0.4]{vertex-deletion}
   \end{center}
   \caption{Vertex deletion in \texttt{Posets}. When vertex $2$ is
     deleted from the poset on the left, mathematically we have the
@@ -58,6 +58,7 @@ vertex). As a result, the result in \texttt{Posets} of deleting vertex
 $2$ in Figure~\ref{fig:vertex-deletion} is the poset on the right.
 
 This is illustrated in Julia as follows:
+{\small
 \begin{verbatim}
 julia> p = chain(3) + chain(3);
 julia> add_relation!(p, 4, 2);
@@ -70,8 +71,9 @@ julia> collect(relations(p))
  Relation 4 < 5
  Relation 5 < 2
 \end{verbatim}
+}
 
-\newpage
+\bigbreak
 \noindent{\textbf{Deleting Relations}}
 
 Deleting a relation from a poset is complicated. The simplest case is
@@ -79,11 +81,11 @@ the removal of a relation $a \prec b$ where $b$ is a cover of $a$. In
 this case, it is possible just to remove the single relation $a \prec
 b$ and make no other changes to the poset. This is illustrated in
 Figure~\ref{fig:cover-edge-deletion} in which we delete the cover
-relation $2\prec$ from the linear order $1\prec2\prec3\prec4$. 
+relation $2\prec3$ from the linear order $1\prec2\prec3\prec4$. 
 \begin{figure}[h]
   \begin{framed}
     \begin{center}
-      \includegraphics[scale=0.3]{cover-edge-deletion}
+      \includegraphics[scale=0.4]{cover-edge-deletion}
     \end{center}
     \caption{Deleting a cover relation, $2\prec3$, from a poset.}
     \label{fig:cover-edge-deletion}
@@ -92,6 +94,7 @@ relation $2\prec$ from the linear order $1\prec2\prec3\prec4$.
 
 The following Julia code implements the action of deleting $2 \prec 3$
 from a 4-element chain:
+{\small
 \begin{verbatim}
 julia> p = chain(4);
 julia> rem_relation!(p, 2, 3);
@@ -104,8 +107,9 @@ julia> collect(relations(p))
  Relation 2 < 4
  Relation 3 < 4
 \end{verbatim}
+} 
 That this yields a partial order follows from
-Proposition~\ref{prop:ab}. 
+Proposition~\ref{prop:ab}.
 
 The situation is different for non-cover relations. For example,
 consider the linear order $1\prec2\prec3\prec4\prec5$. Suppose we
@@ -130,7 +134,7 @@ This is illustrated in Figure~\ref{fig:other-edge-deletion}.
 \begin{figure}[h]
   \begin{framed}
     \begin{center}
-      \includegraphics[scale=0.3]{other-edge-deletion}
+      \includegraphics[scale=0.4]{other-edge-deletion}
     \end{center}
     \caption{Deleting the non-cover relation $2\prec4$ from the poset
       on the left yields the poset on the right.  The function
@@ -142,6 +146,7 @@ This is illustrated in Figure~\ref{fig:other-edge-deletion}.
 \end{figure}
 
 This Julia code illustrates the deletion:
+{\small
 \begin{verbatim}
 julia> p = chain(5);
 julia> rem_relation!(p, 2, 4);
@@ -155,9 +160,7 @@ julia> collect(relations(p))
  Relation 3 < 5
  Relation 4 < 5
 \end{verbatim}
-
-Note on notation: $[a,b] = \{ c \in V \colon a \preceq c \preceq b
-\}$. 
+}
 
 \begin{prop}\label{prop:ab}
   Let $P=(V,\prec)$ be a poset. Let $a,b\in V$ with $a \prec b$.
@@ -179,7 +182,7 @@ Note on notation: $[a,b] = \{ c \in V \colon a \preceq c \preceq b
   and antisymmetric. We need to prove that $\prec'$ is transitive.
 
   Suppose $x \prec' y \prec' z$. We must show $x \prec' z$. Note that
-  this supposition implies $x \prec y \prec z$ and hence $x \prec
+  $x \prec' y \prec' z$ implies $x \prec y \prec z$ and hence $x \prec
   z$. To show that $x \prec' z$ we need to rule out both $x=a\prec
   z\preceq b$ and $a\preceq x \prec b=z$.
     
@@ -192,5 +195,8 @@ Note on notation: $[a,b] = \{ c \in V \colon a \preceq c \preceq b
   Therefore $x \prec' z$ and we conclude that $\prec'$ is transitive
   and that $(V,\prec')$ is a partially ordered set.
 \end{proof}
+
+\bigbreak
+\rightline{---Ed Scheinerman (\texttt{ers@jhu.edu})}
 
 \end{document}
