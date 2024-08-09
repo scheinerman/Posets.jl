@@ -417,7 +417,9 @@ julia> dimension(p)
 
 ## Standard Posets
 
-The following functions create standard partially ordered sets.
+The following functions create standard partially ordered sets. 
+See the [Gallery](https://github.com/scheinerman/Posets.jl/blob/main/gallery/README.md) 
+for pictures of some of these posets.
 
 * `antichain(n)` creates the poset with `n` elements and no relations. Same as `Poset(n)`.
 
