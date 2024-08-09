@@ -419,19 +419,29 @@ julia> dimension(p)
 
 The following functions create standard partially ordered sets.
 
-* `chain(n)` creates the poset with `n` elements in which `1 < 2 < 3 < ... < n`. 
-* `chain(vlist)` creates a chain from the integer vector `vlist` (which must be a permutation of `1:n`). 
-For example, `chain([2,1,3])` creates a chain in which `2 < 1 < 3`.
 * `antichain(n)` creates the poset with `n` elements and no relations. Same as `Poset(n)`.
+
+* `chain(n)` creates the poset with `n` elements in which `1 < 2 < 3 < ... < n`. 
+  
+* `chain(vlist)` creates a chain from the integer vector `vlist` (which must be a permutation of `1:n`). For example, `chain([2,1,3])` creates a chain in which `2 < 1 < 3`.
+
+* `chevron()` creates a poset with `6` elements that has dimension equal to `3`. It is 
+  different from `standard_example(3)`. 
+
+* `crown(n,k)` creates the crown poset with `2n` elements with two levels: `n` elements as minimals
+  and `n` as maximals. Each minimal is comparable to `n-k` maximals. See the help message for more information.
+
+* `random_linear_order(n)`: Create a linear order in which the numbers `1` through `n` 
+  appear in random order.
+
+* `random_poset(n,d=2)`: Create a random `d`-dimensional poset by intersecting `d` random linear orders,
+  each with `n` elements. 
+
 * `standard_example(n)` creates a poset with `2n` elements. Elements `1` through `n` form an antichain 
   as do elements `n+1` through `2n`. The only relations are of the form `j < k` where `1 ≤ j ≤ n` 
   and `k = n+i` where `1 ≤ i ≤ n` and `i ≠ j`. This is a smallest-size poset of dimension `n`.
-* `chevron()` creates a poset with `6` elements that has dimension equal to `3`. It is 
-  different from `standard_example(3)`. 
-* `random_linear_order(n)`: Create a linear order in which the numbers `1` through `n` appear in 
-  random order.
-* `random_poset(n,d=2)`: Create a random `d`-dimensional poset by intersecting `d` random linear orders,
-  each with `n` elements. 
+  Equivalent to `crown(n,1)`.
+
 * `subset_lattice(d)`: Create the poset corresponding to the `2^d` subsets of `{1,2,...,d}` 
   ordered by inclusion. For `a` between `1` and `2^d`, element `a` corresponds to a 
   subset of `{1,2,...,d}` as follows: Write `a-1` in binary and view the bits as the characteristic 

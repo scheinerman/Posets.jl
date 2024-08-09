@@ -47,18 +47,38 @@ antichain(n::Integer) = Poset(n)
 Poset with `2n` elements in two levels. Each element on the lower level is 
 below `n-1` elements on the upper level. This is an example of a smallest-size 
 poset of dimension `n`.
+
+This is equivalent to `crown(n,1)`.
 """
-function standard_example(n::Integer)
+standard_example(n::Integer) = crown(n,1)
+
+"""
+    crown(n::Integer, k::Integer)::Poset{Int}
+
+Create the crown poset `S(n,k)`. This is a height-`2` poset 
+with `2n` vertices with elements `1` through `n` as minimals and 
+`n+1` through `2n` as maximals. Minimal element `a` is below exactly
+`n-k` maximals. Element `a` is *not* below elements `n+(a)` through `n+(a+k-1)`
+where the terms in parentheses wrap modulo `n`. 
+
+For example, in `crown(5,2)` element `2` is not below `7` or `8`, but 
+`2<9`, `2<10`, and `2<6`.
+"""
+function crown(n::Integer, k::Integer)::Poset{Int}
+    if !(0 ≤ k ≤ n)
+        throw(DomainError("crown(n,k): must have 0 ≤ k ≤ n. Received n=$n and k=$k"))
+    end
+
     p = Poset(2n)
-    for a in 1:n
-        for b in 1:n
-            if a != b
-                add_edge!(p.d, a, b + n)
-            end
+    for a=1:n
+        for j=k:n-1
+            b = n + mod1(a+j,n)
+            add_edge!(p.d, a, b)
         end
     end
     return p
 end
+
 
 """
     chevron()
