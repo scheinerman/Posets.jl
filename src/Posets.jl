@@ -12,7 +12,23 @@ using JuMP
 using HiGHS
 
 import Base:
-    +, /, <, <<, ==, >>, adjoint, eltype, getindex, in, intersect, issubset, reverse, show
+    +,
+    /,
+    \,
+    <,
+    <<,
+    ==,
+    >>,
+    adjoint,
+    eltype,
+    getindex,
+    hcat,
+    in,
+    intersect,
+    issubset,
+    reverse,
+    show,
+    vcat
 
 import Graphs:
     add_vertex!,

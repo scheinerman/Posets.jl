@@ -85,12 +85,16 @@ end
     q = p / p
     @test q == reverse(chain(6))
 
+    @test p / q == vcat(p, q)
+    @test p / q == q \ p
+
     p = antichain(4) / chain(3) / antichain(2)
     @test length(collect(maximals(p))) == 4
     @test length(collect(minimals(p))) == 2
 
     p = chain(3) + chain(2)
     @test length(collect(maximals(p))) == 2
+    @test p == hcat(chain(3), chain(2))
 
     p = chain(5) ∩ reverse(chain(5))
     @test nr(p) == 0

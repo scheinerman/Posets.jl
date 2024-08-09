@@ -15,7 +15,7 @@ adjoint(p::Poset) = reverse(p)
 """
     (+)(p::Poset, q::Poset)::Poset
 
-`p+q`is the disjoint union of posets `p` and `q`.
+`p+q`is the disjoint union of posets `p` and `q`. Also `hcat(p,q)`.
 """
 function (+)(p::Poset, q::Poset)::Poset
     np = nv(p)
@@ -30,10 +30,12 @@ function (+)(p::Poset, q::Poset)::Poset
     return Poset(ZZ)
 end
 
+hcat(p::Poset, q::Poset) = p + q
+
 """
     (/)(p::Poset, q::Poset)::Poset
 
-`p/q` creates a new poset by stacking `p` above `q`.
+`p / q` creates a new poset by stacking `p` above `q`. Also `vcat(p,q)`
 """
 function (/)(p::Poset, q::Poset)::Poset
     np = nv(p)
@@ -48,6 +50,16 @@ function (/)(p::Poset, q::Poset)::Poset
     ZZ = [Zp A; B Zq]
     return Poset(ZZ)
 end
+
+vcat(p::Poset, q::Poset) = p / q
+
+"""
+    (\\)(p::Poset, q::Poset)
+
+`p \\ q` creates a new poset by stacking `q` above `p`. 
+Equivalent to `q / p`.
+"""
+(\)(p::Poset, q::Poset) = q / p
 
 """
     intersect(p::Poset, q::Poset)
