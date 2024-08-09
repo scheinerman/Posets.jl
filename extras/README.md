@@ -11,6 +11,18 @@ Function provided:
   Given a list of distinct objects for which `issubseteq` is defined, 
   create a poset `p` in which `i<j` exactly when `list[i] ⊆ list[j]`.
 
+## `converter.jl`
+
+This file provides the function `poset_converter` that may be use to convert a poset
+defined in this `Posets` module (called `Poset`) to a poset (called `SimplePoset`)
+in the [SimplePosets](https://github.com/scheinerman/SimplePosets.jl) module.
+A simple call to `poset_convert(p)` converts `p` from one
+type to the other. There is also a version for converting a `SimplePoset` to a `Poset` 
+in which the user provides a dictionary mapping elements in the `SimplePoset` to the 
+integers `1` through `n`. See the help message for the function.
+
+> **Note**: The functions defined in the `Poset` and `SimplePoset` have a lot of the same names. This can cause conflicts. It may be necessary to invoke a function `f` either as `Posets.f` or `SimplePosets.f` to deal with the clash. 
+
 ## `divisors.jl`
 
 Function provided:

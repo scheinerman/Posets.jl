@@ -490,12 +490,16 @@ only if `w < v` in `reverse(p)`). The dual (reverse) of `p` can also be created 
 ### Disjoint union
 Given two posets `p` and `q`, the result of `p+q` is a new poset formed from the 
 disjoint union of `p` and `q`. Note that `p+q` and `q+p` are isomorphic, but 
-may be unequal because of the vertex numbering convention.
+may be unequal because of the vertex numbering convention. 
+
+Alternatively `hcat(p,q)`.
 
 ### Stack
 
-Given two posets `p` and `q`, the result of `p/q` is a new poset from from a copy of `p` 
+Given two posets `p` and `q`, the result of `p/q` is a new poset from a copy of `p` 
 and a copy of `q` with all elements of `p` above all elements of `q`. 
+
+Alternatively, `vcat(p,q)` or  `q\p`.
 
 ### Induced subposet
 
