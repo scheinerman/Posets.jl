@@ -566,4 +566,8 @@ this function can cause severe problems if not used carefully.
 The `extras` folder includes additional code that may be useful in 
 working with `Posets`. See the `README` in that directory. 
 
+Of note is `extras/converter.jl` that defines the function `poset_converter` that can 
+be used to transform a `Poset` (defined in this module) to a `SimplePoset` 
+(defined in the [SimplePosets](https://github.com/scheinerman/SimplePosets.jl) module). 
+
 
