@@ -39,4 +39,4 @@ julia> for k=1:8
 
 ## `weak_order([1,1,1,2,2,3,3,3,3])`
 
-<img src="weak.png" width="300">
+<img src="weak.png" width="250">
