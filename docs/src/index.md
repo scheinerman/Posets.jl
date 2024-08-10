@@ -135,7 +135,8 @@ true
 ```
 When element `2` is removed from `p`, element `5` takes its place. 
 
-For a more extensive explanation, see `poset-deletion.pdf` in the `delete-doc` folder. 
+For a more extensive explanation, see [poset-deletion.pdf](https://github.com/scheinerman/Posets.jl/blob/main/delete-doc/poset-deletion.pdf)
+in the `delete-doc` folder. 
 
 > **Note**: The `rem_vertices!` function is not part of the official API for `Graphs` and so we have not defined `rem_vertices!` for `Posets`.
 
@@ -576,7 +577,7 @@ this function can cause severe problems if not used carefully.
 ## See Also
 
 The `extras` folder includes additional code that may be useful in 
-working with `Posets`. See the `README` in that directory. 
+working with `Posets`. See the `README` in the `extras` directory. 
 
 Of note is `extras/converter.jl` that defines the function `poset_converter` that can 
 be used to transform a `Poset` (defined in this module) to a `SimplePoset` 
