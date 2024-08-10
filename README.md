@@ -453,7 +453,7 @@ for pictures of some of these posets.
   * Use `subset_decode(a)` to convert an element `a` of this poset into a set of positive integers, `A`.
   * Use `subset_encode(A)` to convert a set of positive integers to its name in this poset. 
 
-
+* `weak_order(vals)`: Create a weak order `p` from a list of real numbers. In `p` element `i` is less than element `j` provided `vals[i] < vals[j]` .
 
 ## Graphs
 

@@ -96,6 +96,7 @@ export Poset,
     subset_encode,
     subset_lattice,
     vertex_edge_incidence_poset,
+    weak_order,
     width,
     zeta_matrix
 

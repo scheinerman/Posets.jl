@@ -21,8 +21,6 @@ function poset_convert(p::Poset)::SimplePoset{Int}
     return P
 end
 
-
-
 function poset_convert(P::SimplePoset{T}, V::Vector{T})::Poset{Int} where {T}
     n = card(P)
     p = Poset(n)

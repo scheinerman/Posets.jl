@@ -50,7 +50,7 @@ poset of dimension `n`.
 
 This is equivalent to `crown(n,1)`.
 """
-standard_example(n::Integer) = crown(n,1)
+standard_example(n::Integer) = crown(n, 1)
 
 """
     crown(n::Integer, k::Integer)::Poset{Int}
@@ -70,15 +70,14 @@ function crown(n::Integer, k::Integer)::Poset{Int}
     end
 
     p = Poset(2n)
-    for a=1:n
-        for j=k:n-1
-            b = n + mod1(a+j,n)
+    for a in 1:n
+        for j in k:(n - 1)
+            b = n + mod1(a + j, n)
             add_edge!(p.d, a, b)
         end
     end
     return p
 end
-
 
 """
     chevron()
@@ -141,4 +140,18 @@ function subset_encode(A::Set{T})::Int where {T<:Integer}
         s += 1 << (k - 1)
     end
     return s + 1
+end
+
+"""
+    weak_order(vals::Vector{T}) where {T<:Real}
+
+Create a weak order `p` from a list of real numbers. In `p` element `i` 
+is less than element `j` provided `vals[i] < vals[j]` .
+"""
+function weak_order(vals::Vector{T}) where {T<:Real}
+    n = length(vals)
+    p = Poset(n)
+    rels = [(a, b) for a in 1:n for b in 1:n if vals[a] < vals[b]]
+    add_relations!(p, rels)
+    return p
 end
