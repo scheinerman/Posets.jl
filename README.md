@@ -165,7 +165,7 @@ julia> collect(relations(p))
 ```
 Note that relations `2<3` and `3<4` have been removed. 
 
-For a more extensive explanation, see `poset-deletion.pdf` in the `delete-doc` folder. 
+For a more extensive explanation, see [poset-deletion.pdf](https://github.com/scheinerman/Posets.jl/blob/main/delete-doc/poset-deletion.pdf) in the `delete-doc` folder. 
 
 
 ## Inspection
