@@ -109,3 +109,21 @@ function induced_subposet(p::Poset, vlist::AbstractVector{T}) where {T<:Integer}
     q = Poset(g)
     return q, m
 end
+
+"""
+    trim!(p::Poset)
+
+Remove all vertices of `p` that have no relation to any other vertices.
+"""
+function trim!(p::Poset)
+    while true
+        n = nv(p)
+        isolates = (v for v in 1:n if degree(p.d, v) == 0)
+        try
+            x = first(isolates)
+            rem_vertex!(p, x)
+        catch
+            return nothing
+        end
+    end
+end

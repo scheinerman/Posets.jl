@@ -1,7 +1,12 @@
 # Extras for `Posets`
 
 This folder contains extra code that may be interesting/useful
-in working with partially ordered sets.
+in working with partially ordered sets. 
+
+Some of these files are sequestered here
+because they load other packages. Some might be of marginal value. Some
+might be incorporated into `Posets` in the future. 
+
 
 ## `containment_order.jl`
 
@@ -80,10 +85,10 @@ Based on `gplot` from [GraphPlot](https://github.com/JuliaGraphs/GraphPlot.jl).
 ## `posetplot.jl`
 
 Function provided:
-* `posetplot(p)`: draw a picture of (the cover digraph of) `p`. An edge `v → w` means 
-`v < w` and `w` covers `v`. 
+* `posetplot(p)`: draw a picture of (the cover digraph of) `p`. An edge from `v` upward to `w`
+  means `v < w` and `w` covers `v`. (No arrows are drawn; this is a Hasse diagram.)
 
-Based on `graphplot` from [GraphMakie](https://graph.makie.org/stable/).
+Based on `graphplot` from [GraphMakie](https://graph.makie.org/stable/) and using [LayeredLayouts](https://github.com/oxinabox/LayeredLayouts.jl).
 
 
 ## `vertex-edge.jl`

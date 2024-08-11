@@ -165,7 +165,7 @@ julia> collect(relations(p))
 ```
 Note that relations `2<3` and `3<4` have been removed. 
 
-For a more extensive explanation, see `poset-deletion.pdf` in the `delete-doc` folder. 
+For a more extensive explanation, see [poset-deletion.pdf](https://github.com/scheinerman/Posets.jl/blob/main/delete-doc/poset-deletion.pdf) in the `delete-doc` folder. 
 
 
 ## Inspection
@@ -453,7 +453,7 @@ for pictures of some of these posets.
   * Use `subset_decode(a)` to convert an element `a` of this poset into a set of positive integers, `A`.
   * Use `subset_encode(A)` to convert a set of positive integers to its name in this poset. 
 
-
+* `weak_order(vals)`: Create a weak order `p` from a list of real numbers. In `p` element `i` is less than element `j` provided `vals[i] < vals[j]` .
 
 ## Graphs
 
@@ -542,6 +542,21 @@ julia> p ∩ reverse(p)
 
 Use `linear_extension(p)` to create  a linear extension of `p`. 
 This is a total order `q` with the same elements as `p` and with `p ⊆ q`. 
+
+
+### Isolated vertex removal
+
+Use `trim!(p)` to remove from `p` all isolated vertices. That is, delete all
+elements that have no relation to any other elements. 
+```
+julia> p = chain(4) + antichain(3)
+{7, 6} Int64 poset
+
+julia> trim!(p)
+
+julia> p
+{4, 6} Int64 poset
+```
 
 
 ## Implementation

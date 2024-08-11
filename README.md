@@ -544,6 +544,21 @@ Use `linear_extension(p)` to create  a linear extension of `p`.
 This is a total order `q` with the same elements as `p` and with `p ⊆ q`. 
 
 
+### Isolated vertex removal
+
+Use `trim!(p)` to remove from `p` all isolated vertices. That is, delete all
+elements that have no relation to any other elements. 
+```
+julia> p = chain(4) + antichain(3)
+{7, 6} Int64 poset
+
+julia> trim!(p)
+
+julia> p
+{4, 6} Int64 poset
+```
+
+
 ## Implementation
 
 A `Poset` is a structure that contains a single data element: a `DiGraph`. 
