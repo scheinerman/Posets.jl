@@ -88,7 +88,16 @@ Function provided:
 * `posetplot(p)`: draw a picture of (the cover digraph of) `p`. An edge from `v` upward to `w`
   means `v < w` and `w` covers `v`. (No arrows are drawn; this is a Hasse diagram.)
 
+* `posetplot2d(p)`: Draw a picture of a poset whose dimension is at most 2. 
+
 Based on `graphplot` from [GraphMakie](https://graph.makie.org/stable/) and using [LayeredLayouts](https://github.com/oxinabox/LayeredLayouts.jl).
+
+```
+julia> posetplot(chevron())
+```
+Gives this: 
+
+![](chevron.png)
 
 
 ## `vertex-edge.jl`
