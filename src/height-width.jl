@@ -113,6 +113,13 @@ end
 
 chain_cover(p::Poset) = chain_cover(p, width(p))
 
+"""
+    antichain_cover(p::Poset, k::Integer)
+
+Find a collection of `k` antichains in `p` such that every vertex of `p`
+is a member of one of those antichains. If `k` is omitted, the height of `p`
+is used. 
+"""
 function antichain_cover(p::Poset, k::Integer)
     n = nv(p)
     MOD = Model(get_solver())
