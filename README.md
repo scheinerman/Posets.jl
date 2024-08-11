@@ -386,7 +386,7 @@ julia> just_below(p,5) |> collect
 ```
 
 
-### Maxmals/Minimals/Height/Width
+### Maximals/Minimals/Height/Width
 
 * `maximals(p)` returns an iterator for the maximal elements of `p`.
 * `minimals(p)` returns an iterator for the minimal elements of `p`.
