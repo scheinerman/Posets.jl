@@ -112,6 +112,10 @@ end
     q, _ = induced_subposet(p, [1, 7, 8, 9, 10])
     @test nr(q) == 4
     @test is_connected(q)
+
+    p = antichain(2) + chain(4) + antichain(2)
+    trim!(p)
+    @test nv(p) == 4
 end
 
 @testset "Connection" begin
