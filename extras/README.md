@@ -32,7 +32,6 @@ Function provided:
 distinct positive integers to be ordered by divisibility. 
 
 
-
 ## `interval-orders.jl`
 
 Functions provided:
@@ -73,6 +72,19 @@ julia> partition_lattice_demo(5)
 Function provided:
 * `pplot(p)`: draw a picture of (the cover digraph of) `p`. An edge `v → w` means 
 `v < w` and `w` covers `v`. Use `pplot(p, nodelable=1:nv(p))` to have the nodes labeled.
+
+Based on `gplot` from [GraphPlot](https://github.com/JuliaGraphs/GraphPlot.jl).
+
+(I like the pictures produced by `posetplot.jl` better. I might just delete this. )
+
+## `posetplot.jl`
+
+Function provided:
+* `posetplot(p)`: draw a picture of (the cover digraph of) `p`. An edge `v → w` means 
+`v < w` and `w` covers `v`. 
+
+Based on `graphplot` from [GraphMakie](https://graph.makie.org/stable/).
+
 
 ## `vertex-edge.jl`
 
