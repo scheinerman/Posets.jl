@@ -306,7 +306,7 @@ julia> src(r), dst(r)
 
 * `issubset(p,q)` (or `p ⊆ q`) returns `true` exactly when `nv(p) ≤ nv(q)` and whenever `v < w` in `p` we also have `v < w` in `q`.
 
-### Above, Below, Between
+### Above, below, between
 
 * `above(p,a)` returns an iterator for all elements `k` of `p` such that `a<k`.
 * `below(p,a)` returns an iterator for all elements `k` of `p` such that `k<a`.
@@ -386,7 +386,7 @@ julia> just_below(p,5) |> collect
 ```
 
 
-### Maximals/Minimals/Height/Width
+### Maximals, minimals, height, and width
 
 * `maximals(p)` returns an iterator for the maximal elements of `p`.
 * `minimals(p)` returns an iterator for the minimal elements of `p`.

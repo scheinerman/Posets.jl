@@ -34,7 +34,7 @@ Function provided:
   the (positive) integer `n`. In this poset we have `a < b` provided the `a`-th divisor of `n`
   is a factor of the `b`-th divisor. 
 * This can also be invoked as `divisor_poset(list)` where `list` is a list (`Vector`) of 
-distinct positive integers to be ordered by divisibility. 
+  distinct positive integers to be ordered by divisibility. 
 
 
 ## `interval-orders.jl`
