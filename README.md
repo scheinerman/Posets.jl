@@ -133,12 +133,40 @@ true
 julia> has_relation(p,1,2)
 true
 ```
-When element `2` is removed from `p`, element `5` takes its place. 
+When element `2` is removed from `p`, element `5` takes its place. Because of this renumbering, 
+we have some unexpected behavior:
+```
+julia> p = subset_lattice(4)
+{16, 65} Int64 poset
 
-For a more extensive explanation, see [poset-deletion.pdf](https://github.com/scheinerman/Posets.jl/blob/main/delete-doc/poset-deletion.pdf)
-in the `delete-doc` folder. 
+julia> q = Poset(p)   # make a copy of p
+{16, 65} Int64 poset
 
-> **Note**: The `rem_vertices!` function is not part of the official API for `Graphs` and so we have not defined `rem_vertices!` for `Posets`.
+julia> rem_vertex!(q, 9)
+true
+
+julia> q
+{15, 57} Int64 poset
+
+julia> q ⊆ p
+false
+
+julia> maximals(p) |> collect
+1-element Vector{Int64}:
+ 16
+
+julia> maximals(q) |> collect
+1-element Vector{Int64}:
+ 9
+```
+One might expect that deleting a vertex from a poset results in a poset that is a subset of the original. However, 
+when vertex `9` was removed from (a copy of) `p`, the vertex `16` is relabeled `9`. Hence vertex `9` in `p` is
+not maximal, but it is maximal in `q`. 
+
+
+> For a more extensive explanation, see [poset-deletion.pdf](https://github.com/scheinerman/Posets.jl/blob/main/delete-doc/poset-deletion.pdf) in the `delete-doc` folder. 
+
+
 
 ### Removing a relation
 
@@ -165,7 +193,7 @@ julia> collect(relations(p))
 ```
 Note that relations `2<3` and `3<4` have been removed. 
 
-For a more extensive explanation, see [poset-deletion.pdf](https://github.com/scheinerman/Posets.jl/blob/main/delete-doc/poset-deletion.pdf) in the `delete-doc` folder. 
+> For a more extensive explanation, see [poset-deletion.pdf](https://github.com/scheinerman/Posets.jl/blob/main/delete-doc/poset-deletion.pdf) in the `delete-doc` folder. 
 
 
 ## Inspection
@@ -366,6 +394,8 @@ julia> just_below(p,5) |> collect
 * `max_antichain(p)` returns a vector containing the elements of a largest antichain in `p`.
 * `height(p)` returns the size of a largest chain in `p`.
 * `width(p)` returns the size of a largest antichain in `p`.
+* `antichain_cover(p, k)` returns a collection of `k` anti chains of `p` such that 
+   every element of `p` is in one of the antichains. The parameter `k` is optional, in which case the height of `p` is used. 
 * `chain_cover(p, k)` returns a collection of `k` chains of `p` such that every element of 
    `p` is in one of the chains. The parameter `k` is optional, in which case the width of `p` 
    is used. (This is the smallest possible size of a chain cover per Dilworth's theorem.)

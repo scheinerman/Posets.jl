@@ -1,9 +1,9 @@
 """
-    max_anti_chain(p::Poset)
+    max_antichain(p::Poset)
 
 Return a maximum size antichain of `p` (as a list).
 """
-function max_anti_chain(p::Poset)
+function max_antichain(p::Poset)
     n = nv(p)
     V = collect(1:n)
     R = collect(relations(p))
@@ -29,7 +29,7 @@ end
 
 Return the width of `p`, i.e., the size of a maximum antichain.
 """
-width(p::Poset) = length(max_anti_chain(p))
+width(p::Poset) = length(max_antichain(p))
 
 """
     max_chain(p::Poset)
@@ -112,3 +112,40 @@ function chain_cover(p::Poset, k::Integer)
 end
 
 chain_cover(p::Poset) = chain_cover(p, width(p))
+
+function antichain_cover(p::Poset, k::Integer)
+    n = nv(p)
+    MOD = Model(get_solver())
+
+    # x[v,i]==1 means that vertex v belongs to antichain i
+    @variable(MOD, x[1:n, 1:k], Bin)
+
+    # each vertex belongs to exactly one antichain
+    for v in 1:n
+        @constraint(MOD, sum(x[v, i] for i in 1:k) == 1)
+    end
+
+    #comparable vertices must be in different chains 
+    for v in 1:(n - 1)
+        for w in (v + 1):n
+            if p(v, w) || p(w, v)
+                for i in 1:k
+                    @constraint(MOD, x[v, i] + x[w, i] <= 1)
+                end
+            end
+        end
+    end
+
+    optimize!(MOD)
+    status = Int(termination_status(MOD))
+    # status == 1 means success
+    if status != 1
+        error("No antichain cover of size $k is possible.")
+    end
+
+    X = value.(x)
+    chains = [findall(X[:, i] .> 0.1) for i in 1:k]
+    return [_chain_sort(p, c) for c in chains]
+end
+
+antichain_cover(p::Poset) = antichain_cover(p, height(p))

@@ -164,6 +164,11 @@ end
     CC = chain_cover(p)
     @test length(CC) == width(p)
     @test is_chain(p, CC[1]) && is_chain(p, CC[end])
+
+    p = chain(3) + chain(3)
+    AC = antichain_cover(p)
+    @test length(AC) == 3
+    @test length(AC[1]) == 2
 end
 
 @testset "dimension" begin
