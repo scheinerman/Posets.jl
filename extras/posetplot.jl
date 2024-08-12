@@ -26,22 +26,6 @@ function _zlay(g::AbstractGraph)
     return Point.(zip(ys, xs))
 end
 
-function _chain2list(p::Poset)
-    n = nv(p)
-    g = transitivereduction(p.d)
-    v0 = first(findall(indegree(g, v) == 0 for v in 1:n))
-    result = zeros(Int, n)
-    result[1] = v0
-
-    for i in 1:(n - 1)
-        v = result[i]
-        w = first(outneighbors(g, v))
-        result[i + 1] = w
-    end
-
-    return result
-end
-
 """
     posetplot2d(p::Poset)
 
@@ -57,8 +41,8 @@ function posetplot2d(p::Poset)
 
     function _two_d_lay(::AbstractGraph)
         R = realizer(p, 2)
-        x = sortperm(_chain2list(R[1]))
-        y = sortperm(_chain2list(R[2]))
+        x = sortperm(Posets._chain2list(R[1]))
+        y = sortperm(Posets._chain2list(R[2]))
 
         rot = [1 -1; 1 1]
         XY = [x y] * rot'

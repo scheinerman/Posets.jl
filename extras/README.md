@@ -99,6 +99,21 @@ Gives this:
 
 ![](chevron.png)
 
+## `rectangle-rep.jl`
+
+Function provided:
+
+* `rectangle_containment_representation(p)` draws a picture with `nv(p)` rectangles 
+  in which the `i`-th rectangle is contained inside the `j`-th rectangle if and
+  only if `i < j` in `p`. Throws an error if the dimension of `p` is greater than 4.
+
+For example
+```
+julia> rectangle_containment_representation(standard_example(4))
+```
+gives this:
+
+![](rect-standard-4.png)
 
 ## `vertex-edge.jl`
 

@@ -73,26 +73,34 @@ May also be invoked as `p ∩ q`.
 intersect(p::Poset, q::Poset) = Poset(p.d ∩ q.d)
 
 """
+    _chain2list(p::Poset)
+
+Given a (chain) poset `p`, return a list of integers
+whose entries are the elements of `p` in ascending order.
+
+See also `_chain_sort`.
+"""
+function _chain2list(p::Poset)::Vector{Int}
+    return sortperm([indegree(p.d, v) for v in 1:nv(p)])
+end
+
+"""
     linear_extension(p::Poset)::Poset
 
 Return a linear extension of `p`. This is a total order `q` with 
 the same elements as `p` with `p ⊆ q`.
 """
 function linear_extension(p::Poset)::Poset
-    n = nv(p)
-    seq = topological_sort(p.d)
-    d = DiGraph(n)
-    for i in 1:(n - 1)
-        add_edge!(d, seq[i], seq[i + 1])
-    end
-    return Poset(d)
+    return chain(_chain2list(p))
 end
 
 """
     _chain_sort(p::Poset, ch::Vector{T}) where {T<:Integer}
 
 `ch` is a list of vertices of `p`, preferrably a chain. Return the list sorted 
-according to the `<` relation of `p`.
+according to the `<` relation of `p`. 
+
+See also `_chain2list`.
 """
 function _chain_sort(p::Poset, ch::Vector{T}) where {T<:Integer}
     lt(x, y) = p[x] < p[y]
