@@ -37,7 +37,9 @@ width(p::Poset) = length(max_antichain(p))
 Return a maximum size chain of `p` (as a list). The 
 chain elements are returned in order (least is first).
 """
-function max_chain(p::Poset)
+max_chain(p::Poset) = dag_longest_path(p.d)
+
+function old_max_chain(p::Poset)
     n = nv(p)
     V = collect(1:n)
     MOD = Model(get_solver())
