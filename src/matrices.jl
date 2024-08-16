@@ -4,11 +4,17 @@
     zeta_matrix(p::Poset)::Matrix{Int}
 
 Return the zeta matrix of `p`. This is a (dense) 0,1-matrix whose `i,j`-entry 
-is `1` exactly when `p[i] ≤ p[j]`.
+is `1` exactly when `p[i] ≤ p[j]`. See also `strict_zeta_matrix`.
 """
-function zeta_matrix(p::Poset)::Matrix{Int}
-    return Matrix(adjacency_matrix(p.d) + I)
-end
+zeta_matrix(p::Poset)::Matrix{Int} = strict_zeta_matrix(p) + I
+
+"""
+    strict_zeta_matrix(p::Poset)::Matrix{Int}
+
+Return the  *strict* zeta matrix of `p`. This is a (dense) 0,1-matrix whose `i,j`-entry 
+is `1` exactly when `p[i] < p[j]`. See also `zeta_matrix`.
+"""
+strict_zeta_matrix(p::Poset)::Matrix{Int} = Matrix(adjacency_matrix(p.d))
 
 """
     mobius_matrix(p::Poset):: Matrix{Int}
@@ -17,5 +23,5 @@ Return the inverse `zeta_matrix(p)`.
 """
 function mobius_matrix(p::Poset)::Matrix{Int}
     Z = zeta_matrix(p)
-    return Int.(inv(Z))
+    return Int.(round.(inv(Z)))
 end
