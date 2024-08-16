@@ -518,9 +518,11 @@ are of the form `v < e` where `v` is a vertex that is an end point of the edge `
 
 * `zeta_matrix(p)` returns the zeta matrix of the poset. This is a `0,1`-matrix whose
   `i,j`-entry is `1` exactly when `p[i] ≤ p[j]`. 
+* `strict_zeta_matrix(p)` returns a  `0,1`-matrix whose `i,j` entry is `1` 
+  exactly when `p[i] < p[j]`.
 * `mobius_matrix(p)` returns the inverse of `zeta(p)`. 
 
-In both cases, the output is a dense, integer matrix. 
+In all cases, the output is a dense, integer matrix. 
 
 
 ## Operations
