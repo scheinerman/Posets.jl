@@ -10,8 +10,8 @@ function _zeros_to_missing(A::AbstractMatrix{T}) where {T}
     TM = Union{T,Missing}
     B = Matrix{TM}(A)
     r, c = size(B)
-    for i = 1:r
-        for j = 1:c
+    for i in 1:r
+        for j in 1:c
             if B[i, j] == 0
                 B[i, j] = missing
             end
@@ -19,8 +19,6 @@ function _zeros_to_missing(A::AbstractMatrix{T}) where {T}
     end
     return B
 end
-
-
 
 """
     max_antichain(p::Poset)
@@ -48,15 +46,16 @@ function max_antichain(p::Poset)
     return [v for v in V if X[v] > 0.1]
 end
 
-
-
-
 """
     width(p::Poset)
 
 Return the width of `p`, i.e., the size of a maximum antichain.
 """
 function width(p::Poset)::Int
+    if nr(p) == 0   # corner case needed to avoid glitch in hungarian
+        return nv(p)
+    end
+
     A = _zeros_to_missing(strict_zeta_matrix(p))
     _, a = hungarian(A)
     return nv(p) - a
