@@ -260,7 +260,7 @@ The functions `are_comparable(p,a,b)` and `are_incomparable(p,a,b)` behave as fo
 * `are_comparable(p,a,b)` returns `true` exactly when `a` and `b` are both in the poset, and one of the following is true: `a<b`, `a==b`, or `a>b`. 
 * `are_incompable(p,a,b)` returns `true` exactly when `a` and `b` are both in the poset, but none of the follower are true: `a<b`, `a==b`, or `a>b`.
 
-Alternatively, use `p[a] ⟂ p[b]` to test if `a` and `b` are comparable, and use `p[a] ∥ p[b]` to test of `a` and `b` are incomparable. 
+Alternatively, use `p[a] ⟂ p[b]` to test if `a` and `b` are comparable, and use `p[a] ∥ p[b]` to test if `a` and `b` are incomparable. 
 
 #### Chain/antichain check
 
@@ -396,8 +396,8 @@ julia> just_below(p,5) |> collect
 * `max_antichain(p)` returns a vector containing the elements of a largest antichain in `p`.
 * `height(p)` returns the size of a largest chain in `p`.
 * `width(p)` returns the size of a largest antichain in `p`.
-* `antichain_cover(p)` returns a collection of `k` antichains of `p` such that 
-   every element of `p` is in one of the antichains. The number of chains is the height of `p`.
+* `antichain_cover(p)` returns a collection of antichains of `p` such that 
+   every element of `p` is in one of the antichains. The number of antichains is the height of `p`.
 * `chain_cover(p)` returns a collection of chains of `p` such that every element of 
    `p` is in one of the chains. The number of chains is the width of `p`. 
 

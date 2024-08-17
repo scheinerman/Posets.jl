@@ -44,10 +44,10 @@ Returns `true` provided both `a` and `b` are in `p` and none of the
 following are true: `a<b` or `a==b` or `b<a`.
 """
 function are_incomparable(p::Poset, a::Integer, b::Integer)::Bool
-    if (a ∉ p) || (b ∉ p) || (a == b)
+    if (a ∉ p) || (b ∉ p)
         return false
     end
-    return !(has_relation(p, a, b) && has_relation(p, b, a))
+    return !(are_comparable(p, a, b))
 end
 
 """

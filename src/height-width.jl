@@ -105,13 +105,43 @@ function chain_cover(p::Poset) # ::Vector{Vector{Int}}
 end
 
 """
-    antichain_cover(p::Poset, k::Integer)
+    antichain_cover(p)
+
+Find a collection of antichains in `p` such that every vertex of `p`
+is a member of one of those antichains. The number of antichains is 
+the height of `p`.
+"""
+function antichain_cover(p)
+    n = nv(p)
+    if n == 0
+        return Vector{Vector{Int}}()
+    end
+
+    a1 = collect(minimals(p))  #bottoms form first antichain
+    result = [a1]
+    done = Set(a1)
+
+    todo = setdiff(Set(1:n), done)   # not yet in an antichain
+    while length(todo) > 0
+        # next antichain are all elements whose downset are already done
+        a = [v for v in todo if below(p, v) ⊆ done]
+        sort!(a)
+        append!(result, [a])
+        done = done ∪ Set(a)
+        todo = setdiff(Set(1:n), done)
+    end
+
+    return result
+end
+
+"""
+    old_antichain_cover(p::Poset, k::Integer)
 
 Find a collection of `k` antichains in `p` such that every vertex of `p`
 is a member of one of those antichains. If `k` is omitted, the height of `p`
 is used. 
 """
-function antichain_cover(p::Poset, k::Integer)
+function old_antichain_cover(p::Poset, k::Integer)
     n = nv(p)
     MOD = Model(get_solver())
 
@@ -145,5 +175,3 @@ function antichain_cover(p::Poset, k::Integer)
     chains = [findall(X[:, i] .> 0.1) for i in 1:k]
     return [_chain_sort(p, c) for c in chains]
 end
-
-antichain_cover(p::Poset) = antichain_cover(p, height(p))
