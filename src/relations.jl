@@ -188,6 +188,15 @@ function (==)(a::PosetElement, b::PosetElement)::Bool
     return a.x == b.x
 end
 
+function (⟂)(a::PosetElement, b::PosetElement)::Bool
+    if a.p !== b.p
+        _cannot_compare()
+    end
+    return are_comparable(a.p, a.x, b.x)
+end
+
+(∥)(a::PosetElement, b::PosetElement)::Bool = !(a ⟂ b)
+
 # COVERING
 
 """

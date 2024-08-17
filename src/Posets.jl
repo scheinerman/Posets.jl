@@ -102,7 +102,9 @@ export Poset,
     vertex_edge_incidence_poset,
     weak_order,
     width,
-    zeta_matrix
+    zeta_matrix,
+    ⟂,
+    ∥
 
 function __init__()
     set_solver(HiGHS)

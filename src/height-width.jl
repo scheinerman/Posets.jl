@@ -61,7 +61,6 @@ function width(p::Poset)::Int
     return nv(p) - a
 end
 
-
 """
     max_chain(p::Poset)
 
@@ -97,57 +96,13 @@ function chain_cover(p::Poset) # ::Vector{Vector{Int}}
     A = _zeros_to_missing(strict_zeta_matrix(p))
     assg, _ = hungarian(A)
 
-    rel_list =  [ (k, assg[k]) for k=1:n if assg[k] != 0]
+    rel_list = [(k, assg[k]) for k in 1:n if assg[k] != 0]
     q = Poset(n)
     add_relations!(q, rel_list)
     C = connected_components(q)
-    lt(x,y) = p[x] < p[y]
 
-    return [sort(c,lt=lt) for c in C]
+    return [_chain_sort(p, c) for c in C]
 end
-
-
-
-
-
-
-
-function old_chain_cover(p::Poset, k::Integer)
-    n = nv(p)
-    MOD = Model(get_solver())
-
-    # x[v,i]==1 means that vertex v belongs to chain i
-    @variable(MOD, x[1:n, 1:k], Bin)
-
-    # each vertex belongs to exactly one chain
-    for v in 1:n
-        @constraint(MOD, sum(x[v, i] for i in 1:k) == 1)
-    end
-
-    #incomparable vertices must be in different chains 
-    for v in 1:(n - 1)
-        for w in (v + 1):n
-            if p(v, w) || p(w, v)
-                continue
-            end
-            for i in 1:k
-                @constraint(MOD, x[v, i] + x[w, i] <= 1)
-            end
-        end
-    end
-
-    optimize!(MOD)
-    status = Int(termination_status(MOD))
-    # status == 1 means success
-    if status != 1
-        error("No chain cover of size $k is possible.")
-    end
-
-    X = value.(x)
-    chains = [findall(X[:, i] .> 0.1) for i in 1:k]
-    return [_chain_sort(p, c) for c in chains]
-end
-
 
 """
     antichain_cover(p::Poset, k::Integer)
