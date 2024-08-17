@@ -61,46 +61,14 @@ function width(p::Poset)::Int
     return nv(p) - a
 end
 
-"""
-    Posets.old_width(p::Poset)
-
-Legacy version of `width`, to be removed. 
-"""
-old_width(p::Poset) = length(max_antichain(p))
 
 """
-    Posets.old_max_chain(p::Poset)
+    max_chain(p::Poset)
 
 Return a maximum size chain of `p` (as a list). The 
 chain elements are returned in order (least is first).
-
-Legacy version to be removed.
 """
 max_chain(p::Poset) = dag_longest_path(p.d)
-
-function old_max_chain(p::Poset)
-    n = nv(p)
-    V = collect(1:n)
-    MOD = Model(get_solver())
-
-    @variable(MOD, x[V], Bin)
-
-    for u in 1:(n - 1)
-        for v in (u + 1):n
-            if p(u, v) || p(v, u)
-                continue
-            end
-            @constraint(MOD, x[u] + x[v] <= 1)
-        end
-    end
-
-    @objective(MOD, Max, sum(x[v] for v in V))
-    optimize!(MOD)
-
-    X = value.(x)
-    ch = [v for v in V if X[v] > 0.1]
-    return _chain_sort(p, ch)
-end
 
 """
     height(p::Poset)
@@ -110,13 +78,41 @@ Return the size of a maximum chain of `p`.
 height(p::Poset) = length(max_chain(p))
 
 """
-    chain_cover(p::Poset, k::Integer)
+    chain_cover(p::Poset)
 
-Find a collection of `k` chains in `p` such that every vertex of `p`
-is a member of one of those chains. If `k` is omitted, the width of `p`
-is used. 
+Find a minimal collection of chains in `p` such that every vertex of `p`
+is a member of one of those chains. The number of chains is the width of `p`.
 """
-function chain_cover(p::Poset, k::Integer)
+function chain_cover(p::Poset) # ::Vector{Vector{Int}}
+    n = nv(p)
+
+    if n == 0
+        return Vector{Vector{Int}}()
+    end
+
+    if nr(p) == 0
+        return [[v] for v in 1:nv(p)]
+    end
+
+    A = _zeros_to_missing(strict_zeta_matrix(p))
+    assg, _ = hungarian(A)
+
+    rel_list =  [ (k, assg[k]) for k=1:n if assg[k] != 0]
+    q = Poset(n)
+    add_relations!(q, rel_list)
+    C = connected_components(q)
+    lt(x,y) = p[x] < p[y]
+
+    return [sort(c,lt=lt) for c in C]
+end
+
+
+
+
+
+
+
+function old_chain_cover(p::Poset, k::Integer)
     n = nv(p)
     MOD = Model(get_solver())
 
@@ -152,7 +148,6 @@ function chain_cover(p::Poset, k::Integer)
     return [_chain_sort(p, c) for c in chains]
 end
 
-chain_cover(p::Poset) = chain_cover(p, width(p))
 
 """
     antichain_cover(p::Poset, k::Integer)
