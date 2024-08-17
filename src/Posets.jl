@@ -10,6 +10,7 @@ using Random
 using ChooseOptimizer
 using JuMP
 using HiGHS
+using Hungarian
 
 import Base:
     +,
