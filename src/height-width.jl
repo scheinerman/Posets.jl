@@ -82,7 +82,7 @@ height(p::Poset) = length(max_chain(p))
 Find a minimal collection of chains in `p` such that every vertex of `p`
 is a member of one of those chains. The number of chains is the width of `p`.
 """
-function chain_cover(p::Poset) # ::Vector{Vector{Int}}
+function chain_cover(p::Poset)::Vector{Vector{Int}}
     n = nv(p)
 
     if n == 0
