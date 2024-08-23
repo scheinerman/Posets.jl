@@ -396,10 +396,13 @@ julia> just_below(p,5) |> collect
 * `max_antichain(p)` returns a vector containing the elements of a largest antichain in `p`.
 * `height(p)` returns the size of a largest chain in `p`.
 * `width(p)` returns the size of a largest antichain in `p`.
-* `antichain_cover(p)` returns a collection of antichains of `p` such that 
-   every element of `p` is in one of the antichains. The number of antichains is the height of `p`.
-* `chain_cover(p)` returns a collection of chains of `p` such that every element of 
+* `chain_cover(p)` returns a minimum-size collection of chains of `p` such that every element of 
    `p` is in one of the chains. The number of chains is the width of `p`. 
+* `antichain_cover(p)` returns a minimum-size collection of antichains of `p` such that 
+   every element of `p` is in one of the antichains. The number of antichains is the height of `p`.
+
+   
+> **Note**: The function `max_chain` returns a largest chain in the poset. It is possible that there are two or more possible answers because there are two or more such chains of maximum size. There is no guarantee as to which largest chain will be returned. Likewise for `max_antichain`. Similarly, `chain_cover` returns a minimum-size partition of the elements into chains. If there are multiple minimum-size chain covers, there is no guarantee which will be returned by `chain_cover`. Likewise for `antichain_cover`.
 
 ### Isomorphism
 
