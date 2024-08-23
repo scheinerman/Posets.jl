@@ -28,6 +28,35 @@ Return a maximum size antichain of `p` (as a list).
 function max_antichain(p::Poset)
     n = nv(p)
     V = collect(1:n)
+    MOD = Model(get_solver())
+    @variable(MOD, x[V], Bin)
+
+    CC = chain_cover(p)
+    nCC = length(CC)
+
+    for ch in CC
+        @constraint(MOD, sum(x[c] for c in ch) == 1)
+    end
+
+    for i in 1:(nCC - 1)
+        for j in (i + 1):nCC
+            gen = ((u, v) for u in CC[i] for v in CC[j] if p[u] ⟂ p[v])
+            for uv in gen
+                u, v = uv
+                @constraint(MOD, x[u] + x[v] <= 1)
+            end
+        end
+    end
+    optimize!(MOD)
+    X = value.(x)
+    return [v for v in V if X[v] > 0.1]
+end
+
+
+
+function old_max_antichain(p::Poset)
+    n = nv(p)
+    V = collect(1:n)
     R = collect(relations(p))
     MOD = Model(get_solver())
 
