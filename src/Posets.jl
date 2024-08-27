@@ -44,6 +44,8 @@ import Graphs:
     rem_vertex!,
     src
 
+import AbstractLattices: vee, wedge, ∨, ∧
+
 export Poset,
     Relation,
     above,
