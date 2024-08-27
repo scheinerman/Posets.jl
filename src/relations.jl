@@ -168,6 +168,11 @@ end
 
 show(io::IO, pe::PosetElement) = print(io, "Element $(pe.x) in a $(pe.p)")
 getindex(p::Poset, x::Integer) = PosetElement(p, x)
+"""
+    integer(a::PosetElement)
+
+Convert a poset element `p[a]` to an integer, `a`.
+"""
 integer(a::PosetElement) = a.x
 
 function _cannot_compare()
