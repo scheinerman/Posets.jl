@@ -598,29 +598,46 @@ elements in $P$ that are below or equal to $x$ and $y$. If $D$ contains a unique
 In this module, the join and meet of elements `x` and `y` in poset `p` can be computed as 
 `p[x] ∨ p[y]` and `p[x] ∧ p[y]`. 
 
-Important notes:
+
+**Important notes**:
 * The meet [or join] of two elements need not exist. If there is no meet [or join], an error is thrown.
 * Cannot compute the meet [or join] of elements in different posets. 
 * The expression `p[x]` throws an error if `x` is not an element of `p`. 
 * The symbol `∨` is typed `\vee<TAB>` and `∧` is typed `\wedge<TAB>`.
 * The result of `p[x] ∨ p[y]` is an object of type `PosetElement` (likewise for meet). To convert this back to an integer, wrap the result in `integer`. 
 
+The join and meet operations for posets are analogous to union and intersection for sets as illustrated here:
 ```
+julia> using ShowSet
+
 julia> p = subset_lattice(4)
 {16, 65} Int64 poset
 
-julia> p[2] ∧ p[7]
-Element 1 in a {16, 65} Int64 poset
+julia> A = Set([1,2,3])
+{1,2,3}
 
-julia> p[2] ∨ p[7]
-Element 8 in a {16, 65} Int64 poset
+julia> B = Set([2,3,4])
+{2,3,4}
 
-julia> integer(ans)
+julia> a = subset_encode(A)
 8
 
-julia> p[2] ∨ p[3] ∨ p[5] ∨ p[9]
+julia> b = subset_encode(B)
+15
+
+julia> p[a] ∨ p[b]
 Element 16 in a {16, 65} Int64 poset
+
+julia> subset_decode(integer(ans))
+{1,2,3,4}
+
+julia> p[a] ∧ p[b]
+Element 7 in a {16, 65} Int64 poset
+
+julia> subset_decode(integer(ans))
+{2,3}
 ```
+
 
 
 
