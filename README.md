@@ -392,6 +392,8 @@ julia> just_below(p,5) |> collect
 
 * `maximals(p)` returns an iterator for the maximal elements of `p`.
 * `minimals(p)` returns an iterator for the minimal elements of `p`.
+* `maximum(p)` returns the maximum element of `p` or `0` if no such element exists. 
+* `minimum(p)` returns the minimum element of `p` or `0` if no such element exists.
 * `max_chain(p)` returns a vector containing the elements of a largest chain in `p`.
 * `max_antichain(p)` returns a vector containing the elements of a largest antichain in `p`.
 * `height(p)` returns the size of a largest chain in `p`.

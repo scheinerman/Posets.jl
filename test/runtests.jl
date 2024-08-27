@@ -78,6 +78,14 @@ end
     @test is_chain(p, [3, 2, 1])
     X = Set(4:5)
     @test is_chain(p, X)
+
+    p = chain(3) + chain(5)
+    @test maximum(p) == 0
+    @test minimum(p) == 0
+
+    p = subset_lattice(3)
+    @test maximum(p) > 0
+    @test minimum(p) > 0
 end
 
 @testset "Operations" begin

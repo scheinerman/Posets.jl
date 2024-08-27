@@ -339,3 +339,37 @@ function rem_relation!(p::Poset, a::Integer, b::Integer)::Bool
     rem_edge!(p.d, a, b)
     return true
 end
+
+"""
+    maximum(p::Poset)::Integer
+
+Return the maximum element of `p` or `0` if there is no such element. 
+"""
+function maximum(p::Poset)::Integer
+    n = nv(p)
+    if n == 0
+        return 0
+    end
+    vv = [v for v in 1:n if indegree(p.d, v) == n - 1]
+    if length(vv) != 1
+        return 0
+    end
+    return first(vv)
+end
+
+"""
+    minimum(p::Poset)::Integer
+
+Return the minimum element of `p` or `0` if there is no such element. 
+"""
+function minimum(p::Poset)::Integer
+    n = nv(p)
+    if n == 0
+        return 0
+    end
+    vv = [v for v in 1:n if outdegree(p.d, v) == n - 1]
+    if length(vv) != 1
+        return 0
+    end
+    return first(vv)
+end

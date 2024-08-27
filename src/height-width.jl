@@ -52,8 +52,6 @@ function max_antichain(p::Poset)
     return [v for v in V if X[v] > 0.1]
 end
 
-
-
 function old_max_antichain(p::Poset)
     n = nv(p)
     V = collect(1:n)
