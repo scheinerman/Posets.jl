@@ -115,6 +115,9 @@ gives this:
 
 ![](rect-standard-4.png)
 
+Use `rectangle_containment_representation(p, false)` to create the drawing 
+without the labels. 
+
 ## `vertex-edge.jl`
 
 Function provided:

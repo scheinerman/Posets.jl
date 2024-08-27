@@ -1,15 +1,18 @@
 using Posets, SimpleDrawing, Plots
 
 """
-    rectangle_containment_representation(p::Poset)
+    rectangle_containment_representation(p::Poset, labels::Bool=true)
 
 Give a poset `p` with `n` elements, draw `n` rectangles such that
 the `i`-th rectangle is contained inside the `j`-th rectangle if and
 only if `i < j` in `p`. 
 
 This fails if `dimension(p)` is greater than `4`.
+
+Use `rectangle_containment_representation(p, false)` to draw the representation 
+without labels. 
 """
-function rectangle_containment_representation(p::Poset)
+function rectangle_containment_representation(p::Poset, labels::Bool=true)
     newdraw()
     n = nv(p)
     R = realizer(p, 4)
@@ -22,7 +25,7 @@ function rectangle_containment_representation(p::Poset)
         z = xyzw[4][j]
 
         draw_rectangle(x, y, -z, -w; color=:black)
-        annotate!(-z, -w, "$j")
+        labels && annotate!(-z, -w, "$j")
     end
     return finish()
 end
