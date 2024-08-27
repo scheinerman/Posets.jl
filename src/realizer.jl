@@ -120,7 +120,7 @@ function dimension(p::Poset, verb::Bool=false)::Int
     return dimension_work(p, lb, ub, verb)
 end
 
-function dimension_work(p::Poset, lb::Int, ub::Int, verb::Bool)::Int
+function dimension_work(p::Poset, lb::Integer, ub::Integer, verb::Bool)::Integer
     if verb
         print("$lb ≤ dim(p) ≤ $ub\t")
     end

@@ -72,6 +72,7 @@ export Poset,
     height,
     in,
     induced_subposet,
+    integer,
     is_antichain,
     is_chain,
     is_connected,
@@ -107,7 +108,9 @@ export Poset,
     width,
     zeta_matrix,
     ⟂,
-    ∥
+    ∥,
+    ∨,
+    ∧
 
 function __init__()
     set_solver(HiGHS)

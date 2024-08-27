@@ -581,7 +581,7 @@ julia> p ∩ reverse(p)
 Use `linear_extension(p)` to create  a linear extension of `p`. 
 This is a total order `q` with the same elements as `p` and with `p ⊆ q`. 
 
-### Meet and join
+### Join and meet
 
 Let $x$ and $y$ be elements of a poset $P$. 
 Let $U$ be the set of all elements $z$ of $P$ such that $x \preceq z$ and $y \preceq z$. 
@@ -602,7 +602,26 @@ Important notes:
 * The meet [or join] of two elements need not exist. If there is no meet [or join], an error is thrown.
 * Cannot compute the meet [or join] of elements in different posets. 
 * The expression `p[x]` throws an error if `x` is not an element of `p`. 
-* The result of `p[x] ∨ p[y]` is an object of type `PosetElement` (likewise for meet). To convert this back to an integer, wrap the result in `Int`. 
+* The symbol `∨` is typed `\vee<TAB>` and `∧` is typed `\wedge<TAB>`.
+* The result of `p[x] ∨ p[y]` is an object of type `PosetElement` (likewise for meet). To convert this back to an integer, wrap the result in `integer`. 
+
+```
+julia> p = subset_lattice(4)
+{16, 65} Int64 poset
+
+julia> p[2] ∧ p[7]
+Element 1 in a {16, 65} Int64 poset
+
+julia> p[2] ∨ p[7]
+Element 8 in a {16, 65} Int64 poset
+
+julia> integer(ans)
+8
+
+julia> p[2] ∨ p[3] ∨ p[5] ∨ p[9]
+Element 16 in a {16, 65} Int64 poset
+```
+
 
 
 ## Implementation

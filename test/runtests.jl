@@ -121,9 +121,15 @@ end
     @test nr(q) == 4
     @test is_connected(q)
 
-    p = antichain(2) + chain(4) + antichain(2)
-    trim!(p)
-    @test nv(p) == 4
+    # meet join
+    p = subset_lattice(4)
+    @test p[5] ∨ p[9] == p[13]
+    @test p[5] ∧ p[9] == p[1]
+    @test p[2] ∨ p[7] == p[8]
+    @test p[1] ∨ p[4] == p[4]
+    @test p[1] ∧ p[4] == p[1]
+    @test integer(p[4]) == 4
+
 end
 
 @testset "Connection" begin

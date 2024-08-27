@@ -168,7 +168,7 @@ end
 
 show(io::IO, pe::PosetElement) = print(io, "Element $(pe.x) in a $(pe.p)")
 getindex(p::Poset, x::Integer) = PosetElement(p, x)
-Int(a::PosetElement) = a.x
+integer(a::PosetElement) = a.x
 
 function _cannot_compare()
     throw(ArgumentError("Cannot compare elements of different posets"))
