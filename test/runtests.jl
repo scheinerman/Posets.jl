@@ -129,7 +129,6 @@ end
     @test p[1] ∨ p[4] == p[4]
     @test p[1] ∧ p[4] == p[1]
     @test integer(p[4]) == 4
-
 end
 
 @testset "Connection" begin
