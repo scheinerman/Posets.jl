@@ -392,6 +392,8 @@ julia> just_below(p,5) |> collect
 
 * `maximals(p)` returns an iterator for the maximal elements of `p`.
 * `minimals(p)` returns an iterator for the minimal elements of `p`.
+* `maximum(p)` returns the maximum element of `p` or `0` if no such element exists. 
+* `minimum(p)` returns the minimum element of `p` or `0` if no such element exists.
 * `max_chain(p)` returns a vector containing the elements of a largest chain in `p`.
 * `max_antichain(p)` returns a vector containing the elements of a largest antichain in `p`.
 * `height(p)` returns the size of a largest chain in `p`.
@@ -579,20 +581,47 @@ julia> p ∩ reverse(p)
 Use `linear_extension(p)` to create  a linear extension of `p`. 
 This is a total order `q` with the same elements as `p` and with `p ⊆ q`. 
 
+### Join and meet
 
-### Isolated vertex removal
+Let $x$ and $y$ be elements of a poset $P$. 
+Let $U$ be the set of all elements $z$ of $P$ such that $x \preceq z$ and $y \preceq z$. 
+This is the set of all elements above or equal to both $x$ and $y$. 
+If $U$ contains a minimum element (one that is below all the other elements of $U$), 
+then that minimum element $u$ is the *join* of $x$ and $y$. Notation $u = x \vee y$. 
 
-Use `trim!(p)` to remove from `p` all isolated vertices. That is, delete all
-elements that have no relation to any other elements. 
+Similarly, let $D$ be the set of all elements $z$ of $P$ such that 
+$z \preceq x$ and $z \preceq y$. This is the set of all
+elements in $P$ that are below or equal to $x$ and $y$. If $D$ contains a unique maximum element
+(one that is above all the other elements in $D$), then that maximum element $d$ is the 
+*meet* of $x$ and $y$. Notation: $d = x \wedge y$. 
+
+In this module, the join and meet of elements `x` and `y` in poset `p` can be computed as 
+`p[x] ∨ p[y]` and `p[x] ∧ p[y]`. 
+
+Important notes:
+* The meet [or join] of two elements need not exist. If there is no meet [or join], an error is thrown.
+* Cannot compute the meet [or join] of elements in different posets. 
+* The expression `p[x]` throws an error if `x` is not an element of `p`. 
+* The symbol `∨` is typed `\vee<TAB>` and `∧` is typed `\wedge<TAB>`.
+* The result of `p[x] ∨ p[y]` is an object of type `PosetElement` (likewise for meet). To convert this back to an integer, wrap the result in `integer`. 
+
 ```
-julia> p = chain(4) + antichain(3)
-{7, 6} Int64 poset
+julia> p = subset_lattice(4)
+{16, 65} Int64 poset
 
-julia> trim!(p)
+julia> p[2] ∧ p[7]
+Element 1 in a {16, 65} Int64 poset
 
-julia> p
-{4, 6} Int64 poset
+julia> p[2] ∨ p[7]
+Element 8 in a {16, 65} Int64 poset
+
+julia> integer(ans)
+8
+
+julia> p[2] ∨ p[3] ∨ p[5] ∨ p[9]
+Element 16 in a {16, 65} Int64 poset
 ```
+
 
 
 ## Implementation
