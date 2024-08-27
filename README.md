@@ -584,13 +584,14 @@ This is a total order `q` with the same elements as `p` and with `p ⊆ q`.
 ### Meet and join
 
 Let $x$ and $y$ be elements of a poset $P$. 
-Let $U=\{z \in P \colon x \preceq z \text{ and } y \preceq z\}$; this is the set of 
-all elements above or equal to both $x$ and $y$. If $U$ contains a minimum element (one that
-is below all the other elements of $U$), then that minimum element $u$ is the *join* of 
-$x$ and $y$. Notation $u = x \vee y$. 
+Let $U$ be the set of all elements $z$ of $P$ such that $x \preceq z$ and $y \preceq z$. 
+This is the set of all elements above or equal to both $x$ and $y$. 
+If $U$ contains a minimum element (one that is below all the other elements of $U$), 
+then that minimum element $u$ is the *join* of $x$ and $y$. Notation $u = x \vee y$. 
 
-Similarly, let $D = \{z \in P : z \preceq x \text{ and } z \preceq y\}$. This is the set of all
-elements in $P$ that are below or equal to $x$ and $y$. If $U$ contains a unique maximum element
+Similarly, let $D$ be the set of all elements $z$ of $P$ such that 
+$z \preceq x$ and $z \preceq y$. This is the set of all
+elements in $P$ that are below or equal to $x$ and $y$. If $D$ contains a unique maximum element
 (one that is above all the other elements in $D$), then that maximum element $d$ is the 
 *meet* of $x$ and $y$. Notation: $d = x \wedge y$. 
 
@@ -598,7 +599,10 @@ In this module, the join and meet of elements `x` and `y` in poset `p` can be co
 `p[x] ∨ p[y]` and `p[x] ∧ p[y]`. 
 
 Important notes:
-
+* The meet [or join] of two elements need not exist. If there is no meet [or join], an error is thrown.
+* Cannot compute the meet [or join] of elements in different posets. 
+* The expression `p[x]` throws an error if `x` is not an element of `p`. 
+* The result of `p[x] ∨ p[y]` is an object of type `PosetElement` (likewise for meet). To convert this back to an integer, wrap the result in `Int`. 
 
 
 ## Implementation
