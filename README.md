@@ -581,20 +581,24 @@ julia> p ∩ reverse(p)
 Use `linear_extension(p)` to create  a linear extension of `p`. 
 This is a total order `q` with the same elements as `p` and with `p ⊆ q`. 
 
+### Meet and join
 
-### Isolated vertex removal
+Let $x$ and $y$ be elements of a poset $P$. 
+Let $U=\{z \in P \colon x \preceq z \text{ and } y \preceq z\}$; this is the set of 
+all elements above or equal to both $x$ and $y$. If $U$ contains a minimum element (one that
+is below all the other elements of $U$), then that minimum element $u$ is the *join* of 
+$x$ and $y$. Notation $u = x \vee y$. 
 
-Use `trim!(p)` to remove from `p` all isolated vertices. That is, delete all
-elements that have no relation to any other elements. 
-```
-julia> p = chain(4) + antichain(3)
-{7, 6} Int64 poset
+Similarly, let $D = \{z \in P : z \preceq x \text{ and } z \preceq y\}$. This is the set of all
+elements in $P$ that are below or equal to $x$ and $y$. If $U$ contains a unique maximum element
+(one that is above all the other elements in $D$), then that maximum element $d$ is the 
+*meet* of $x$ and $y$. Notation: $d = x \wedge y$. 
 
-julia> trim!(p)
+In this module, the join and meet of elements `x` and `y` in poset `p` can be computed as 
+`p[x] ∨ p[y]` and `p[x] ∧ p[y]`. 
 
-julia> p
-{4, 6} Int64 poset
-```
+Important notes:
+
 
 
 ## Implementation
