@@ -26,6 +26,7 @@ import Base:
     hcat,
     in,
     intersect,
+    isless,
     issubset,
     maximum,
     minimum,

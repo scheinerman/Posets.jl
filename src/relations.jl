@@ -154,7 +154,19 @@ end
 
 ###
 # The following code enables p[i] < p[j] syntax for has(p,i,j)
-##
+## 
+
+"""
+    PosetElement 
+
+A `PosetElement` is (essentially) a pair associating a particular 
+poset, `p`, with one of its elements, `a`. Created by the syntax `p[a]`.
+Throws an error if `a` is not a vertex of `p`.
+
+Used in expressions such as `p[a] < p[b]` or `p[a] ∨ p[b]`.
+
+Given a poset element `p[a]`, use `integer(p[a])` to return the value `a`.
+"""
 struct PosetElement
     p::Poset
     x::Integer
@@ -179,7 +191,7 @@ function _cannot_compare()
     throw(ArgumentError("Cannot compare elements of different posets"))
 end
 
-function (<)(a::PosetElement, b::PosetElement)::Bool
+function isless(a::PosetElement, b::PosetElement)::Bool
     if a.p !== b.p   # different posets
         _cannot_compare()
     end
