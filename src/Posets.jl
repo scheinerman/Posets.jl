@@ -14,6 +14,7 @@ using Hungarian
 
 import Base:
     +,
+    *,
     /,
     \,
     <,

@@ -552,6 +552,16 @@ and a copy of `q` with all elements of `p` above all elements of `q`.
 
 Alternatively, `vcat(p,q)` or  `q\p`.
 
+### Cartesian product 
+
+Given posets $P$ and $Q$, their *Cartesian product*, $P \times Q$, is a poset whose 
+elements are all ordered pairs $(a,b)$ where $a$ is an element of $P$ and $b$ is an element
+of $Q$. In this poset we have $(a,b)\preceq(c,d)$ if and only if $a\preceq c$ in $P$ and 
+$b\preceq d$ in $Q$.
+
+Cartesian product is implemented in `Posets` as `p * q`. The result is a new poset 
+that is isomorphic to the Cartesian product of `p` and `q`. 
+
 ### Induced subposet
 
 Given a poset `p` and a list of vertices `vlist`, use `induced_subposet(p)` to return a 

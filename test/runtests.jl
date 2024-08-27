@@ -129,6 +129,11 @@ end
     @test p[1] ∨ p[4] == p[4]
     @test p[1] ∧ p[4] == p[1]
     @test integer(p[4]) == 4
+
+    p = random_poset(10)
+    q = random_poset(5)
+    iso(p * q, q * p)
+    @test nv(p * q) == nv(p) * nv(q)
 end
 
 @testset "Connection" begin

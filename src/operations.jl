@@ -13,6 +13,16 @@ end
 adjoint(p::Poset) = reverse(p)
 
 """
+    (*)(p::Poset, q::Poset)
+
+Given posets `p` and `q`, return their Cartesian product.
+"""
+function (*)(p::Poset, q::Poset)::Poset
+    g = cartesian_product(p.d, q.d)
+    return Poset(g)
+end
+
+"""
     (+)(p::Poset, q::Poset)::Poset
 
 `p+q`is the disjoint union of posets `p` and `q`. Also `hcat(p,q)`.
