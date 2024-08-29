@@ -605,16 +605,21 @@ elements in $P$ that are below or equal to $x$ and $y$. If $D$ contains a unique
 (one that is above all the other elements in $D$), then that maximum element $d$ is the 
 *meet* of $x$ and $y$. Notation: $d = x \wedge y$. 
 
-In this module, the join and meet of elements `x` and `y` in poset `p` can be computed as 
-`p[x] ∨ p[y]` and `p[x] ∧ p[y]`. 
+There are two ways to compute the join [or meet] of elements in a poset. 
+
+* The join and meet of elements `x` and `y` in poset `p` can be computed as `p[x] ∨ p[y]` and `p[x] ∧ p[y]`.
+* Or use the functions `lattice_join(p,x,y)` or `lattice_meet(p,x,y)`
 
 
 **Important notes**:
-* The meet [or join] of two elements need not exist. If there is no meet [or join], an error is thrown.
+* The meet [or join] of two elements need not exist.
+  * In the operation form, `p[x] ∧ p[y]` [or `p[x] ∨ p[y]`], if there is no meet [or join], an error is thrown.
+  * In the function form, `lattice_meet(p,x,y)` [or `lattice_join(x,y)`], if there is no meet [or join] then `0` is returned. 
 * Cannot compute the meet [or join] of elements in different posets. 
 * The expression `p[x]` throws an error if `x` is not an element of `p`. 
 * The symbol `∨` is typed `\vee<TAB>` and `∧` is typed `\wedge<TAB>`.
-* The result of `p[x] ∨ p[y]` is an object of type `PosetElement` (likewise for meet). To convert this back to an integer, wrap the result in `integer`. 
+* The result of `p[x] ∨ p[y]` is an object of type `PosetElement` (likewise for `∧`). 
+* The result of `lattice_join` [or `lattice_meet`] is always an integer. The return value of `0` is used to show that the join [or meet] does not exist. 
 
 The join and meet operations for posets are analogous to union and intersection for sets as illustrated here:
 ```
@@ -648,6 +653,9 @@ julia> subset_decode(integer(ans))
 {2,3}
 ```
 
+Further, the function `join_table(p)` [or `meet_table`] creates a matrix 
+whose `i,j`-entry is the join [or meet] of elements `i` and `j` in poset `p`, 
+or `0` if the join [or meet] doesn't exist.
 
 
 
