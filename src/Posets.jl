@@ -181,6 +181,7 @@ include("up-down.jl")
 include("matrices.jl")
 include("graphs.jl")
 include("operations.jl")
+include("meet-join.jl")
 include("connection.jl")
 
 include("height-width.jl")
