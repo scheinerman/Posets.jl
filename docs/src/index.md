@@ -254,7 +254,7 @@ However, the expression `p[a] < p[b]`  throws an error in either of these situat
 * Using the syntax `p[a]` if `a` is not an element of `p`.
 * Trying to compare elements of different posets (even if the two posets are equal).
 
-#### Comparability check
+### Comparability check
 
 The functions `are_comparable(p,a,b)` and `are_incomparable(p,a,b)` behave as follows:
 * `are_comparable(p,a,b)` returns `true` exactly when `a` and `b` are both in the poset, and one of the following is true: `a<b`, `a==b`, or `a>b`. 
@@ -262,7 +262,7 @@ The functions `are_comparable(p,a,b)` and `are_incomparable(p,a,b)` behave as fo
 
 Alternatively, use `p[a] ⟂ p[b]` to test if `a` and `b` are comparable, and use `p[a] ∥ p[b]` to test if `a` and `b` are incomparable. 
 
-#### Chain/antichain check
+### Chain/antichain check
 
 Given a list of elements `vlist` of a poset `p`:
 
@@ -450,6 +450,16 @@ julia> dimension(p)
 ```
 
 > **Note**: Computation of the dimension of a poset is NP-hard. The `dimension` function may be slow, even for moderate-size posets.
+
+### Ranking
+
+The function `ranking(p)` returns a ranking (as a dictionary) of the poset 
+starting from the minimal elements.
+That is, the minimal elements are assigned rank 0. Elements that are above only elements of 
+rank 0 are assigned rank 1. Elements that are only above elements of rank 0 and 1 are assigned 
+rank 2. And so forth. 
+
+Note that not all posets are ranked, but this function always returns a result. 
 
 
 ## Standard Posets

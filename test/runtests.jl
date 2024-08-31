@@ -134,6 +134,11 @@ end
     q = random_poset(5)
     iso(p * q, q * p)
     @test nv(p * q) == nv(p) * nv(q)
+
+    p = subset_lattice(4)
+    r = ranking(p)
+    mids = [v for v in 1:nv(p) if r[v] == 2]
+    @test length(mids) == binomial(4, 2)
 end
 
 @testset "Connection" begin

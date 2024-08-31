@@ -1,7 +1,7 @@
 name = "Posets"
 uuid = "9a158a65-591e-4f68-ac4f-9ffef2fc51f2"
 authors = ["Ed Scheinerman <ers@jhu.edu>"]
-version = "0.3.1"
+version = "0.3.2"
 
 [deps]
 AbstractLattices = "398f06c4-4d28-53ec-89ca-5b2656b7603d"
