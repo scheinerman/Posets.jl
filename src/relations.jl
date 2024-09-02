@@ -314,6 +314,17 @@ function is_chain(p::Poset, vlist)::Bool
 end
 
 """
+    is_chain(p::Poset)::Bool
+
+Test if `p` is a chain.
+"""
+function is_chain(p::Poset)::Bool
+    n = nv(p)
+    m = nr(p)
+    return n * (n - 1) == 2m
+end
+
+"""
     is_antichain(p::Poset, vlist)::Bool
 
 Check if the elements in `vlist` form an antichain in `p`.
@@ -335,6 +346,13 @@ function is_antichain(p::Poset, vlist)::Bool
     end
     return true
 end
+
+"""
+    is_antichain(p)
+
+Test if `p` is an antichain.
+"""
+is_antichain(p)::Bool = nr(p) == 0
 
 """
     rem_relation!(p::Poset, a::Integer, b::Integer)::Bool

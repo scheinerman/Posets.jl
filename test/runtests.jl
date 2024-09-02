@@ -112,6 +112,10 @@ end
     @test nr(q) == binomial(8, 2)
     @test p ⊆ q
 
+    q = random_linear_extension(p)
+    @test is_chain(q)
+    @test p ⊆ q
+
     p = standard_example(5)
     q, _ = induced_subposet(p, [1, 2, 3])
     @test nr(q) == 0

@@ -83,14 +83,14 @@ May also be invoked as `p ∩ q`.
 intersect(p::Poset, q::Poset) = Poset(p.d ∩ q.d)
 
 """
-    _chain2list(p::Poset)
+    chain2list(p::Poset)::Vector{Int}
 
 Given a (chain) poset `p`, return a list of integers
 whose entries are the elements of `p` in ascending order.
 
-See also `_chain_sort`.
+See also `Posets._chain_sort`.
 """
-function _chain2list(p::Poset)::Vector{Int}
+function chain2list(p::Poset)::Vector{Int}
     return sortperm([indegree(p.d, v) for v in 1:nv(p)])
 end
 
@@ -101,7 +101,32 @@ Return a linear extension of `p`. This is a total order `q` with
 the same elements as `p` with `p ⊆ q`.
 """
 function linear_extension(p::Poset)::Poset
-    return chain(_chain2list(p))
+    return chain(chain2list(p))
+end
+
+"""
+    random_linear_extension(p::Poset)::Poset
+
+Generate a pseudo-random linear extension of `p`.
+"""
+function random_linear_extension(p::Poset)::Poset
+    n = nv(p)
+    if n < 2
+        return chain(n)
+    end
+
+    todo = Set{Int}(1:n)
+    ch = Int[]
+
+    while length(todo) > 0
+        candidates = [x for x in todo if below(p, x) ⊆ ch]
+        nc = length(candidates)
+        idx = mod1(rand(Int), nc)  # random int in [1,nc]
+        v = candidates[idx]  # new member of the list
+        append!(ch, v)
+        delete!(todo, v)
+    end
+    return chain(ch)
 end
 
 """
@@ -110,7 +135,7 @@ end
 `ch` is a list of vertices of `p`, preferrably a chain. Return the list sorted 
 according to the `<` relation of `p`. 
 
-See also `_chain2list`.
+See also `chain2list`.
 """
 function _chain_sort(p::Poset, ch::Vector{T}) where {T<:Integer}
     lt(x, y) = p[x] < p[y]

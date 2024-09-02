@@ -601,6 +601,12 @@ julia> p ∩ reverse(p)
 Use `linear_extension(p)` to create  a linear extension of `p`. 
 This is a total order `q` with the same elements as `p` and with `p ⊆ q`. 
 
+The function `random_linear_extension(p)` creates a pseudo-random linear extension of `p`  
+as follows: Pick a minimal element of `p` at random. Make that the first element
+of the result. Now ignore that element and pick a minimal element at random from 
+among those that remain. Continue in this way until all elements have been 
+incorporated. 
+
 ### Join and meet
 
 Let $x$ and $y$ be elements of a poset $P$. 
