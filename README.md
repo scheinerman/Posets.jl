@@ -1,5 +1,6 @@
 # Posets
-Partially ordered sets for Julia based on [Graphs](https://juliagraphs.org/Graphs.jl/).
+Partially ordered sets for Julia based on [Graphs](https://juliagraphs.org/Graphs.jl/). 
+See [HasseDiagrams](https://github.com/scheinerman/HasseDiagrams.jl) for functions to draw posets.
 
 ## Introduction: Partially Ordered Sets
 
@@ -16,7 +17,7 @@ The design philosophy for this module is modeled exactly on `Graphs`. In particu
 ## Basics
 
 
-### Construct new posets 
+### Constructing new posets 
 
 Create a new poset with no elements using `Poset()` or a poset with a specified number 
 of elements with `Poset(n)`. 
