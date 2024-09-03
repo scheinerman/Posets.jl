@@ -50,6 +50,9 @@ using LinearAlgebra
     rlist = [(i, i + 1) for i in 1:5]
     Posets.add_relations!(p, rlist)
     @test p == chain(6)
+
+    p = poset_builder(collect(1:10), isless)
+    @test p == chain(10)
 end
 
 @testset "Above/Below/Between" begin

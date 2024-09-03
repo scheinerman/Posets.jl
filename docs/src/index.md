@@ -197,6 +197,51 @@ Note that relations `2<3` and `3<4` have been removed.
 > For a more extensive explanation, see [poset-deletion.pdf](https://github.com/scheinerman/Posets.jl/blob/main/delete-doc/poset-deletion.pdf) in the `delete-doc` folder. 
 
 
+### `poset_builder` function
+
+Posets are a collection of objects and a $\prec$ relation. The `poset_builder` function 
+takes a list of objects and a function the determines if they obey a $\prec$ relation, and
+returns the resulting poset. 
+
+The function is invoked as `poset_builder(list, comp_func)` where
+* `list` is a list (vector) of objects and
+* `comp_func` is a function that takes a pair of objects and returns `true` if they satisfy a $\prec$ relation. 
+
+For example, suppose we want to construct a poset consisting of the integers `1` to `100` 
+which $a \prec b$ provided $a$ is a divisor of $b$. Here is how to do that:
+
+```
+julia> nums = collect(1:100);
+
+julia> divs(a,b) = mod(b,a)==0    # return true if a divides b
+divs (generic function with 1 method)
+
+julia> p = poset_builder(nums, divs)
+{100, 382} Int64 poset
+```
+
+The elements that cover `1` are the primes less than `100`:
+```
+julia> [ x for x in 1:100 if covered_by(p,1,x) ]
+25-element Vector{Int64}:
+  2
+  3
+  5
+  7
+ 11
+ 13
+ 17
+ 19
+  ⋮
+ 67
+ 71
+ 73
+ 79
+ 83
+ 89
+ 97
+```
+
 ## Inspection
 
 ### Vertices
