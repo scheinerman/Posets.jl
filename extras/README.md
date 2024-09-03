@@ -8,6 +8,12 @@ because they load other packages. Some might be of marginal value. Some
 might be incorporated into `Posets` in the future. 
 
 
+## Visualization
+
+Please see the [HasseDiagram](https://github.com/scheinerman/HasseDiagrams.jl) package that 
+supercedes the `pplot.jl` and  `posetplot.jl` files that were in this directory.
+
+
 ## `containment_order.jl`
 
 Function provided:
@@ -72,51 +78,6 @@ julia> partition_lattice_demo(5)
 
 
 
-## `pplot.jl`
-
-Function provided:
-* `pplot(p)`: draw a picture of (the cover digraph of) `p`. An edge `v → w` means 
-`v < w` and `w` covers `v`. Use `pplot(p, nodelable=1:nv(p))` to have the nodes labeled.
-
-Based on `gplot` from [GraphPlot](https://github.com/JuliaGraphs/GraphPlot.jl).
-
-(I like the pictures produced by `posetplot.jl` better. I might just delete this. )
-
-## `posetplot.jl`
-
-Function provided:
-* `posetplot(p)`: draw a picture of (the cover digraph of) `p`. An edge from `v` upward to `w`
-  means `v < w` and `w` covers `v`. (No arrows are drawn; this is a Hasse diagram.)
-
-* `posetplot2d(p)`: Draw a picture of a poset whose dimension is at most 2. 
-
-Based on `graphplot` from [GraphMakie](https://graph.makie.org/stable/) and using [LayeredLayouts](https://github.com/oxinabox/LayeredLayouts.jl).
-
-```
-julia> posetplot(chevron())
-```
-Gives this: 
-
-![](chevron.png)
-
-## `rectangle-rep.jl`
-
-Function provided:
-
-* `rectangle_containment_representation(p)` draws a picture with `nv(p)` rectangles 
-  in which the `i`-th rectangle is contained inside the `j`-th rectangle if and
-  only if `i < j` in `p`. Throws an error if the dimension of `p` is greater than 4.
-
-For example
-```
-julia> rectangle_containment_representation(standard_example(4))
-```
-gives this:
-
-![](rect-standard-4.png)
-
-Use `rectangle_containment_representation(p, false)` to create the drawing 
-without the labels. 
 
 ## `vertex-edge.jl`
 
@@ -126,3 +87,5 @@ Function provided:
   The elements of `p` correspond to the vertices and edgs of
   `g`. We have `v < e` is `p` exactly when `v` is a vertex, 
   `e` is an edge, and `v` is an end point of `v`.
+
+I might move this into `Posets`.

@@ -95,6 +95,7 @@ export Poset,
     mobius_matrix,
     nr,
     nv,
+    poset_builder,
     random_linear_extension,
     random_linear_order,
     random_poset,
@@ -188,6 +189,7 @@ include("graphs.jl")
 include("operations.jl")
 include("meet-join.jl")
 include("connection.jl")
+include("builder.jl")
 
 include("height-width.jl")
 include("realizer.jl")
