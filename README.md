@@ -547,7 +547,7 @@ for pictures of some of these posets.
 
 * `weak_order(vals)`: Create a weak order `p` from a list of real numbers. In `p` element `i` is less than element `j` provided `vals[i] < vals[j]` .
 
-## Graphs
+## Graphs and Posets
 
 Let `p` be a poset. The following two functions create graphs from `p` with the same 
 vertex set as `p`:
@@ -571,9 +571,11 @@ julia> d == path_digraph(9)
 true
 ```
 
-Given a graph `g`, calling `vertex_edge_incidence_poset(p)` creates a poset whose
+Given a graph `g`, calling `incidence_poset(p)` creates a poset whose
 elements correspond to the vertices and edges of `g`. In this poset the only relations
 are of the form `v < e` where `v` is a vertex that is an end point of the edge `e`.
+
+> **Deprecation notice**: This function was previously named `vertex_edge_incidence_poset` and that name is now deprecated. It will be removed in future releases.
 
 
 ## Matrices

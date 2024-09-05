@@ -216,6 +216,13 @@ end
     p = chevron()
     a, b, c = realizer(p, 3)
     @test a ∩ b ∩ c == p
+
+    g = complete_graph(5)
+    p = incidence_poset(g)
+    @test dimension(p) == 4
+    rem_edge!(g, 1, 2)
+    p = incidence_poset(g)
+    @test dimension(p) == 3
 end
 
 @testset "Isomorphism" begin

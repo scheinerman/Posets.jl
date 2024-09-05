@@ -26,13 +26,13 @@ function cover_digraph(p::Poset{T}) where {T}
 end
 
 """
-    vertex_edge_incidence_poset(g::AbstractGraph)
+    incidence_poset(g::AbstractGraph)
 
 Given a graph `g` create a poset whose elements correspond to the vertices 
 and edges of `g` in which the only relations are of the form `v < e` where `v` 
 is a vertex that is an end point of edge `e`. 
 """
-function vertex_edge_incidence_poset(g::AbstractGraph)
+function incidence_poset(g::AbstractGraph)
     n = nv(g)
     m = ne(g)
     p = Poset(n + m)
@@ -48,3 +48,5 @@ function vertex_edge_incidence_poset(g::AbstractGraph)
 
     return p
 end
+
+@deprecate vertex_edge_incidence_poset(g) incidence_poset(g)

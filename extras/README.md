@@ -76,16 +76,3 @@ julia> partition_lattice_demo(5)
 {{1},{2},{4},{3},{5}} < {{1,5},{2},{4},{3}} < {{4},{3},{1,2,5}} < {{1,2,4,5},{3}} < {{1,2,3,4,5}}
 ```
 
-
-
-
-## `vertex-edge.jl`
-
-Function provided:
-
-* `vertex_edge_poset(g)`: Given a graph `g`, create `p`, the vertex-edge poset of `g`.
-  The elements of `p` correspond to the vertices and edgs of
-  `g`. We have `v < e` is `p` exactly when `v` is a vertex, 
-  `e` is an edge, and `v` is an end point of `v`.
-
-I might move this into `Posets`.
