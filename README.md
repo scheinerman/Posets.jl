@@ -507,6 +507,37 @@ rank 2. And so forth.
 
 Note that not all posets are ranked, but this function always returns a result. 
 
+We also provide `dual_ranking` which combines the rankings of `p` and its dual, `p'`. 
+This removes the bias that minimal elements are treated differently than maximal elements. 
+
+For example, suppose the poset is a the disjoint union of a 3-element and a 2-element chain.
+The function `ranking` places both minimal elements at rank `0`, then their covers at 
+rank `1`, and finally the maximal element in the 3-chain at rank `2`. 
+
+By contrast, `dual_ranking` places the elements in the 3-chain at ranks `0`, `2`, and `4`,
+and the elements of the 2-chain at ranks `1` and `3`.
+
+```
+julia> p = chain(3) + chain(2)
+{5, 4} Int64 poset
+
+julia> ranking(p)
+Dict{Int64, Int64} with 5 entries:
+  5 => 1
+  4 => 0
+  2 => 1
+  3 => 2
+  1 => 0
+
+julia> dual_ranking(p)
+Dict{Int64, Int64} with 5 entries:
+  5 => 3
+  4 => 1
+  2 => 2
+  3 => 4
+  1 => 0
+```
+
 
 ## Standard Posets
 

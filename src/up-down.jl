@@ -52,3 +52,44 @@ function ranking(p::Poset)::Dict{Int,Int}
     end
     return gr
 end
+
+"""
+    dual_ranking(p::Poset, compact::Bool = true)::Dict{Int,Int}
+
+A variant on `ranking` from `Posets` by combining `ranking` on both `p` 
+and its dual. 
+
+With `compact` set to `true` the levels are "collapsed" to be numbered 0,
+1, 2, 3, etc. Otherwise, there may be gaps in the numbering and might not
+start at 0.
+"""
+function dual_ranking(p::Poset, compact::Bool=true)::Dict{Int,Int}
+    r1 = ranking(p)
+    r2 = ranking(p')
+    n = nv(p)
+
+    for v in 1:n
+        r1[v] -= r2[v]
+    end
+
+    if !compact
+        return r1
+    end
+
+    vals = unique(sort(collect(values(r1))))
+    nvals = length(vals)
+
+    lookup = Dict{Int,Int}()
+
+    for idx in 1:nvals
+        v = vals[idx]
+        lookup[v] = idx
+    end
+
+    rk = Dict{Int,Int}()
+    for v in 1:n
+        rk[v] = lookup[r1[v]] - 1
+    end
+
+    return rk
+end
