@@ -107,6 +107,7 @@ function dimension(p::Poset, verb::Bool=false)::Int
         return 0
     end
 
+    # special cases 
     if 2 * nr(p) == n * (n - 1)  # it's a chain
         return 1
     end
@@ -117,7 +118,7 @@ function dimension(p::Poset, verb::Bool=false)::Int
 
     lb = 2
 
-    ub1 = Int(floor(n / 2))
+    ub1 = Int(ceil(n / 2))
     ub2 = width(p)
     ub = min(ub1, ub2)
 
