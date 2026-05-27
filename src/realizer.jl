@@ -111,6 +111,10 @@ function dimension(p::Poset, verb::Bool=false)::Int
         return 1
     end
 
+    if nr(p) == 0   # it's an antichain with 2 or more el'ts
+        return 2 
+    end
+
     lb = 2
 
     ub1 = Int(floor(n / 2))
